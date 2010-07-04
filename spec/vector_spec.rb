@@ -21,4 +21,14 @@ describe Vector do
     result.should == 44
   end
 
+  it "returns when cross product (3,-1,5) with (-2,3,10)" do
+    v1 = Vector.new(3,-1,5)
+    v2 = Vector.new(-2,3,10)
+    result = v1.cross(v2)
+    result.x.should == -25
+    result.y.should == -40
+    result.z.should == 7
+    result.w.should == 1
+  end
+
 end

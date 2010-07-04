@@ -11,4 +11,10 @@ class Vector
   def *(v)
     @x*v.x + @y*v.y + @z*v.z
   end
+
+  def cross(v)
+    Vector.new(@y*v.z - @z*v.y,
+               @z*v.x - @x*v.z,
+               @x*v.y - @y*v.x)
+  end
 end
