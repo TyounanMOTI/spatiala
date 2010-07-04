@@ -13,4 +13,12 @@ describe Vector do
     vector.z.should == 5
     vector.w.should == 1
   end
+
+  it "returns 44 when dot product (3,-1,5) with (-2,0,10)" do
+    v1 = Vector.new(3,-1,5)
+    v2 = Vector.new(-2,0,10)
+    result = v1 * v2
+    result.should == 44
+  end
+
 end

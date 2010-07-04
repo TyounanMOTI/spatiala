@@ -7,4 +7,8 @@ class Vector
     @z = z
     @w = 1
   end
+
+  def *(v)
+    @x*v.x + @y*v.y + @z*v.z
+  end
 end
