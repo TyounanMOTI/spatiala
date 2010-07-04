@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe Vector do
+describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
   before do
     @v1 = Vector.new(3,-1,5)
     @v2 = Vector.new(-2,3,10)
@@ -18,13 +18,13 @@ describe Vector do
     @v1.w.should == 1
   end
 
-  it "returns 44 when dot product (3,-1,5) with (-2,0,10)" do
+  it "returns 44 when dot product v1 with (-2,0,10)" do
     v2 = Vector.new(-2,0,10)
     result = @v1 * v2
     result.should == 44
   end
 
-  it "returns when cross product (3,-1,5) with (-2,3,10)" do
+  it "returns when cross product v1 with v2" do
     result = @v1.cross(@v2)
     result.x.should == -25
     result.y.should == -40
@@ -32,7 +32,7 @@ describe Vector do
     result.w.should == 1
   end
 
-  it "returns (1,2,15) when add (3,-1,5) with (-2,3,10)" do
+  it "returns (1,2,15) when add v1 with v2" do
     result = @v1 + @v2
     result.x.should == 1
     result.y.should == 2
