@@ -47,5 +47,4 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
   it "returns false when those vectors are differ" do
     @v1.should_not == Vector.new(3,0,5)
   end
-
 end

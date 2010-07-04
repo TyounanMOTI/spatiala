@@ -25,4 +25,8 @@ class Vector
   def ==(v)
     @x == v.x && @y == v.y && @z == v.z && @w == v.w
   end
+
+  def !=(v)
+    not (self == v)
+  end
 end
