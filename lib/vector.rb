@@ -21,4 +21,8 @@ class Vector
   def +(v)
     Vector.new(@x + v.x, @y + v.y, @z + v.z)
   end
+
+  def ==(v)
+    @x == v.x && @y == v.y && @z == v.z && @w == v.w
+  end
 end

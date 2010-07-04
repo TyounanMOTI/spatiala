@@ -40,4 +40,12 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     result.w.should == 1
   end
 
+  it "returns true when those vectors are same" do
+    @v1.should == Vector.new(3,-1,5)
+  end
+
+  it "returns false when those vectors are differ" do
+    @v1.should_not == Vector.new(3,0,5)
+  end
+
 end
