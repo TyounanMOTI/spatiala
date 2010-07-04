@@ -31,4 +31,14 @@ describe Vector do
     result.w.should == 1
   end
 
+  it "returns (1,2,15) when add (3,-1,5) with (-2,3,10)" do
+    v1 = Vector.new(3,-1,5)
+    v2 = Vector.new(-2,3,10)
+    result = v1 + v2
+    result.x.should == 1
+    result.y.should == 2
+    result.z.should == 15
+    result.w.should == 1
+  end
+
 end

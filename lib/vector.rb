@@ -17,4 +17,8 @@ class Vector
                @z*v.x - @x*v.z,
                @x*v.y - @y*v.x)
   end
+
+  def +(v)
+    Vector.new(@x + v.x, @y + v.y, @z + v.z)
+  end
 end
