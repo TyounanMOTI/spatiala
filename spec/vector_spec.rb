@@ -12,10 +12,7 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
   end
 
   it "should returns (3,-1,5,1) Vector when initialize with Vector.new(3,-1,5)" do
-    @v1.x.should == 3
-    @v1.y.should == -1
-    @v1.z.should == 5
-    @v1.w.should == 1
+    @v1.should == Vector.new(3,-1,5)
   end
 
   it "returns 44 when dot product v1 with (-2,0,10)" do
@@ -24,20 +21,14 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     result.should == 44
   end
 
-  it "returns when cross product v1 with v2" do
+  it "returns (-25,-40,7) when cross product v1 with v2" do
     result = @v1.cross(@v2)
-    result.x.should == -25
-    result.y.should == -40
-    result.z.should == 7
-    result.w.should == 1
+    result.should == Vector.new(-25,-40,7)
   end
 
   it "returns (1,2,15) when add v1 with v2" do
     result = @v1 + @v2
-    result.x.should == 1
-    result.y.should == 2
-    result.z.should == 15
-    result.w.should == 1
+    result.should == Vector.new(1,2,15)
   end
 
   it "returns true when those vectors are same" do
