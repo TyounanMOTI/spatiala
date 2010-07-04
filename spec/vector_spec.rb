@@ -5,4 +5,12 @@ describe Vector do
     vector = Vector.new()
     vector.should be_instance_of Vector
   end
+
+  it "should returns (3,-1,5,1) Vector when initialize with Vector.new(3,-1,5)" do
+    vector = Vector.new(3, -1, 5)
+    vector.x.should == 3
+    vector.y.should == -1
+    vector.z.should == 5
+    vector.w.should == 1
+  end
 end
