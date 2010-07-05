@@ -48,4 +48,8 @@ class Vector
   def length
     Math.sqrt(@x**2 + @y**2 + @z**2)
   end
+
+  def normalize
+    self / self.length
+  end
 end

@@ -64,5 +64,11 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     result.should < 6
     result.should > 5
   end
+
+  it "should normalize v1" do
+    result = @v1.normalize
+    result.length.should > 0.9
+    result.length.should < 1.1
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)
