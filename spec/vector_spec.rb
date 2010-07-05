@@ -38,4 +38,10 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
   it "returns false when those vectors are differ" do
     @v1.should_not == Vector.new(3,0,5)
   end
+
+  it "returns (5,-4,-5) when v1 minus v2" do
+    result = @v1 - @v2
+    result.should == Vector.new(5, -4, -5)
+  end
 end
+# v1(3,-1,5) v2(-2,3,10)
