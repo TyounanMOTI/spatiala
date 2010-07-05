@@ -9,7 +9,10 @@ class Vector
   end
 
   def *(v)
-    @x*v.x + @y*v.y + @z*v.z
+    case v
+      when Vector then @x*v.x + @y*v.y + @z*v.z
+      else Vector.new(@x*v, @y*v, @z*v)
+    end
   end
 
   def cross(v)

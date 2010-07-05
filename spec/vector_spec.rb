@@ -53,5 +53,10 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     result = @v1 / 2.0
     result.should == Vector.new(1.5,-0.5,2.5)
   end
+
+  it "returns (6,-2,10) when v1 * 2" do
+    result = @v1 * 2
+    result.should == Vector.new(6,-2,10)
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)
