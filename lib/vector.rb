@@ -30,6 +30,10 @@ class Vector
     Vector.new(-@x, -@y, -@z)
   end
 
+  def /(a)
+    Vector.new(@x/a, @y/a, @z/a)
+  end
+
   def ==(v)
     @x == v.x && @y == v.y && @z == v.z && @w == v.w
   end
