@@ -26,6 +26,10 @@ class Vector
     Vector.new(@x - v.x, @y - v.y, @z - v.z)
   end
 
+  def -@
+    Vector.new(-@x, -@y, -@z)
+  end
+
   def ==(v)
     @x == v.x && @y == v.y && @z == v.z && @w == v.w
   end

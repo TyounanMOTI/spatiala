@@ -43,5 +43,10 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     result = @v1 - @v2
     result.should == Vector.new(5, -4, -5)
   end
+
+  it "returns (-3,1,-5) when minus v1" do
+    result = -@v1
+    result.should == Vector.new(-3,1,-5)
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)
