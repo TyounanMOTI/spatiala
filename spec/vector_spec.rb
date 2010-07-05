@@ -58,5 +58,11 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     result = @v1 * 2
     result.should == Vector.new(6,-2,10)
   end
+
+  it "returns length 5.x when measured length of v1" do
+    result = @v1.length
+    result.should < 6
+    result.should > 5
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)
