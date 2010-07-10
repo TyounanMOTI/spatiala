@@ -6,6 +6,7 @@ require 'polygon'
 require 'geometry'
 require 'beam'
 require 'listener'
+require 'source'
 require 'spec'
 require 'spec/autorun'
 
