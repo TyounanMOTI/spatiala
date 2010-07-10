@@ -41,10 +41,6 @@ class Vector
     @x == v.x && @y == v.y && @z == v.z && @w == v.w
   end
 
-  def !=(v)
-    not (self == v)
-  end
-
   def length
     Math.sqrt(@x**2 + @y**2 + @z**2)
   end
