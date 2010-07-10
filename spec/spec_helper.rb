@@ -5,6 +5,7 @@ require 'ray'
 require 'polygon'
 require 'geometry'
 require 'beam'
+require 'listener'
 require 'spec'
 require 'spec/autorun'
 
