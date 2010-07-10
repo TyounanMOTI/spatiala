@@ -1,13 +1,13 @@
 require 'ray'
 
 class Polygon
-  def initialize(*vertex)
-    @vertex = vertex
+  def initialize(*vertices)
+    @vertices = vertices
   end
 
   def lines
     result = Array.new
-    @vertex.each_index { |i| result.push(Ray.new(@vertex[i], @vertex.fetch(i+1, @vertex[0])))}
+    @vertices.each_index { |i| result.push(Ray.new(@vertices[i], @vertices.fetch(i+1, @vertices[0])))}
     return result
   end
 end
