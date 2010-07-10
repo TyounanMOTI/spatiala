@@ -1,7 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Source do
+  before do
+    @source = Source.new(Vector.new(300,50))
+  end
+
   it "should be initialized with its position" do
-    Source.new(Vector.new(300,50)).should be_instance_of Source
+    @source.should be_instance_of Source
+  end
+
+  it "should have position" do
+    @source.position.should == Vector.new(300,50)
   end
 end
