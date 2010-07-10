@@ -1,3 +1,5 @@
+require 'vector'
+
 class Ray
   attr_accessor :origin, :destination, :delta
 

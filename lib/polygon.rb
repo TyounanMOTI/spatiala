@@ -1,3 +1,5 @@
+require 'ray'
+
 class Polygon
   def initialize(*vertex)
     @vertex = vertex
