@@ -1,4 +1,4 @@
-class Geometry
+class Polygon
   def initialize(*vertex)
     @vertex = vertex
   end
