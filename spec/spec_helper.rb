@@ -4,6 +4,7 @@ require 'vector'
 require 'ray'
 require 'polygon'
 require 'geometry'
+require 'beam'
 require 'spec'
 require 'spec/autorun'
 
