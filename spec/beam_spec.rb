@@ -16,4 +16,8 @@ describe Beam do
     @beam.deltas[0].should == Vector.new(400,40)
     @beam.deltas[1].should == Vector.new(30,300)
   end
+
+  it "should have children array" do
+    @beam.children.should be_instance_of Array
+  end
 end

@@ -13,4 +13,8 @@ describe Listener do
     @listener.position.should == Vector.new(10,10)
     @listener.direction.should == Vector.new(40,50).normalize
   end
+
+  it "should have children array" do
+    @listener.children.should be_instance_of Array
+  end
 end
