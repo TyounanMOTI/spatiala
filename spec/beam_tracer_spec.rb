@@ -16,10 +16,10 @@ describe BeamTracer do
     @listener = Listener.new(Vector.new(120,160),
                              Vector.new(30,30))
 
-
+    @tracer = BeamTracer.new(@geometry, @source, @listener)
   end
 
   it "should initialize with geometry, source, listener" do
-    BeamTracer.new(@geometry, @source, @listener).should be_instance_of BeamTracer
+    @tracer.should be_instance_of BeamTracer
   end
 end
