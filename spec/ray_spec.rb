@@ -19,4 +19,22 @@ describe Ray do
     result.should < 1
     result.should > 0
   end
+
+  it "should re-compute delta when origin is changed" do
+    ray = Ray.new(Vector.new(1,0), Vector.new(2,4))
+    ray.origin = Vector.new(3,9)
+    ray.delta.should == Vector.new(-1,-5)
+  end
+
+  it "should re-compute delta when destination is changed" do
+    ray = Ray.new(Vector.new(1,0), Vector.new(2,4))
+    ray.destination = Vector.new(3,9)
+    ray.delta.should == Vector.new(2,9)
+  end
+
+  it "should re-compute destination when delta is changed" do
+    ray = Ray.new(Vector.new(1,0), Vector.new(2,4))
+    ray.delta = Vector.new(3,9)
+    ray.destination.should == Vector.new(4,9)
+  end
 end
