@@ -24,8 +24,8 @@ describe Geometry do
     @geometry.polygons.each { |i| i.should be_instance_of Polygon }
   end
 
-  it "should return Array of Vector when get_all_vertices" do
-    vertices = @geometry.get_all_vertices
+  it "should return Array of Vector when get all vertices" do
+    vertices = @geometry.vertices
     vertices.should be_instance_of Array
     vertices.each{ |i| i.should be_instance_of Vector }
   end

@@ -7,7 +7,7 @@ class Geometry
     @polygons = polygons
   end
 
-  def get_all_vertices
+  def vertices
     vertices = Array.new
     @polygons.each { |i| vertices.push i.vertices }
     return vertices.flatten
