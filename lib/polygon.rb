@@ -1,6 +1,8 @@
 require 'ray'
 
 class Polygon
+  attr_reader :vertices
+
   def initialize(*vertices)
     @vertices = vertices
   end
