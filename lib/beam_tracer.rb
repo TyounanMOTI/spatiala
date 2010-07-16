@@ -1,7 +1,7 @@
 class BeamTracer
-  def initialize(geometry, source, listener)
+  def initialize(geometry, sources, listener)
     @geometry = geometry
-    @source = source
+    @sources = sources
     @listener = listener
   end
 end
