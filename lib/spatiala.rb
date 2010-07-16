@@ -4,6 +4,7 @@ require 'geometry'
 require 'polygon'
 require 'ray'
 require 'vector'
+require 'beam_tracer'
 
 class Spatiala < Processing::App
   def setup
@@ -33,6 +34,9 @@ class Spatiala < Processing::App
     draw_geometry
     draw_listener
     draw_source
+
+    @tracer = BeamTracer.new(@geometry, @sources, @listener)
+    @tracer.split_ray_list.each { |ray| draw_ray(ray) }
   end
 
   def draw
@@ -74,6 +78,19 @@ class Spatiala < Processing::App
 
   def draw_point(x, y)
     ellipse x, y, 8, 8
+  end
+
+  def draw_ray(ray)
+    push_style
+
+    stroke_weight 3
+    color_mode HSB, 100
+    stroke 18, @saturation, @brightness, 100
+    fill @hue, @saturation, @brightness, 80
+    line ray.origin.x, ray.origin.y, ray.destination.x, ray.destination.y
+    draw_point ray.origin.x, ray.origin.y
+
+    pop_style
   end
 end
 
