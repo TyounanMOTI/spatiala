@@ -1,6 +1,6 @@
 class Beam
   attr_reader :origin
-  attr_accessor :children, :deltas
+  attr_accessor :children, :deltas, :reference_segment
 
   def initialize(origin, *deltas)
     @origin = origin
