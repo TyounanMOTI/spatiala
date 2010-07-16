@@ -33,18 +33,24 @@ describe BeamTracer do
     @tracer.intersect_with_no_walls?(ray).should == false
   end
 
-  it "should return Array of Crack when make crack list" do
+  it "should return CrackList when make crack list" do
     list = @tracer.make_crack_list
-    list.should be_instance_of Array
-    list.each { |i| i.should be_instance_of Crack }
+    list.should be_instance_of CrackList
+    list.cracks.each { |i| i.should be_instance_of Crack }
   end
 
-  it "should return Array of Crack which have one or two rays when connect_listener_to_vertices" do
+  it "should return CrackList which have one or two rays when connect_listener_to_vertices" do
     list = @tracer.connect_listener_to_vertices
-    list.should be_instance_of Array
-    list.each do |i|
+    list.should be_instance_of CrackList
+    list.cracks.each do |i|
       i.should be_instance_of Crack
       i.rays.length.should <= 2
     end
+  end
+
+  it "should return CrackList which have even rays when extend_crack" do
+    list = @tracer.connect_listener_to_vertices
+    list = @tracer.extend_cracks list
+    list.cracks.each { |i| (i.rays.length % 2).should == 0 }
   end
 end
