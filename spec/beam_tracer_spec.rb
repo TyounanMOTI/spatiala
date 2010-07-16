@@ -38,4 +38,13 @@ describe BeamTracer do
     list.should be_instance_of Array
     list.each { |i| i.should be_instance_of Crack }
   end
+
+  it "should return Array of Crack which have one or two rays when connect_listener_to_vertices" do
+    list = @tracer.connect_listener_to_vertices
+    list.should be_instance_of Array
+    list.each do |i|
+      i.should be_instance_of Crack
+      i.rays.length.should <= 2
+    end
+  end
 end
