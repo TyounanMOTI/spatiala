@@ -29,4 +29,10 @@ describe Geometry do
     vertices.should be_instance_of Array
     vertices.each{ |i| i.should be_instance_of Vector }
   end
+
+  it "should return Array of Ray when get all lines" do
+    lines = @geometry.lines
+    lines.should be_instance_of Array
+    lines.each { |i| i.should be_instance_of Ray }
+  end
 end
