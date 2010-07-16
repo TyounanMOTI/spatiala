@@ -32,4 +32,10 @@ describe BeamTracer do
     ray = Ray.new(Vector.new(50, 50), Vector.new(500, 500))
     @tracer.intersect_with_no_walls?(ray).should == false
   end
+
+  it "should return Array of Ray when get_split_ray_list" do
+    list = @tracer.get_split_ray_list
+    list.should be_instance_of Array
+    list.each { |i| i.should be_instance_of Ray }
+  end
 end
