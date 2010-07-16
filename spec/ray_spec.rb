@@ -12,7 +12,7 @@ describe Ray do
     ray.destination.should == Vector.new(-6,0)
   end
 
-  it "should return num between 0 and 1 when intersect (0,1)->(2,4) with (1,0)->(4,3)" do
+  it "should return num between 0 and 1 when intersect (1,0)->(2,4) with (0,1)->(4,3)" do
     ray1 = Ray.new(Vector.new(1,0), Vector.new(2,4))
     ray2 = Ray.new(Vector.new(0,1), Vector.new(4,3))
     result = ray1.intersect(ray2)
