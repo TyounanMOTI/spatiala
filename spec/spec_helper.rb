@@ -8,6 +8,7 @@ require 'beam'
 require 'listener'
 require 'source'
 require 'beam_tracer'
+require 'crack'
 
 require 'spec'
 require 'spec/autorun'
