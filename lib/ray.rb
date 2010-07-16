@@ -29,4 +29,14 @@ class Ray
     return -1 if (cross.length == 0)
     return (((target.origin - @origin).cross(target.delta))*cross).to_f / ((cross*cross)).to_f
   end
+
+  def intersect?(wall)
+    ray_to_wall = self.intersect(wall)
+    wall_to_ray = wall.intersect(self)
+    if ((ray_to_wall >= 0 && ray_to_wall <= 1) &&
+        (wall_to_ray >= 0 && wall_to_ray <= 1)) then
+      return true
+    end
+    return false
+  end
 end

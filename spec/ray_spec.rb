@@ -37,4 +37,10 @@ describe Ray do
     ray.delta = Vector.new(3,9)
     ray.destination.should == Vector.new(4,9)
   end
+
+  it "should true when Ray((1,0),(4,2)) intersect? ((0,1),(3,4))" do
+    ray = Ray.new(Vector.new(0,1), Vector.new(4,2))
+    wall = Ray.new(Vector.new(1,0), Vector.new(3,4))
+    ray.intersect?(wall).should == true
+  end
 end
