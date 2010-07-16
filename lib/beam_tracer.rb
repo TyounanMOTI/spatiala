@@ -10,7 +10,7 @@ class BeamTracer
     list = Array.new
     @geometry.vertices.each do |vertex|
       ray = Ray.new(@listener.position, vertex)
-      next if intersect_with_no_walls?(ray)
+      next unless intersect_with_no_walls?(ray)
       list.push ray
     end
     return list
