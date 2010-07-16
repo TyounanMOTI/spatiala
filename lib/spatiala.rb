@@ -5,11 +5,13 @@ require 'polygon'
 require 'ray'
 require 'vector'
 require 'beam_tracer'
+require 'crack_list'
 require 'crack'
 
 class Spatiala < Processing::App
   def setup
     size 640, 640
+    frame_rate 1
     smooth
     color_mode HSB, 100
     @hue = 60
@@ -37,12 +39,32 @@ class Spatiala < Processing::App
     draw_source
 
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
-    @tracer.make_crack_list.each do |i|
-      i.rays.each { |j| draw_ray j }
-    end
+    @crack_list = @tracer.make_crack_list
+    @index = 0
   end
 
   def draw
+    refresh
+    @index = 0 if @index >= @crack_list.cracks.length
+    @crack_list.cracks[@index].rays.each { |i| draw_ray i }
+    @index += 1
+  end
+
+  def refresh
+    clear
+    draw_geometry
+    draw_listener
+    draw_source
+  end
+
+  def clear
+    push_style
+
+    stroke_weight 0
+    fill @hue, @saturation, @brightness-50
+    rect 0, 0, width, height
+
+    pop_style
   end
 
   def draw_polygon(polygon)
