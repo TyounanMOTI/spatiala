@@ -33,8 +33,9 @@ class Ray
   def intersect?(wall)
     ray_to_wall = self.intersect(wall)
     wall_to_ray = wall.intersect(self)
-    if ((ray_to_wall >= 0 && ray_to_wall <= 1) &&
-        (wall_to_ray >= 0 && wall_to_ray <= 1)) then
+    # return false if intersect with both end of wall
+    if ((ray_to_wall > 0 && ray_to_wall < 1) &&
+        (wall_to_ray > 0 && wall_to_ray < 1)) then
       return true
     end
     return false
