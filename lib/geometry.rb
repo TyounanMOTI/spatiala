@@ -18,4 +18,10 @@ class Geometry
     @polygons.each { |i| lines.push i.lines }
     return lines.flatten
   end
+
+  def lines_include_vertex(vertex)
+    result = Array.new
+    self.lines.each { |i| result.push i if i.origin == vertex || i.destination == vertex }
+    return result
+  end
 end

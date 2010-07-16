@@ -35,4 +35,11 @@ describe Geometry do
     lines.should be_instance_of Array
     lines.each { |i| i.should be_instance_of Ray }
   end
+
+  it "should return Array of Ray when get lines includes specified vertex" do
+    vertex = Vector.new(50, 30)
+    lines = @geometry.lines_include_vertex vertex
+    lines.should be_instance_of Array
+    lines.each { |i| i.should be_instance_of Ray }
+  end
 end
