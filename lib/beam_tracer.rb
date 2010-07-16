@@ -6,7 +6,7 @@ class BeamTracer
   end
 
 
-  def get_split_ray_list
+  def split_ray_list
     list = Array.new
     @geometry.vertices.each do |vertex|
       ray = Ray.new(@listener.position, vertex)
