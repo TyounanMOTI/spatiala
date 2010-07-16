@@ -22,4 +22,14 @@ describe BeamTracer do
   it "should initialize with geometry, source, listener" do
     @tracer.should be_instance_of BeamTracer
   end
+
+  it "should return true when Ray((50,50), (60,60)) intersect_with_no_walls?" do
+    ray = Ray.new(Vector.new(50, 50), Vector.new(60, 60))
+    @tracer.intersect_with_no_walls?(ray).should == true
+  end
+
+  it "should return false when Ray((50,50), (500,500)) intersect_with_no_walls?" do
+    ray = Ray.new(Vector.new(50, 50), Vector.new(500, 500))
+    @tracer.intersect_with_no_walls?(ray).should == false
+  end
 end
