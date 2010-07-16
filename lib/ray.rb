@@ -40,4 +40,9 @@ class Ray
     end
     return false
   end
+
+  def ==(ray)
+    return true if @origin == ray.origin && @destination == ray.destination
+    return false
+  end
 end

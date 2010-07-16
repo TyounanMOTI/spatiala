@@ -43,4 +43,12 @@ describe Ray do
     wall = Ray.new(Vector.new(1,0), Vector.new(3,4))
     ray.intersect?(wall).should == true
   end
+
+  it "should true when Ray((1,0),(4,2)) == Ray((1,0),(4,2))" do
+    Ray.new(Vector.new(1,0), Vector.new(4,2)).should == Ray.new(Vector.new(1,0), Vector.new(4,2))
+  end
+
+  it "should false when Ray((1,0),(4,2)) == Ray((0,1),(5,6))" do
+    Ray.new(Vector.new(1,0), Vector.new(4,2)).should_not == Ray.new(Vector.new(0,1), Vector.new(5,6))
+  end
 end
