@@ -5,6 +5,7 @@ require 'polygon'
 require 'ray'
 require 'vector'
 require 'beam_tracer'
+require 'crack'
 
 class Spatiala < Processing::App
   def setup
@@ -36,7 +37,9 @@ class Spatiala < Processing::App
     draw_source
 
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
-    @tracer.split_ray_list.each { |ray| draw_ray(ray) }
+    @tracer.make_crack_list.each do |i|
+      i.rays.each { |j| draw_ray j }
+    end
   end
 
   def draw
