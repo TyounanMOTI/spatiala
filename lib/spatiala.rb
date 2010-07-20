@@ -46,7 +46,7 @@ class Spatiala < Processing::App
   def draw
     refresh
     @index = 0 if @index >= @crack_list.cracks.length
-    @crack_list.cracks[@index].rays.each { |i| draw_ray i }
+    @crack_list[@index].rays.each { |i| draw_ray i }
     @index += 1
   end
 
