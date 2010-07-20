@@ -39,20 +39,14 @@ class Spatiala < Processing::App
     draw_source
 
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
-#    @crack_list = @tracer.make_crack_list
-    @crack_list = @tracer.connect_listener_to_vertices
-    @ray_list = Array.new
-    @crack_list.cracks.each { |i| @ray_list.push i.rays }
-    @ray_list.flatten!
+    @crack_list = @tracer.make_crack_list
     @index = 0
   end
 
   def draw
     refresh
-#    @index = 0 if @index >= @crack_list.cracks.length
-    @index = 0 if @index >= @ray_list.length
-#    @crack_list.cracks[@index].rays.each { |i| draw_ray i }
-    draw_ray @ray_list[@index]
+    @index = 0 if @index >= @crack_list.cracks.length
+    @crack_list.cracks[@index].rays.each { |i| draw_ray i }
     @index += 1
   end
 
