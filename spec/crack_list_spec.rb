@@ -32,4 +32,8 @@ describe CrackList do
     @list.append @crack3
     @list.cracks.length.should == previous_length
   end
+
+  it "should get Crack when get crack_list element by index" do
+    @list[0].should be_instance_of Crack
+  end
 end
