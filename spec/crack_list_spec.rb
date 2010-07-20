@@ -17,8 +17,8 @@ describe CrackList do
   end
 
   it "should have cracks" do
-    @list.cracks.should be_instance_of Array
-    @list.cracks.each { |i| i.should be_instance_of Crack }
+    @list.should be_instance_of CrackList
+    @list.each { |i| i.should be_instance_of Crack }
   end
 
   it "should append new crack to list when there are'nt already exist crack which have same line" do

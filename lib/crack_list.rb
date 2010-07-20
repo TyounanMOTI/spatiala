@@ -1,4 +1,5 @@
 class CrackList
+  include Enumerable
   attr_reader :cracks
 
   def initialize(*cracks)
@@ -12,6 +13,12 @@ class CrackList
     else
       @cracks[i].rays.push crack.rays
       @cracks[i].rays.flatten!
+    end
+  end
+
+  def each
+    @cracks.each do |crack|
+      yield crack
     end
   end
 end
