@@ -27,7 +27,7 @@ class BeamTracer
   end
 
   def extend_cracks(list)
-    list.cracks.each do |crack|
+    list.each do |crack|
       crack.rays.each do |ray|
         @geometry.lines.each do |line|
           line_to_ray = line.intersect ray
