@@ -20,5 +20,9 @@ describe Crack do
     @crack.line.should be_instance_of Ray
     @crack.rays.each { |i| i.should be_instance_of Ray }
   end
+
+  it "can sort" do
+    @crack.sort!
+    (@crack.rays[0].delta.cross(@crack.rays[1].delta)).z.should > 0
   end
 end
