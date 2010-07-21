@@ -29,4 +29,10 @@ class CrackList
       yield crack
     end
   end
+
+  def to_beams
+    list = Array.new
+    self.each { |i| list << i.to_beam }
+    return list
+  end
 end
