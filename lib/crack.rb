@@ -18,5 +18,7 @@ class Crack
                     @rays[1].destination - @rays[0].destination,
                     Ray.new(@rays[1].destination, @rays[1].origin),
                     Ray.new(@rays[0].origin, Vector.new))
+    beam.reference_segment = @line
+    return beam
   end
 end
