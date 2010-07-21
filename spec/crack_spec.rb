@@ -2,9 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Crack do
   before do
-    @ray1 = Ray.new(Vector.new(1,0), Vector.new(1,1))
-    @ray2 = Ray.new(Vector.new(2,2), Vector.new(3,4))
-    @ray3 = Ray.new(Vector.new(5,3), Vector.new(3,6))
+    @ray1 = Ray.new(Vector.new(2,4), Vector.new(3,2))
+    @ray2 = Ray.new(Vector.new(1,1), Vector.new(2,4))
+    @ray3 = Ray.new(Vector.new(1,1), Vector.new(3,2))
     @crack = Crack.new(@ray1, @ray2, @ray3)
   end
 
@@ -24,5 +24,9 @@ describe Crack do
   it "can sort" do
     @crack.sort!
     (@crack.rays[0].delta.cross(@crack.rays[1].delta)).z.should > 0
+  end
+
+  it "should return Beam when convert to_beam" do
+     @crack.to_beam.should be_instance_of Beam
   end
 end
