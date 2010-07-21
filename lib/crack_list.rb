@@ -20,6 +20,10 @@ class CrackList
     return @cracks[i]
   end
 
+  def length
+    return @cracks.length
+  end
+
   def each
     @cracks.each do |crack|
       yield crack

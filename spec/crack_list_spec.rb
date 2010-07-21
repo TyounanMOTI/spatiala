@@ -22,15 +22,15 @@ describe CrackList do
   end
 
   it "should append new crack to list when there are'nt already exist crack which have same line" do
-    previous_length = @list.cracks.length
+    previous_length = @list.length
     @list.append @crack2
-    @list.cracks.length.should == previous_length + 1
+    @list.length.should == previous_length + 1
   end
 
   it "should append to existing crack when there are already exist crack which have same line" do
-    previous_length = @list.cracks.length
+    previous_length = @list.length
     @list.append @crack3
-    @list.cracks.length.should == previous_length
+    @list.length.should == previous_length
   end
 
   it "should get Crack when get crack_list element by index" do
