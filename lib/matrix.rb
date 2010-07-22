@@ -1,4 +1,6 @@
 class Matrix
+  attr_reader :vectors
+
   def initialize(*vectors)
     @vectors = vectors
     @vectors[3].w = 1
@@ -26,5 +28,10 @@ class Matrix
                  @vectors[2].z,
                  @vectors[3].z)
     end
+  end
+
+  def ==(m)
+    return true if @vectors == m.vectors
+    return false
   end
 end
