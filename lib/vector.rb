@@ -1,17 +1,17 @@
 class Vector
   attr_accessor :x, :y, :z, :w
 
-  def initialize(x=0, y=0, z=0, w=1)
+  def initialize(x=0, y=0, z=0, w=0)
     @x = x
     @y = y
     @z = z
-    @w = 1
+    @w = w
   end
 
   def *(v)
     case v
-      when Vector then @x*v.x + @y*v.y + @z*v.z
-      else Vector.new(@x*v, @y*v, @z*v)
+      when Vector then @x*v.x + @y*v.y + @z*v.z + @w*v.w
+      else Vector.new(@x*v, @y*v, @z*v, @w*v)
     end
   end
 
@@ -22,19 +22,19 @@ class Vector
   end
 
   def +(v)
-    Vector.new(@x + v.x, @y + v.y, @z + v.z)
+    Vector.new(@x + v.x, @y + v.y, @z + v.z, @w + v.w)
   end
 
   def -(v)
-    Vector.new(@x - v.x, @y - v.y, @z - v.z)
+    Vector.new(@x - v.x, @y - v.y, @z - v.z, @w - v.w)
   end
 
   def -@
-    Vector.new(-@x, -@y, -@z)
+    Vector.new(-@x, -@y, -@z, -@w)
   end
 
   def /(a)
-    Vector.new(@x/a, @y/a, @z/a)
+    Vector.new(@x/a, @y/a, @z/a, @w/a)
   end
 
   def ==(v)
@@ -42,7 +42,7 @@ class Vector
   end
 
   def length
-    Math.sqrt(@x**2 + @y**2 + @z**2)
+    Math.sqrt(@x**2 + @y**2 + @z**2 + @w**2)
   end
 
   def normalize
