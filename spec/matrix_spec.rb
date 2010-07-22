@@ -16,4 +16,8 @@ describe Matrix do
   it "should have row vector" do
     @m1.row(1).should == Vector.new(1, 2, 3)
   end
+
+  it "should have column vector" do
+    @m1.column(1).should == Vector.new(-1, 2, 0, 2)
+  end
 end
