@@ -1,6 +1,7 @@
 class Matrix
   def initialize(*vectors)
     @vectors = vectors
+    @vectors[3].w = 1
   end
 
   def row(i)
