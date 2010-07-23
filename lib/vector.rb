@@ -19,12 +19,12 @@ class Vector
     @y = y
   end
 
-  def z=(v)
+  def z=(z)
     @elements[2] = z
     @z = z
   end
 
-  def w=(v)
+  def w=(w)
     @elements[3] = w
     @w = w
   end
