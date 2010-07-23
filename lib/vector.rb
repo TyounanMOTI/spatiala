@@ -1,5 +1,5 @@
 class Vector
-  attr_reader :x, :y, :z, :w
+  attr_reader :x, :y, :z, :w, :elements
 
   def initialize(*elements)
     @elements = elements

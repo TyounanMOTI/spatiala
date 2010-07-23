@@ -14,6 +14,10 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     @v1.w.should == 0
   end
 
+  it "should have 3 elements in v1" do
+    @v1.elements.length.should == 3
+  end
+
   it "should returns Vector when initialize with no arguments" do
     vector = Vector.new()
     vector.should be_instance_of Vector
