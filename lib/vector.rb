@@ -1,11 +1,30 @@
 class Vector
-  attr_accessor :x, :y, :z, :w
+  attr_reader :x, :y, :z, :w
 
-  def initialize(x=0, y=0, z=0, w=0)
+  def initialize(*elements)
+    @elements = elements
+    @x = @elements.fetch(0, 0)
+    @y = @elements.fetch(1, 0)
+    @z = @elements.fetch(2, 0)
+    @w = @elements.fetch(3, 0)
+  end
+
+  def x=(x)
+    @elements[0] = x
     @x = x
+  end
+
+  def y=(y)
+    @elements[1] = y
     @y = y
-    @z = z
-    @w = w
+  end
+
+  def z=(v)
+    @elements[2] = z
+  end
+
+  def w=(v)
+    @elements[3] = w
   end
 
   def *(v)

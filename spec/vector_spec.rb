@@ -6,6 +6,14 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     @v2 = Vector.new(-2,3,10)
   end
 
+  it "should return 3 when v1.x" do
+    @v1.x.should == 3
+  end
+
+  it "should return 0 when v1.w" do
+    @v1.w.should == 0
+  end
+
   it "should returns Vector when initialize with no arguments" do
     vector = Vector.new()
     vector.should be_instance_of Vector
