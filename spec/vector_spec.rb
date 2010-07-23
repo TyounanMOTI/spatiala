@@ -18,6 +18,10 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     @v1.elements.length.should == 3
   end
 
+  it "should have its x value at @v1[0]" do
+    @v1[0].should == @v1.x
+  end
+
   it "should returns Vector when initialize with no arguments" do
     vector = Vector.new()
     vector.should be_instance_of Vector

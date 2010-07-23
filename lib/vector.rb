@@ -27,6 +27,10 @@ class Vector
     @elements[3] = w
   end
 
+  def [](i)
+    @elements[i]
+  end
+
   def *(v)
     case v
       when Vector then @x*v.x + @y*v.y + @z*v.z + @w*v.w
