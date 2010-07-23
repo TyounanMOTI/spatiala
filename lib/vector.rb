@@ -28,13 +28,17 @@ class Vector
   end
 
   def [](i)
-    @elements[i]
+    return 0 if i >= @elements.length
+    return @elements[i]
   end
 
   def *(v)
     case v
-      when Vector then @x*v.x + @y*v.y + @z*v.z + @w*v.w
-      else Vector.new(@x*v, @y*v, @z*v, @w*v)
+    when Vector
+      product = 0
+      @elements.each_index { |i| product += self[i]*v[i]}
+      return product
+    else Vector.new(@x*v, @y*v, @z*v, @w*v)
     end
   end
 
