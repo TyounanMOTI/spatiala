@@ -21,10 +21,12 @@ class Vector
 
   def z=(v)
     @elements[2] = z
+    @z = z
   end
 
   def w=(v)
     @elements[3] = w
+    @w = w
   end
 
   def [](i)
