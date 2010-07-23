@@ -55,7 +55,10 @@ class Vector
       product = 0
       @elements.each_index { |i| product += self[i]*v[i]}
       return product
-    else Vector.new(@x*v, @y*v, @z*v, @w*v)
+    else
+      result = Vector.new
+      @elements.each_index { |i| result[i] = self[i]*v }
+      return result
     end
   end
 
