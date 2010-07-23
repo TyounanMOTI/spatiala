@@ -22,6 +22,12 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     @v1[0].should == @v1.x
   end
 
+  it "should be writable its elements by index" do
+    vector = Vector.new(1,2,3)
+    vector[0] = 2
+    vector.x.should == 2
+  end
+
   it "should returns Vector when initialize with no arguments" do
     vector = Vector.new()
     vector.should be_instance_of Vector

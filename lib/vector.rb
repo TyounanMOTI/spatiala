@@ -32,6 +32,21 @@ class Vector
     return @elements[i]
   end
 
+  def []=(key, value)
+    case key
+    when 0
+      self.x = value
+    when 1
+      self.y = value
+    when 2
+      self.z = value
+    when 3
+      self.w = value
+    else
+      @elements[key] = value
+    end
+  end
+
   def *(v)
     case v
     when Vector
