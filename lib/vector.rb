@@ -97,7 +97,9 @@ class Vector
   end
 
   def length
-    Math.sqrt(@x**2 + @y**2 + @z**2 + @w**2)
+    sum = 0
+    @elements.each { |i| sum += i**2 }
+    return Math.sqrt sum
   end
 
   def normalize
