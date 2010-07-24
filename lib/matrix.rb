@@ -3,7 +3,6 @@ class Matrix
 
   def initialize(*vectors)
     @vectors = vectors
-    @vectors[3].w = 1
   end
 
   def row(i)
@@ -19,5 +18,16 @@ class Matrix
   def ==(m)
     return true if @vectors == m.vectors
     return false
+  end
+
+  def *(m)
+    result = Matrix.new
+    @vectors.each_index do |i|
+      result.vectors[i] = Vector.new
+      @vectors[i].each_with_index do |e, j|
+        result.vectors[i][j] = self.row(i) * m.column(j)
+      end
+    end
+    return result
   end
 end
