@@ -92,5 +92,11 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     result.length.should > 0.9
     result.length.should < 1.1
   end
+
+  it "should be Enumerable" do
+    result = 0
+    @v1.each { |i| result += i }
+    result.should == 7
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)

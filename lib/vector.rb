@@ -1,4 +1,5 @@
 class Vector
+  include Enumerable
   attr_reader :x, :y, :z, :w, :elements
 
   def initialize(*elements)
@@ -104,5 +105,9 @@ class Vector
 
   def normalize
     self / self.length
+  end
+
+  def each
+    @elements.each { |v| yield v }
   end
 end
