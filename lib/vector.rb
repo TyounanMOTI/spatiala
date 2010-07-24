@@ -93,7 +93,7 @@ class Vector
   end
 
   def ==(v)
-    @x == v.x && @y == v.y && @z == v.z && @w == v.w
+    @elements == v.elements
   end
 
   def length
