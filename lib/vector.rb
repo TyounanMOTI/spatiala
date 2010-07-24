@@ -69,7 +69,9 @@ class Vector
   end
 
   def +(v)
-    Vector.new(@x + v.x, @y + v.y, @z + v.z, @w + v.w)
+    result = Vector.new
+    @elements.each_index { |i| result[i] = self[i] + v[i] }
+    return result
   end
 
   def -(v)
