@@ -87,7 +87,9 @@ class Vector
   end
 
   def /(a)
-    Vector.new(@x/a, @y/a, @z/a, @w/a)
+    result = Vector.new
+    @elements.each_index { |i| result[i] = self[i] / a }
+    return result
   end
 
   def ==(v)
