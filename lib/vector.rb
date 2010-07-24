@@ -81,7 +81,9 @@ class Vector
   end
 
   def -@
-    Vector.new(-@x, -@y, -@z, -@w)
+    result = Vector.new
+    @elements.each_index { |i| result[i] = - self[i] }
+    return result
   end
 
   def /(a)
