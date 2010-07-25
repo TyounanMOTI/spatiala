@@ -38,4 +38,11 @@ describe Matrix do
                                      Vector.new(-1, 5,-2, 0),
                                      Vector.new(11,16,16, 1))
   end
+
+  it "should return translation Matrix when Matrix.get_translator" do
+    Matrix.get_translator(3, 4, 5).should == Matrix.new(Vector.new(1,0,0,0),
+                                                        Vector.new(0,1,0,0),
+                                                        Vector.new(0,0,1,0),
+                                                        Vector.new(3,4,5,1))
+  end
 end

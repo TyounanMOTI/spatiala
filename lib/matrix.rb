@@ -30,4 +30,11 @@ class Matrix
     end
     return result
   end
+
+  def self.get_translator(x,y,z)
+    Matrix.new(Vector.new(1,0,0,0),
+               Vector.new(0,1,0,0),
+               Vector.new(0,0,1,0),
+               Vector.new(x,y,z,1))
+  end
 end
