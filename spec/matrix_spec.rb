@@ -53,4 +53,12 @@ describe Matrix do
                                                 Vector.new(0, 0, 1, 0),
                                                 Vector.new(0, 0, 0, 1))
   end
+
+  it "should generate scale Matrix when Matrix.get_scale" do
+    Matrix.get_scale(5, 10).should == Matrix.new(Vector.new(5, 0, 0, 0),
+                                                 Vector.new(0,10, 0, 0),
+                                                 Vector.new(0, 0, 1, 0),
+                                                 Vector.new(0, 0, 0, 1))
+  end
 end
+

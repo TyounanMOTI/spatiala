@@ -46,4 +46,11 @@ class Matrix
                Vector.new(0, 0, 1, 0),
                Vector.new(0, 0, 0, 1))
   end
+
+  def self.get_scale(x,y,z=1)
+    Matrix.new(Vector.new(x, 0, 0, 0),
+               Vector.new(0, y, 0, 0),
+               Vector.new(0, 0, z, 0),
+               Vector.new(0, 0, 0, 1))
+  end
 end
