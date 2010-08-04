@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Matrix do
+
   before do
     @m1 = Matrix.new(Vector.new(-2, -1,  0, 0),
                      Vector.new( 1,  2,  3, 0),
@@ -44,5 +45,12 @@ describe Matrix do
                                                         Vector.new(0,1,0,0),
                                                         Vector.new(0,0,1,0),
                                                         Vector.new(3,4,5,1))
+  end
+
+  it "should generate rotation Matrix when Matrix.get_rotator" do
+    Matrix.get_rotator(30).should == Matrix.new(Vector.new(cos(PI/6), sin(PI/6), 0, 0),
+                                                Vector.new(-sin(PI/6),cos(PI/6), 0, 0),
+                                                Vector.new(0, 0, 1, 0),
+                                                Vector.new(0, 0, 0, 1))
   end
 end

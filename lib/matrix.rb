@@ -1,4 +1,5 @@
 class Matrix
+  include Math
   attr_reader :vectors
 
   def initialize(*vectors)
@@ -36,5 +37,13 @@ class Matrix
                Vector.new(0,1,0,0),
                Vector.new(0,0,1,0),
                Vector.new(x,y,z,1))
+  end
+
+  def self.get_rotator(rot)
+    radian = PI*(rot/180.0)
+    Matrix.new(Vector.new(cos(radian), sin(radian), 0, 0),
+               Vector.new(-sin(radian),cos(radian), 0, 0),
+               Vector.new(0, 0, 1, 0),
+               Vector.new(0, 0, 0, 1))
   end
 end
