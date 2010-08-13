@@ -98,5 +98,9 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     @v1.each { |i| result += i }
     result.should == 7
   end
+
+  it "should transform v1 to v2 with Matrix.get_translator(-5,4,5)" do
+    @v1.transform(Matrix.get_translator(-5,4,5)).should == @v2
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)

@@ -110,4 +110,14 @@ class Vector
   def each
     @elements.each { |v| yield v }
   end
+
+  def transform(matrix)
+    self_matrix = Matrix.new(Vector.new(@x,@y,@z,1),
+                             Vector.new(0,1,0,0),
+                             Vector.new(0,0,1,0),
+                             Vector.new(0,0,0,1))
+    product = self_matrix * matrix
+    result = product.row(0)
+    return Vector.new(result.x, result.y, result.z)
+  end
 end
