@@ -14,8 +14,8 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     @v1.w.should == 0
   end
 
-  it "should have 3 elements in v1" do
-    @v1.elements.length.should == 3
+  it "should have 4 elements in v1" do
+    @v1.elements.length.should == 4
   end
 
   it "should have its x value at @v1[0]" do

@@ -4,10 +4,10 @@ class Vector
 
   def initialize(*elements)
     @elements = elements
-    @x = @elements.fetch(0, 0)
-    @y = @elements.fetch(1, 0)
-    @z = @elements.fetch(2, 0)
-    @w = @elements.fetch(3, 0)
+    self.x = @elements.fetch(0, 0)
+    self.y = @elements.fetch(1, 0)
+    self.z = @elements.fetch(2, 0)
+    self.w = @elements.fetch(3, 0)
   end
 
   def x=(x)
