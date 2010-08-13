@@ -45,4 +45,8 @@ class Ray
     return true if @origin == ray.origin && @destination == ray.destination
     return false
   end
+
+  def transform(matrix)
+    Ray.new(@origin.transform(matrix), @destination.transform(matrix))
+  end
 end

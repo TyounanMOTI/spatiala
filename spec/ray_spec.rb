@@ -51,4 +51,8 @@ describe Ray do
   it "should false when Ray((1,0),(4,2)) == Ray((0,1),(5,6))" do
     Ray.new(Vector.new(1,0), Vector.new(4,2)).should_not == Ray.new(Vector.new(0,1), Vector.new(5,6))
   end
+
+  it "should transform Ray((1,0),(4,2)) to Ray((3,2),(6,4)) when Matrix.translator(2,2)" do
+    Ray.new(Vector.new(1,0), Vector.new(4,2)).transform(Matrix.get_translator(2,2,0)).should == Ray.new(Vector.new(3,2), Vector.new(6,4))
+  end
 end
