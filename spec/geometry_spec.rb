@@ -42,4 +42,10 @@ describe Geometry do
     lines.should be_instance_of Array
     lines.each { |i| i.should be_instance_of Ray }
   end
+
+  it "should return Matrix when get normalizer" do
+    segment = @geometry.lines[0]
+    @geometry.normalizer(segment).should be_instance_of Matrix
+    p @geometry.normalizer(segment)
+  end
 end
