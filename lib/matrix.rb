@@ -39,8 +39,7 @@ class Matrix
                Vector.new(x,y,z,1))
   end
 
-  def self.get_rotator(rot)
-    radian = PI*(rot/180.0)
+  def self.get_rotator(radian)
     Matrix.new(Vector.new(cos(radian), sin(radian), 0, 0),
                Vector.new(-sin(radian),cos(radian), 0, 0),
                Vector.new(0, 0, 1, 0),

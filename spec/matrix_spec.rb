@@ -48,7 +48,7 @@ describe Matrix do
   end
 
   it "should generate rotation Matrix when Matrix.get_rotator" do
-    Matrix.get_rotator(30).should == Matrix.new(Vector.new(cos(PI/6), sin(PI/6), 0, 0),
+    Matrix.get_rotator(PI/6).should == Matrix.new(Vector.new(cos(PI/6), sin(PI/6), 0, 0),
                                                 Vector.new(-sin(PI/6),cos(PI/6), 0, 0),
                                                 Vector.new(0, 0, 1, 0),
                                                 Vector.new(0, 0, 0, 1))
