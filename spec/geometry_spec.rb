@@ -46,6 +46,5 @@ describe Geometry do
   it "should return Matrix when get normalizer" do
     segment = @geometry.lines[0]
     @geometry.normalizer(segment).should be_instance_of Matrix
-    p @geometry.normalizer(segment)
   end
 end
