@@ -54,4 +54,9 @@ describe Geometry do
     length.should < 2.01
     length.should > 1.99
   end
+
+  it "should return Geometry when normalize" do
+    segment = Ray.new(Vector.new(10,20), Vector.new(400,50))
+    @geometry.normalize(segment).should be_instance_of Geometry
+  end
 end
