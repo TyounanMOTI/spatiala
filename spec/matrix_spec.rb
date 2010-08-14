@@ -40,22 +40,22 @@ describe Matrix do
                                      Vector.new(11,16,16, 1))
   end
 
-  it "should return translation Matrix when Matrix.get_translator" do
-    Matrix.get_translator(3, 4, 5).should == Matrix.new(Vector.new(1,0,0,0),
+  it "should return translation Matrix when Matrix.translator" do
+    Matrix.translator(3, 4, 5).should == Matrix.new(Vector.new(1,0,0,0),
                                                         Vector.new(0,1,0,0),
                                                         Vector.new(0,0,1,0),
                                                         Vector.new(3,4,5,1))
   end
 
-  it "should generate rotation Matrix when Matrix.get_rotator" do
-    Matrix.get_rotator(PI/6).should == Matrix.new(Vector.new(cos(PI/6), sin(PI/6), 0, 0),
+  it "should generate rotation Matrix when Matrix.rotator" do
+    Matrix.rotator(PI/6).should == Matrix.new(Vector.new(cos(PI/6), sin(PI/6), 0, 0),
                                                 Vector.new(-sin(PI/6),cos(PI/6), 0, 0),
                                                 Vector.new(0, 0, 1, 0),
                                                 Vector.new(0, 0, 0, 1))
   end
 
-  it "should generate scale Matrix when Matrix.get_scale" do
-    Matrix.get_scale(5, 10).should == Matrix.new(Vector.new(5, 0, 0, 0),
+  it "should generate scale Matrix when Matrix.scaler" do
+    Matrix.scaler(5, 10).should == Matrix.new(Vector.new(5, 0, 0, 0),
                                                  Vector.new(0,10, 0, 0),
                                                  Vector.new(0, 0, 1, 0),
                                                  Vector.new(0, 0, 0, 1))

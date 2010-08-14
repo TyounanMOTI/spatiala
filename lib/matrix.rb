@@ -32,21 +32,21 @@ class Matrix
     return result
   end
 
-  def self.get_translator(x,y,z)
+  def self.translator(x,y,z)
     Matrix.new(Vector.new(1,0,0,0),
                Vector.new(0,1,0,0),
                Vector.new(0,0,1,0),
                Vector.new(x,y,z,1))
   end
 
-  def self.get_rotator(radian)
+  def self.rotator(radian)
     Matrix.new(Vector.new(cos(radian), sin(radian), 0, 0),
                Vector.new(-sin(radian),cos(radian), 0, 0),
                Vector.new(0, 0, 1, 0),
                Vector.new(0, 0, 0, 1))
   end
 
-  def self.get_scale(x,y,z=1)
+  def self.scaler(x,y,z=1)
     Matrix.new(Vector.new(x, 0, 0, 0),
                Vector.new(0, y, 0, 0),
                Vector.new(0, 0, z, 0),
