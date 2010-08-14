@@ -3,7 +3,7 @@ class CrackList
   attr_reader :cracks
 
   def initialize(*cracks)
-    @cracks = cracks
+    @cracks = cracks.flatten
   end
 
   def append(crack)

@@ -4,7 +4,7 @@ class Beam
 
   def initialize(origin, *deltas)
     @origin = origin
-    @deltas = deltas
+    @deltas = deltas.flatten
     @children = Array.new
   end
 end

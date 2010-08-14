@@ -4,7 +4,7 @@ class Geometry
   attr_reader :polygons
 
   def initialize(*polygons)
-    @polygons = polygons
+    @polygons = polygons.flatten
   end
 
   def vertices

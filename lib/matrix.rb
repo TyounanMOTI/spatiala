@@ -3,7 +3,7 @@ class Matrix
   attr_reader :vectors
 
   def initialize(*vectors)
-    @vectors = vectors
+    @vectors = vectors.flatten
   end
 
   def row(i)

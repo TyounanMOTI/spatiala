@@ -3,7 +3,7 @@ class Crack
 
   def initialize(line, *rays)
     @line = line
-    @rays = rays
+    @rays = rays.flatten
   end
 
   def sort!
