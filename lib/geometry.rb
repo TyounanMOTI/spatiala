@@ -25,12 +25,20 @@ class Geometry
     return result
   end
 
+  def normalize(segment)
+    normalizer = self.normalizer(segment)
+    polygons = @polygons.map do |polygon|
+      polygon.transform(normalizer)
+    end
+    return Geometry.new(polygons)
+  end
+
   def normalizer(segment)
-    segment_center = Vector.new((segment.origin.x + segment.destination.x)/2, (segment.origin.y + segment.destination.y)/2)
+    segment_center = (segment.origin + segment.destination)/2
     translator = Matrix.get_translator(-segment_center.x, -segment_center.y, -segment_center.z)
     translated_segment = segment.transform(translator)
-    theta = Math.atan(translated_segment.origin.x / translated_segment.origin.y)
-    rotator = Matrix.get_rotator(theta)
+    theta = Math.atan(translated_segment.origin.y.to_f / translated_segment.origin.x.to_f)
+    rotator = Matrix.get_rotator(Math::PI/2 - theta)
     rotated_segment = translated_segment.transform(rotator)
     scaler = Matrix.get_scale(1,1/rotated_segment.origin.y)
     return translator * rotator * scaler

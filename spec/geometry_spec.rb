@@ -47,4 +47,11 @@ describe Geometry do
     segment = @geometry.lines[0]
     @geometry.normalizer(segment).should be_instance_of Matrix
   end
+
+  it "should have Ray length is 2 at normalized geometry" do
+    normalized_segment = @geometry.normalize(@geometry.lines[0]).lines[0]
+    length = normalized_segment.delta.length
+    length.should < 2.01
+    length.should > 1.99
+  end
 end
