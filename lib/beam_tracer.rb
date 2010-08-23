@@ -14,7 +14,6 @@ class BeamTracer
 
   def connect_listener_to_vertices
     list = CrackList.new
-
     @geometry.vertices.each do |vertex|
       ray = Ray.new(@listener.position, vertex)
       next unless intersect_with_no_walls?(ray)
