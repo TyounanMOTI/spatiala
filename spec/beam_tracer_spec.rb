@@ -66,4 +66,11 @@ describe BeamTracer do
     result[1].should be_instance_of Array
     result[1][0].should be_instance_of Source
   end
+
+  it "should have Ray which length is 2 at normalized geometry" do
+    geometry, sources = @tracer.normalize(@geometry.lines[0])
+    length = geometry.lines[0].delta.length
+    length.should < 2.01
+    length.should > 1.99
+  end
 end

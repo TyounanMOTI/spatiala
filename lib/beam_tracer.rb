@@ -52,7 +52,19 @@ class BeamTracer
   end
 
   def normalize(segment)
-    return [@geometry, [@sources[0]]]
+    normalizer = normalizer(segment)
+    geometry = normalize_geometry(normalizer)
+    sources = normalize_sources(normalizer)
+    return [geometry, sources]
+  end
+
+  def normalize_geometry(normalizer)
+    polygons = @geometry.polygons.map { |i| i.transform(normalizer) }
+    return Geometry.new(polygons)
+  end
+
+  def normalize_sources(normalizer)
+    return @sources.map { |i| Source.new(i.position.transform(normalizer)) }
   end
 
   def normalizer(segment)
