@@ -24,12 +24,4 @@ class Geometry
     self.lines.each { |i| result.push i if i.origin == vertex || i.destination == vertex }
     return result
   end
-
-  def normalize(segment)
-    normalizer = self.normalizer(segment)
-    polygons = @polygons.map do |polygon|
-      polygon.transform(normalizer)
-    end
-    return Geometry.new(polygons)
-  end
 end

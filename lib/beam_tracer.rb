@@ -51,6 +51,10 @@ class BeamTracer
     return true
   end
 
+  def normalize(segment)
+    return [@geometry, [@sources[0]]]
+  end
+
   def normalizer(segment)
     segment_center = (segment.origin + segment.destination)/2
     translator = Matrix.translator(-segment_center.x, -segment_center.y, -segment_center.z)

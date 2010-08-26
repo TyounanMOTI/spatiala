@@ -58,4 +58,12 @@ describe BeamTracer do
     segment = @geometry.lines[0]
     @tracer.normalizer(segment).should be_instance_of Matrix
   end
+
+  it "should return [Geometry, [Source]] when normalized" do
+    result = @tracer.normalize(@geometry.lines[0])
+    result.should be_instance_of Array
+    result[0].should be_instance_of Geometry
+    result[1].should be_instance_of Array
+    result[1][0].should be_instance_of Source
+  end
 end
