@@ -50,4 +50,15 @@ class BeamTracer
     return false unless result
     return true
   end
+
+  def normalizer(segment)
+    segment_center = (segment.origin + segment.destination)/2
+    translator = Matrix.translator(-segment_center.x, -segment_center.y, -segment_center.z)
+    translated_segment = segment.transform(translator)
+    theta = Math.atan(translated_segment.origin.y.to_f / translated_segment.origin.x.to_f)
+    rotator = Matrix.rotator(Math::PI/2 - theta)
+    rotated_segment = translated_segment.transform(rotator)
+    scaler = Matrix.scaler(1,1/rotated_segment.origin.y)
+    return translator * rotator * scaler
+  end
 end

@@ -53,4 +53,9 @@ describe BeamTracer do
     list = @tracer.extend_cracks list
     list.cracks.each { |i| (i.rays.length % 2).should == 0 }
   end
+
+  it "should return Matrix when get normalizer" do
+    segment = @geometry.lines[0]
+    @tracer.normalizer(segment).should be_instance_of Matrix
+  end
 end
