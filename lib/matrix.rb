@@ -52,4 +52,14 @@ class Matrix
                Vector.new(0, 0, z, 0),
                Vector.new(0, 0, 0, 1))
   end
+
+  def self.reflector(normal)
+    x = normal.x
+    y = normal.y
+    z = normal.z
+    Matrix.new(Vector.new(1 - 2*(x**2), -2*x*y, -2*x*z,0),
+               Vector.new(-2*x*y, 1 - 2*(x**2), -2*y*z,0),
+               Vector.new(-2*x*z, -2*y*z, 1 - 2*(z**2),0),
+               Vector.new(0,0,0,1))
+  end
 end

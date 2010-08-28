@@ -67,5 +67,12 @@ describe Matrix do
                                                  Vector.new(0, 0, 1, 0),
                                                  Vector.new(0, 0, 0, 1))
   end
+
+  it "should generate reflection Matrix when Matrix.reflector" do
+    Matrix.reflector(Vector.new(1,0,0)) == Matrix.new(Vector.new(1,0,0,0),
+                                                      Vector.new(0,-1,0,0),
+                                                      Vector.new(0,0,1,0),
+                                                      Vector.new(0,0,0,1))
+  end
 end
 
