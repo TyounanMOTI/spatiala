@@ -1,4 +1,6 @@
 class BeamTracer
+  attr_reader :geometry, :sources, :listener
+
   def initialize(geometry, sources, listener)
     @geometry = geometry
     @sources = sources
@@ -55,7 +57,7 @@ class BeamTracer
     normalizer = normalizer(segment)
     geometry = normalize_geometry(normalizer)
     sources = normalize_sources(normalizer)
-    return [geometry, sources]
+    return BeamTracer.new(geometry, sources, @listener)
   end
 
   def normalize_geometry(normalizer)

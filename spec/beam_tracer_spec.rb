@@ -59,17 +59,14 @@ describe BeamTracer do
     @tracer.normalizer(segment).should be_instance_of Matrix
   end
 
-  it "should return [Geometry, [Source]] when normalized" do
+  it "should return BeamTracer when normalized" do
     result = @tracer.normalize(@geometry.lines[0])
-    result.should be_instance_of Array
-    result[0].should be_instance_of Geometry
-    result[1].should be_instance_of Array
-    result[1][0].should be_instance_of Source
+    result.should be_instance_of BeamTracer
   end
 
   it "should have Ray which length is 2 at normalized geometry" do
-    geometry, sources = @tracer.normalize(@geometry.lines[0])
-    length = geometry.lines[0].delta.length
+    tracer = @tracer.normalize(@geometry.lines[0])
+    length = tracer.geometry.lines[0].delta.length
     length.should < 2.01
     length.should > 1.99
   end
