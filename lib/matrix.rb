@@ -32,7 +32,7 @@ class Matrix
     return result
   end
 
-  def self.translator(x,y,z)
+  def self.translator(x,y=0,z=0)
     Matrix.new(Vector.new(1,0,0,0),
                Vector.new(0,1,0,0),
                Vector.new(0,0,1,0),
