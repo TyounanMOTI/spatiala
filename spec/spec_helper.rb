@@ -11,6 +11,7 @@ require 'beam_tracer'
 require 'crack'
 require 'crack_list'
 require 'matrix'
+require 'visibility_map'
 
 require 'spec'
 require 'spec/autorun'
