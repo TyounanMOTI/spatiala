@@ -12,6 +12,7 @@ require 'crack'
 require 'crack_list'
 require 'matrix'
 require 'visibility_map'
+require 'visibility_region'
 
 require 'spec'
 require 'spec/autorun'
