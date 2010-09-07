@@ -9,4 +9,9 @@ describe VisibilityRegion do
   it "should be initialized with a Ray" do
     @region.should be_instance_of VisibilityRegion
   end
+
+  it "should have boundary rays" do
+    @region.rays.should be_instance_of Array
+    @region.rays.each { |i| i.should be_instance_of Ray }
+  end
 end
