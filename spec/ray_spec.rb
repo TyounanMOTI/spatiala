@@ -64,4 +64,9 @@ describe Ray do
     result = Ray.new(Vector.new(1,1), Vector.new(3,-1)).dualize
     result.rays.length.should == 4
   end
+
+  it "should return Vector when normal of Ray (1,1) to (3,-1) is requested" do
+    normal = Ray.new(Vector.new(1,1), Vector.new(3,-1)).normal
+    normal.should be_instance_of Vector
+  end
 end

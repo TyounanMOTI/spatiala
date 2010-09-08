@@ -56,4 +56,8 @@ class Ray
     rays.push Ray.new(rays[0].destination, rays[1].destination)
     return VisibilityRegion.new(rays)
   end
+
+  def normal
+    @delta.transform(Matrix.rotator(Math::PI/2))
+  end
 end
