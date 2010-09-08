@@ -49,4 +49,8 @@ class Ray
   def transform(matrix)
     Ray.new(@origin.transform(matrix), @destination.transform(matrix))
   end
+
+  def dualize
+    return VisibilityRegion.new(self)
+  end
 end

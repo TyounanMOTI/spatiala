@@ -55,4 +55,8 @@ describe Ray do
   it "should transform Ray((1,0),(4,2)) to Ray((3,2),(6,4)) when Matrix.translator(2,2)" do
     Ray.new(Vector.new(1,0), Vector.new(4,2)).transform(Matrix.translator(2,2,0)).should == Ray.new(Vector.new(3,2), Vector.new(6,4))
   end
+
+  it "should return VisibilityRegion when dualize" do
+    Ray.new(Vector.new(1,0), Vector.new(4,2)).dualize.should be_instance_of VisibilityRegion
+  end
 end
