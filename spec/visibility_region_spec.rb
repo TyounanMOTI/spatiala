@@ -6,7 +6,7 @@ describe VisibilityRegion do
     @region = VisibilityRegion.new(@ray)
   end
 
-  it "should be initialized with a Ray" do
+  it "should be initialized with Rays" do
     @region.should be_instance_of VisibilityRegion
   end
 
