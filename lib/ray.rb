@@ -51,6 +51,9 @@ class Ray
   end
 
   def dualize
-    return VisibilityRegion.new(self)
+    rays = [@origin.dualize, @destination.dualize]
+    rays.push Ray.new(rays[0].origin, rays[1].origin)
+    rays.push Ray.new(rays[0].destination, rays[1].destination)
+    return VisibilityRegion.new(rays)
   end
 end
