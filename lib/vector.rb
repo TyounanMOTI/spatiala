@@ -3,11 +3,11 @@ class Vector
   attr_reader :x, :y, :z, :w, :elements
 
   def initialize(*elements)
-    @elements = elements
-    self.x = @elements.fetch(0, 0)
-    self.y = @elements.fetch(1, 0)
-    self.z = @elements.fetch(2, 0)
-    self.w = @elements.fetch(3, 0)
+    @elements = elements.map { |i| i.to_f }
+    self.x = @elements.fetch(0, 0).to_f
+    self.y = @elements.fetch(1, 0).to_f
+    self.z = @elements.fetch(2, 0).to_f
+    self.w = @elements.fetch(3, 0).to_f
   end
 
   def x=(x)
