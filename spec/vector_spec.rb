@@ -102,5 +102,11 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
   it "should transform v1 to v2 with Matrix.translator(-5,4,5)" do
     @v1.transform(Matrix.translator(-5,4,5)).should == @v2
   end
+
+  it "should return Ray (0,1) to (2,-1) when dualize Vector (1,1)" do
+    v = Vector.new(1,1)
+    ray = v.dualize
+    ray.should == Ray.new(Vector.new(0,1), Vector.new(2,-1))
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)

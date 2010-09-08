@@ -120,4 +120,10 @@ class Vector
     result = product.row(0)
     return Vector.new(result.x, result.y, result.z)
   end
+
+  def dualize
+    source = Vector.new((@y - 1)/@x, 1)
+    dest = Vector.new((@y + 1)/@x, -1)
+    return Ray.new(source, dest)
+  end
 end
