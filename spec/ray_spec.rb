@@ -64,11 +64,14 @@ describe Ray do
     Ray.new(Vector.new(1,0), Vector.new(4,2)).dualize.should be_instance_of VisibilityRegion
   end
 
-  it "should have four Rays in VisibilityRegion when dualize Ray (1,1) to (3,-1)" do
-    result = Ray.new(Vector.new(1,1), Vector.new(3,-1)).dualize
+  it "should have four Rays in VisibilityRegion when dualize Ray (3,-1) to (1,1)" do
+    result = Ray.new(Vector.new(3,-1), Vector.new(1,1)).dualize
     result.rays.length.should == 4
   end
 
+  it "should return nil when dualize Ray which isn't facing with reference refrector" do
+    Ray.new(Vector.new(1,1), Vector.new(3,-1)).dualize.should be_nil
+  end
 
   it "should return Vector when normal of Ray (1,1) to (3,-1) is requested" do
     normal = Ray.new(Vector.new(1,1), Vector.new(3,-1)).normal

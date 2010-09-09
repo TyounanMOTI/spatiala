@@ -51,6 +51,10 @@ class Ray
   end
 
   def dualize
+    if Ray.new(Vector.new(0,1), Vector.new(0,-1)).facing(self) == :false
+      return nil
+    end
+
     rays = [@origin.dualize, @destination.dualize]
     rays.push Ray.new(rays[0].origin, rays[1].origin)
     rays.push Ray.new(rays[0].destination, rays[1].destination)
