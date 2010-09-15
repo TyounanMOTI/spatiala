@@ -56,6 +56,10 @@ class Ray
       return nil
     end
 
+    if @origin.x <= 0 && @destination.x <= 0
+      return nil
+    end
+
     if @destination.x <= 0
       rays = [@origin.dualize]
       rays.push Ray.new(rays[0].origin, Vector.new(INFINITE, 1))

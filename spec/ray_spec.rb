@@ -73,6 +73,10 @@ describe Ray do
     Ray.new(Vector.new(1,1), Vector.new(3,-1)).dualize.should be_nil
   end
 
+  it "should return nil when dualize Ray which is right of y-axis" do
+    Ray.new(Vector.new(-1,1), Vector.new(-1,-1)).dualize.should be_nil
+  end
+
   it "should include infinite Rays in VisibilityRegion when dualize Ray (2,3) to (-1,1)" do
     result = Ray.new(Vector.new(2,3), Vector.new(-1,1)).dualize
     result.rays[1].destination.x.infinite?.should == 1
