@@ -54,7 +54,8 @@ class Ray
   end
 
   def dualize
-    if REFERENCE_REFLECTOR.facing(self) == :false
+    facing = REFERENCE_REFLECTOR.facing(self)
+    if facing == :false
       return nil
     end
 
