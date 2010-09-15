@@ -2,6 +2,7 @@ require 'vector'
 
 class Ray
   attr_accessor :origin, :destination, :delta
+  INFINITE = 1.0/0.0
 
   def initialize(origin=Vector.new(0,0), destination=Vector.new(0,0))
     @origin = origin
