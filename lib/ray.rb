@@ -10,6 +10,8 @@ class Ray
     @delta = destination - origin
   end
 
+  REFERENCE_REFLECTOR = Ray.new(Vector.new(0,1), Vector.new(0,-1))
+
   def origin=(origin)
     @origin = origin
     @delta = @destination - @origin
@@ -52,7 +54,7 @@ class Ray
   end
 
   def dualize
-    if Ray.new(Vector.new(0,1), Vector.new(0,-1)).facing(self) == :false
+    if REFERENCE_REFLECTOR.facing(self) == :false
       return nil
     end
 
