@@ -97,6 +97,11 @@ describe Ray do
     result.rays[2].origin.y.should == 1
   end
 
+  it "should have Ray which is part of y=-1 when dualize Ray (3,0) to (1,0)" do
+    result = Ray.new(Vector.new(3,0), Vector.new(1,0)).dualize
+    result.rays[2].origin.y.should == -1
+  end
+
   it "should return Vector when normal of Ray (1,1) to (3,-1) is requested" do
     normal = Ray.new(Vector.new(1,1), Vector.new(3,-1)).normal
     normal.should be_instance_of Vector
