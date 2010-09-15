@@ -61,7 +61,7 @@ describe Ray do
   end
 
   it "should return VisibilityRegion when dualize" do
-    Ray.new(Vector.new(1,0), Vector.new(4,2)).dualize.should be_instance_of VisibilityRegion
+    Ray.new(Vector.new(4,2), Vector.new(1,0)).dualize.should be_instance_of VisibilityRegion
   end
 
   it "should have four Rays in VisibilityRegion when dualize Ray (3,-1) to (1,1)" do
