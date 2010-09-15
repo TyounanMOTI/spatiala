@@ -56,6 +56,13 @@ class Ray
       return nil
     end
 
+    if @destination.x <= 0
+      rays = [@origin.dualize]
+      rays.push Ray.new(rays[0].origin, Vector.new(INFINITE, 1))
+      rays.push Ray.new(rays[0].destination, Vector.new(INFINITE, -1))
+      return VisibilityRegion.new(rays)
+    end
+
     rays = [@origin.dualize, @destination.dualize]
     rays.push Ray.new(rays[0].origin, rays[1].origin)
     rays.push Ray.new(rays[0].destination, rays[1].destination)
