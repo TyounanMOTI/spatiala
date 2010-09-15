@@ -77,6 +77,15 @@ class Ray
       return VisibilityRegion.new(rays)
     end
 
+    if facing == :upper
+      intersection = @origin.dualize.intersect(@destination.dualize)
+      rays = [
+             Ray.new(@origin.dualize.origin, @origin.dualize.origin + @origin.dualize.delta * intersection),
+             Ray.new(@destination.dualize.origin, @destination.dualize.origin + @origin.dualize.delta * intersection)]
+      rays.push Ray.new(rays[0].origin, rays[1].origin)
+      return VisibilityRegion.new(rays)
+    end
+
     rays = [@origin.dualize, @destination.dualize]
     rays.push Ray.new(rays[0].origin, rays[1].origin)
     rays.push Ray.new(rays[0].destination, rays[1].destination)
