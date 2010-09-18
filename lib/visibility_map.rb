@@ -9,5 +9,9 @@ class VisibilityMap
     @regions.flatten!.compact!
   end
 
+  def get_intersection_points
+    return IntersectionPoints.new(Vector.new(0,0))
+  end
+
   attr_reader :regions
 end

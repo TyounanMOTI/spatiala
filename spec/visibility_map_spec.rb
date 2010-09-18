@@ -28,4 +28,8 @@ describe VisibilityMap do
     @map.regions.should be_instance_of Array
     @map.regions.each { |i| i.should be_instance_of VisibilityRegion }
   end
+
+  it "should return IntersectionPoints class when get_instersection_points" do
+    @map.get_intersection_points.should be_instance_of IntersectionPoints
+  end
 end
