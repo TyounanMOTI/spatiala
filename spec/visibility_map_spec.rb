@@ -23,4 +23,9 @@ describe VisibilityMap do
   it "should be initialized with BeamTracer" do
     @map.should be_instance_of VisibilityMap
   end
+
+  it "should have regions which is Array of VisibilityRegion" do
+    @map.regions.should be_instance_of Array
+    @map.regions.each { |i| i.should be_instance_of VisibilityRegion }
+  end
 end
