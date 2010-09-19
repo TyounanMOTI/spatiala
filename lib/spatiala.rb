@@ -47,13 +47,14 @@ class Spatiala < Processing::App
     @index = 0 if @index == @beams.length
     draw_beam @beams[@index]
     @index += 1
+
+    draw_listener
+    draw_source
   end
 
   def refresh
     clear
     draw_geometry
-    draw_listener
-    draw_source
   end
 
   def clear
