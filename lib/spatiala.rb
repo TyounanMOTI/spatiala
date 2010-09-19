@@ -47,10 +47,10 @@ class Spatiala < Processing::App
 
   def draw
     clear
-    draw_geometry width/2, height/2
+    draw_geometry @normalized_tracer.geometry, 20, height/2
 
-    draw_listener
-    draw_source
+    draw_listener @normalized_tracer.listener
+    draw_source @normalized_tracer.sources
   end
 
   def clear
@@ -67,9 +67,9 @@ class Spatiala < Processing::App
     polygon.lines.each { |i| line(i.origin.x + x, i.origin.y + y, i.destination.x + x, i.destination.y + y) }
   end
 
-  def draw_geometry(x=0, y=0)
+  def draw_geometry(geometry = @geometry, x=0, y=0)
     draw_axis x, y
-    @geometry.polygons.each { |i| draw_polygon(i, x, y) }
+    geometry.polygons.each { |i| draw_polygon(i, x, y) }
   end
 
   def draw_axis(x, y)
@@ -83,7 +83,7 @@ class Spatiala < Processing::App
     pop_style
   end
 
-  def draw_listener
+  def draw_listener(listener = @listener)
     push_style
 
     stroke_weight 3
@@ -91,12 +91,12 @@ class Spatiala < Processing::App
     stroke @hue-30, @saturation, @brightness, 90
     fill @hue-30, @saturation, @brightness, 40
 
-    draw_point(@listener.position.x, @listener.position.y)
+    draw_point(listener.position.x, listener.position.y)
 
     pop_style
   end
 
-  def draw_source
+  def draw_source(sources = @sources)
     push_style
 
     stroke_weight 3
@@ -104,7 +104,7 @@ class Spatiala < Processing::App
     stroke @hue+30, @saturation, @brightness, 90
     fill @hue+30, @saturation, @brightness, 40
 
-    @sources.each { |i| draw_point(i.position.x, i.position.y) }
+    sources.each { |i| draw_point(i.position.x, i.position.y) }
 
     pop_style
   end
