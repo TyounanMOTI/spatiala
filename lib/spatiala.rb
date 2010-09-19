@@ -128,8 +128,12 @@ class Spatiala < Processing::App
     color_mode HSB, 100
     stroke 18, @saturation, @brightness, 100
     fill @hue, @saturation, @brightness, 80
-    line ray.origin.x, ray.origin.y, ray.destination.x, ray.destination.y
-    draw_point ray.origin.x, ray.origin.y
+    line(ray.origin.x*@scale.x + @offset.x,
+         ray.origin.y*@scale.y + @offset.y,
+         ray.destination.x*@scale.x + @offset.x,
+         ray.destination.y*@scale.y + @offset.y)
+    draw_point(ray.origin.x*@scale.x + @offset.x,
+               ray.origin.y*@scale.y + @offset.y)
 
     pop_style
   end
