@@ -21,6 +21,7 @@ class Spatiala < Processing::App
     @brightness = 80
     background @hue, @saturation, @brightness-50
     stroke @hue, 20, @brightness
+    @scale = width/2 - 20
 
     triangle = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
@@ -64,7 +65,7 @@ class Spatiala < Processing::App
   end
 
   def draw_polygon(polygon, x=0, y=0)
-    polygon.lines.each { |i| line(i.origin.x + x, i.origin.y + y, i.destination.x + x, i.destination.y + y) }
+    polygon.lines.each { |i| line(i.origin.x*@scale + x, i.origin.y*@scale + y, i.destination.x*@scale + x, i.destination.y*@scale + y) }
   end
 
   def draw_geometry(geometry = @geometry, x=0, y=0)
@@ -92,7 +93,7 @@ class Spatiala < Processing::App
     stroke @hue-30, @saturation, @brightness, 90
     fill @hue-30, @saturation, @brightness, 40
 
-    draw_point(listener.position.x, listener.position.y)
+    draw_point(listener.position.x*@scale, listener.position.y*@scale)
 
     pop_style
   end
@@ -105,7 +106,7 @@ class Spatiala < Processing::App
     stroke @hue+30, @saturation, @brightness, 90
     fill @hue+30, @saturation, @brightness, 40
 
-    sources.each { |i| draw_point(i.position.x, i.position.y) }
+    sources.each { |i| draw_point(i.position.x*@scale, i.position.y*@scale) }
 
     pop_style
   end
