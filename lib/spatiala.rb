@@ -12,7 +12,7 @@ require './matrix'
 
 class Spatiala < Processing::App
   def setup
-    size 640, 640
+    size 600, 400
     frame_rate 1
     smooth
     color_mode HSB, 100
@@ -21,7 +21,8 @@ class Spatiala < Processing::App
     @brightness = 80
     background @hue, @saturation, @brightness-50
     stroke @hue, 20, @brightness
-    @scale = width/2 - 20
+    @scale = Vector.new(1,height/2 - 20)
+    @offset = Vector.new(width/2, height/2)
 
     triangle = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
@@ -48,7 +49,8 @@ class Spatiala < Processing::App
 
   def draw
     clear
-    draw_geometry @normalized_tracer.geometry, 20, height/2
+    draw_axis
+    draw_geometry @normalized_tracer.geometry
 
     draw_listener @normalized_tracer.listener
     draw_source @normalized_tracer.sources
@@ -64,23 +66,25 @@ class Spatiala < Processing::App
     pop_style
   end
 
-  def draw_polygon(polygon, x=0, y=0)
-    polygon.lines.each { |i| line(i.origin.x*@scale + x, i.origin.y*@scale + y, i.destination.x*@scale + x, i.destination.y*@scale + y) }
+  def draw_polygon(polygon)
+    polygon.lines.each { |i| line(i.origin.x*@scale.x + @offset.x,
+                                  i.origin.y*@scale.y + @offset.y,
+                                  i.destination.x*@scale.x + @offset.x,
+                                  i.destination.y*@scale.y + @offset.y) }
   end
 
-  def draw_geometry(geometry = @geometry, x=0, y=0)
-    draw_axis x, y
-    geometry.polygons.each { |i| draw_polygon(i, x, y) }
+  def draw_geometry(geometry = @geometry)
+    geometry.polygons.each { |i| draw_polygon i }
   end
 
-  def draw_axis(x, y)
+  def draw_axis
     margin = 10
     push_style
 
     stroke_weight 1
     stroke 0, @saturation, 70
-    line margin, y, width - margin, y # x-axis
-    line x, margin, x, height - margin # y-axis
+    line margin, @offset.y, width - margin, @offset.y # x-axis
+    line @offset.x, margin, @offset.x, height - margin # y-axis
 
     pop_style
   end
@@ -93,7 +97,8 @@ class Spatiala < Processing::App
     stroke @hue-30, @saturation, @brightness, 90
     fill @hue-30, @saturation, @brightness, 40
 
-    draw_point(listener.position.x*@scale, listener.position.y*@scale)
+    draw_point(listener.position.x*@scale.x + @offset.x,
+               listener.position.y*@scale.y + @offset.y)
 
     pop_style
   end
@@ -106,7 +111,8 @@ class Spatiala < Processing::App
     stroke @hue+30, @saturation, @brightness, 90
     fill @hue+30, @saturation, @brightness, 40
 
-    sources.each { |i| draw_point(i.position.x*@scale, i.position.y*@scale) }
+    sources.each { |i| draw_point(i.position.x*@scale.x + @offset.x,
+                                  i.position.y*@scale.y + @offset.y) }
 
     pop_style
   end
