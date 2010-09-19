@@ -17,4 +17,8 @@ describe IntersectionPoints do
   it "should generate instance of IntersectionPoints by including points" do
     @intersection_points.should be_instance_of IntersectionPoints
   end
+
+  it "should return 7 when required length" do
+    @intersection_points.length.should == 7
+  end
 end
