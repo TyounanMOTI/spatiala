@@ -42,19 +42,11 @@ class Spatiala < Processing::App
   end
 
   def draw
-    refresh
-
-    @index = 0 if @index == @beams.length
-    draw_beam @beams[@index]
-    @index += 1
+    clear
+    draw_geometry width/2, height/2
 
     draw_listener
     draw_source
-  end
-
-  def refresh
-    clear
-    draw_geometry
   end
 
   def clear
@@ -67,12 +59,24 @@ class Spatiala < Processing::App
     pop_style
   end
 
-  def draw_polygon(polygon)
-    polygon.lines.each { |i| line(i.origin.x, i.origin.y, i.destination.x, i.destination.y) }
+  def draw_polygon(polygon, x=0, y=0)
+    polygon.lines.each { |i| line(i.origin.x + x, i.origin.y + y, i.destination.x + x, i.destination.y + y) }
   end
 
-  def draw_geometry
-    @geometry.polygons.each { |i| draw_polygon(i) }
+  def draw_geometry(x=0, y=0)
+    draw_axis x, y
+    @geometry.polygons.each { |i| draw_polygon(i, x, y) }
+  end
+
+  def draw_axis(x, y)
+    push_style
+
+    stroke_weight 1
+    stroke 0, @saturation, 70
+    line 10, y, width - 10, y # x-axis
+    line x, 10, x, height - 10 # y-axis
+
+    pop_style
   end
 
   def draw_listener
