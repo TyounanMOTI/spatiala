@@ -8,6 +8,7 @@ require 'beam_tracer'
 require 'crack_list'
 require 'crack'
 require 'beam'
+require './matrix'
 
 class Spatiala < Processing::App
   def setup
@@ -38,6 +39,9 @@ class Spatiala < Processing::App
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
     @crack_list = @tracer.make_crack_list
     @beams = @crack_list.to_beams
+
+    @normalized_tracer = @tracer.normalize @beams[2].reference_segment
+
     @index = 0
   end
 
