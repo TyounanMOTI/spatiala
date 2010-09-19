@@ -34,10 +34,6 @@ class Spatiala < Processing::App
     @listener = Listener.new(Vector.new(120,160),
                              Vector.new(30,30))
 
-    draw_geometry
-    draw_listener
-    draw_source
-
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
     @crack_list = @tracer.make_crack_list
     @index = 0
