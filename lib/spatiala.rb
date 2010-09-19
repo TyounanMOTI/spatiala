@@ -73,12 +73,13 @@ class Spatiala < Processing::App
   end
 
   def draw_axis(x, y)
+    margin = 10
     push_style
 
     stroke_weight 1
     stroke 0, @saturation, 70
-    line 10, y, width - 10, y # x-axis
-    line x, 10, x, height - 10 # y-axis
+    line margin, y, width - margin, y # x-axis
+    line x, margin, x, height - margin # y-axis
 
     pop_style
   end
