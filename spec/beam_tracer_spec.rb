@@ -71,8 +71,8 @@ describe BeamTracer do
     length.should > 1.99
   end
 
-  it "should have Listener which position.y < 0 when normalized" do
+  it "should have Listener which position.x < 0 when normalized" do
     normalized_tracer = @tracer.normalize(@geometry.lines[0])
-    normalized_tracer.listener.position.y.should < 0
+    normalized_tracer.listener.position.x.should < 0
   end
 end

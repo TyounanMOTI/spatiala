@@ -56,7 +56,7 @@ class BeamTracer
   def normalize(segment)
     normalizer = normalizer(segment)
     listener = normalize_listener(normalizer)
-    if listener.position.y > 0
+    if listener.position.x > 0
       listener.position = listener.position.transform(Matrix.reflector(Vector.new(1,0,0)))
     else
       normalizer = normalizer * Matrix.reflector(Vector.new(1,0,0))
