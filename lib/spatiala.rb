@@ -113,6 +113,10 @@ class Spatiala < Processing::App
 
     pop_style
   end
+
+  def key_released
+    save_frame "../snap/spatiala-####.png" if key == 'p'
+  end
 end
 
 Spatiala.new
