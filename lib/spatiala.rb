@@ -9,6 +9,8 @@ require 'crack_list'
 require 'crack'
 require 'beam'
 require './matrix'
+require 'visibility_map'
+require 'visibility_region'
 
 class Spatiala < Processing::App
   def setup
