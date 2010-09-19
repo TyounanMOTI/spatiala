@@ -1,5 +1,5 @@
 class Matrix
-  include Math
+  extend Math
   attr_reader :vectors
 
   def initialize(*vectors)
