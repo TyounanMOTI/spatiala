@@ -7,6 +7,7 @@ require 'vector'
 require 'beam_tracer'
 require 'crack_list'
 require 'crack'
+require 'beam'
 
 class Spatiala < Processing::App
   def setup
@@ -36,13 +37,15 @@ class Spatiala < Processing::App
 
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
     @crack_list = @tracer.make_crack_list
+    @beams = @crack_list.to_beams
     @index = 0
   end
 
   def draw
     refresh
-    @index = 0 if @index >= @crack_list.cracks.length
-    @crack_list[@index].rays.each { |i| draw_ray i }
+
+    @index = 0 if @index == @beams.length
+    draw_beam @beams[@index]
     @index += 1
   end
 
@@ -112,6 +115,10 @@ class Spatiala < Processing::App
     draw_point ray.origin.x, ray.origin.y
 
     pop_style
+  end
+
+  def draw_beam(beam)
+    beam.deltas.each { |i| draw_ray i }
   end
 
   def key_released
