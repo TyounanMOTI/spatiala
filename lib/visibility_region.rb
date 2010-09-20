@@ -1,7 +1,8 @@
 class VisibilityRegion
-  attr_reader :rays
+  attr_reader :rays, :original
 
-  def initialize(*rays)
+  def initialize(original, *rays)
+    @original = original
     @rays = rays.flatten
   end
 end

@@ -66,14 +66,14 @@ class Ray
       rays = [@origin.dualize]
       rays.push Ray.new(rays[0].origin, Vector.new(Float::MAX, 1))
       rays.push Ray.new(rays[0].destination, Vector.new(Float::MAX, -1))
-      return VisibilityRegion.new(rays)
+      return VisibilityRegion.new(self, rays)
     end
 
     if @origin.x <= 0
       rays = [@destination.dualize]
       rays.push Ray.new(rays[0].origin, Vector.new(-Float::MAX, 1))
       rays.push Ray.new(rays[0].destination, Vector.new(-Float::MAX, -1))
-      return VisibilityRegion.new(rays)
+      return VisibilityRegion.new(self, rays)
     end
 
     if facing == :upper
@@ -83,7 +83,7 @@ class Ray
              Ray.new(@destination.dualize.origin, @origin.dualize.origin + @origin.dualize.delta * intersection)
              ]
       rays.push Ray.new(rays[0].origin, rays[1].origin)
-      return VisibilityRegion.new(rays)
+      return VisibilityRegion.new(self, rays)
     end
 
     if facing == :lower
@@ -93,13 +93,13 @@ class Ray
              Ray.new(@destination.dualize.destination, @origin.dualize.origin + @origin.dualize.delta * intersection)
              ]
       rays.push Ray.new(rays[0].origin, rays[1].origin)
-      return VisibilityRegion.new(rays)
+      return VisibilityRegion.new(self, rays)
     end
 
     rays = [@origin.dualize, @destination.dualize]
     rays.push Ray.new(rays[0].origin, rays[1].origin)
     rays.push Ray.new(rays[0].destination, rays[1].destination)
-    return VisibilityRegion.new(rays)
+    return VisibilityRegion.new(self, rays)
   end
 
   def normal
