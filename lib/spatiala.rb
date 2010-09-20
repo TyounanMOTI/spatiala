@@ -23,7 +23,7 @@ class Spatiala < Processing::App
     @brightness = 80
     background @hue, @saturation, @brightness-50
     stroke @hue, 20, @brightness
-    @scale = Vector.new(1,height/2 - 20)
+    @scale = Vector.new(10000, height/2 - 20)
     @offset = Vector.new(width/2, height/2)
 
     triangle = Polygon.new(Vector.new(10,20),
@@ -45,6 +45,19 @@ class Spatiala < Processing::App
     @beams = @crack_list.to_beams
 
     @normalized_tracer = @tracer.normalize @beams[2].reference_segment
+    @visibility_map = VisibilityMap.new(@normalized_tracer)
+    @regions = @visibility_map.regions
+
+    @regions.each do |region|
+      Kernel.print "\n<<< REGION : "
+      print_ray(region.original)
+      region.rays.each { |i| print_ray(i) }
+    end
+
+    Kernel.print "\n+++ Geometry +++\n"
+    @normalized_tracer.geometry.lines.each { |i| print_ray(i) }
+
+    Kernel.print "==== END ====\n"
 
     @index = 0
   end
@@ -52,10 +65,14 @@ class Spatiala < Processing::App
   def draw
     clear
     draw_axis
-    draw_geometry @normalized_tracer.geometry
 
-    draw_listener @normalized_tracer.listener
-    draw_source @normalized_tracer.sources
+    @index = 0 if @index == @regions.length
+    @regions[@index].rays.each { |ray| draw_ray ray }
+    @index += 1
+  end
+
+  def print_ray(ray)
+    Kernel.print "- Ray (%2.1g" % ray.origin.x, ",%2.1g" % ray.origin.y, ") to (%2.1g" % ray.destination.x, ",%2.1g" % ray.destination.y, ")\n"
   end
 
   def clear
@@ -124,6 +141,7 @@ class Spatiala < Processing::App
   end
 
   def draw_ray(ray)
+
     push_style
 
     stroke_weight 3
