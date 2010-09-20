@@ -108,5 +108,17 @@ describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
     ray = v.dualize
     ray.should == Ray.new(Vector.new(0,1), Vector.new(2,-1))
   end
+
+  it "should return Vector (0,5) when snap (1.0e-15, 5)" do
+    Vector.new(1.0e-15, 5).snap.should == Vector.new(0,5)
+  end
+
+  it "should return Vector (0,5) when snap (-1.0e-15, 5)" do
+    Vector.new(-1.0e-15, 5).snap.should == Vector.new(0,5)
+  end
+
+  it "should return Vector (4,-1) when snap (4, -1 + 1.0e-15)" do
+    Vector.new(4, -1 + 1.0e-15).snap.should == Vector.new(4,-1)
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)

@@ -3,6 +3,7 @@ class Vector
   attr_reader :x, :y, :z, :w, :elements
 
   def initialize(*elements)
+    elements.flatten!
     @elements = elements.map { |i| i.to_f }
     self.x = @elements.fetch(0, 0).to_f
     self.y = @elements.fetch(1, 0).to_f
@@ -118,7 +119,19 @@ class Vector
                              Vector.new(0,0,0,1))
     product = self_matrix * matrix
     result = product.row(0)
-    return Vector.new(result.x, result.y, result.z)
+    return Vector.new(result.x, result.y, result.z).snap
+  end
+
+  def snap
+    epsilon = 1.0e-10
+    elements = @elements.map do |i|
+      if (i - i.round).abs < epsilon
+        i.round
+      else
+        i
+      end
+    end
+    return Vector.new(elements)
   end
 
   def dualize
