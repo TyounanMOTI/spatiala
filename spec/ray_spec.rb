@@ -77,14 +77,14 @@ describe Ray do
     Ray.new(Vector.new(-1,1), Vector.new(-1,-1)).dualize.should be_nil
   end
 
-  it "should include x == Float::MAX Rays in VisibilityRegion when dualize Ray (2,3) to (-1,1)" do
+  it "should include x == BIG Rays in VisibilityRegion when dualize Ray (2,3) to (-1,1)" do
     result = Ray.new(Vector.new(2,3), Vector.new(-1,1)).dualize
-    result.rays[1].destination.x.should == Float::MAX
+    result.rays[1].destination.x.should == Ray::BIG
   end
 
-  it "should include -Float::MAX Rays in VisibilityRegion when dualize Ray (-1,-1) to (2,0)" do
+  it "should include -BIG Rays in VisibilityRegion when dualize Ray (-1,-1) to (2,0)" do
     result = Ray.new(Vector.new(-1,-2), Vector.new(2,-2)).dualize
-    result.rays[1].destination.x.should == -Float::MAX
+    result.rays[1].destination.x.should == -Ray::BIG
   end
 
   it "should have three Rays in VisibilityRegion when dualize Ray (1,0) to (3,0)" do

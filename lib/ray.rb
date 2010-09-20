@@ -3,6 +3,8 @@ require 'vector'
 class Ray
   attr_accessor :origin, :destination, :delta
 
+  BIG = 1.0e5
+
   def initialize(origin=Vector.new(0,0), destination=Vector.new(0,0))
     @origin = origin
     @destination = destination
@@ -64,15 +66,15 @@ class Ray
 
     if @destination.x <= 0
       rays = [@origin.dualize]
-      rays.push Ray.new(rays[0].origin, Vector.new(Float::MAX, 1))
-      rays.push Ray.new(rays[0].destination, Vector.new(Float::MAX, -1))
+      rays.push Ray.new(rays[0].origin, Vector.new(BIG, 1))
+      rays.push Ray.new(rays[0].destination, Vector.new(BIG, -1))
       return VisibilityRegion.new(self, rays)
     end
 
     if @origin.x <= 0
       rays = [@destination.dualize]
-      rays.push Ray.new(rays[0].origin, Vector.new(-Float::MAX, 1))
-      rays.push Ray.new(rays[0].destination, Vector.new(-Float::MAX, -1))
+      rays.push Ray.new(rays[0].origin, Vector.new(-BIG, 1))
+      rays.push Ray.new(rays[0].destination, Vector.new(-BIG, -1))
       return VisibilityRegion.new(self, rays)
     end
 
