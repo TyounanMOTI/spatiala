@@ -80,7 +80,7 @@ class Ray
       intersection = @origin.dualize.intersect(@destination.dualize)
       rays = [
              Ray.new(@origin.dualize.origin, @origin.dualize.origin + @origin.dualize.delta * intersection),
-             Ray.new(@destination.dualize.origin, @destination.dualize.origin + @origin.dualize.delta * intersection)
+             Ray.new(@destination.dualize.origin, @origin.dualize.origin + @origin.dualize.delta * intersection)
              ]
       rays.push Ray.new(rays[0].origin, rays[1].origin)
       return VisibilityRegion.new(rays)
