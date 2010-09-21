@@ -8,6 +8,7 @@ class VisibilityMap
     end
     @regions.flatten!
     @regions.compact!
+    @tracer = tracer
   end
 
   def get_intersection_points
