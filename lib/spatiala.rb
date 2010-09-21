@@ -60,15 +60,21 @@ class Spatiala < Processing::App
     Kernel.print "==== END ====\n"
 
     @index = 0
+
+    clear
+    draw_axis
+    draw_visibility_map
   end
 
   def draw
-    clear
-    draw_axis
+  end
 
-    @index = 0 if @index == @regions.length
-    @regions[@index].rays.each { |ray| draw_ray ray }
-    @index += 1
+  def draw_visibility_map
+    hue = 0
+    @regions.each do |region|
+      hue += 100/@regions.length
+      region.rays.each { |ray| draw_ray ray, hue }
+    end
   end
 
   def print_ray(ray)
@@ -140,14 +146,14 @@ class Spatiala < Processing::App
     ellipse x, y, 8, 8
   end
 
-  def draw_ray(ray)
+  def draw_ray(ray, hue=@hue)
 
     push_style
 
     stroke_weight 3
     color_mode HSB, 100
-    stroke 18, @saturation, @brightness, 100
-    fill @hue, @saturation, @brightness, 80
+    stroke hue, @saturation, @brightness, 50
+    fill hue, @saturation, @brightness-20, 50
     line(ray.origin.x*@scale.x + @offset.x,
          ray.origin.y*@scale.y + @offset.y,
          ray.destination.x*@scale.x + @offset.x,
