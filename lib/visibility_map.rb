@@ -6,7 +6,8 @@ class VisibilityMap
        Ray.new(i.destination, i.origin).dualize
       ]
     end
-    @regions.flatten!.compact!
+    @regions.flatten!
+    @regions.compact!
   end
 
   def get_intersection_points
