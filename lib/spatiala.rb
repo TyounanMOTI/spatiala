@@ -48,15 +48,8 @@ class Spatiala < Processing::App
     @visibility_map = VisibilityMap.new(@normalized_tracer)
     @regions = @visibility_map.regions
 
-    @regions.each do |region|
-      Kernel.print "\n<<< REGION : "
-      print_ray(region.original)
-      region.rays.each { |i| print_ray(i) }
-    end
-
-    Kernel.print "\n+++ Geometry +++\n"
-    @normalized_tracer.geometry.lines.each { |i| print_ray(i) }
-
+    print_regions
+    print_geometry
     Kernel.print "==== END ====\n"
 
     @index = 0
@@ -67,6 +60,19 @@ class Spatiala < Processing::App
     draw_axis
     draw_visibility_map
     draw_ray @normalized_tracer.listener.position.dualize, 20
+  end
+
+  def print_regions
+    @regions.each do |region|
+      Kernel.print "\n<<< REGION : "
+      print_ray(region.original)
+      region.rays.each { |i| print_ray(i) }
+    end
+  end
+
+  def print_geometry
+    Kernel.print "\n+++ Geometry +++\n"
+    @normalized_tracer.geometry.lines.each { |i| print_ray(i) }
   end
 
   def draw_visibility_map
