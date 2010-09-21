@@ -66,6 +66,7 @@ class Spatiala < Processing::App
     clear
     draw_axis
     draw_visibility_map
+    draw_ray @normalized_tracer.listener.position.dualize, 20
   end
 
   def draw_visibility_map
