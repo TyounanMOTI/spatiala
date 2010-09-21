@@ -55,7 +55,6 @@ class Ray
   end
 
   def dualize
-    facing = REFERENCE_REFLECTOR.facing(self)
     if facing == :false
       return nil
     end
@@ -108,14 +107,14 @@ class Ray
     @delta.transform(Matrix.rotator(Math::PI/2))
   end
 
-  def facing(ray)
-    if (ray.origin - @origin)*ray.normal < 0
-      if (ray.origin - @destination)*ray.normal < 0
+  def facing
+    if (@origin - REFERENCE_REFLECTOR.origin)*normal < 0
+      if (@origin - REFERENCE_REFLECTOR.destination)*normal < 0
         return :true
       end
       return :upper
     else
-      if (ray.origin - @destination)*ray.normal < 0
+      if (@origin - REFERENCE_REFLECTOR.destination)*normal < 0
         return :lower
       end
       return :false

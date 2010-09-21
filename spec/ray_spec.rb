@@ -109,21 +109,21 @@ describe Ray do
 
   it "should return :false when questioned 'How refrector and Ray (1,1) to (2,-3) are facing?'" do
     ray = Ray.new(Vector.new(1,1), Vector.new(2,-3))
-    @refrector.facing(ray).should == :false
+    ray.facing.should == :false
   end
 
   it "should return :upper when questioned 'How refrector and Ray (2,0) to (3,0) are facing?'" do
     ray = Ray.new(Vector.new(2,0), Vector.new(3,0))
-    @refrector.facing(ray).should == :upper
+    ray.facing.should == :upper
   end
 
   it "should return :lower when questioned 'How refrector and Ray (3,0) to (2,0) are facing?'" do
     ray = Ray.new(Vector.new(3,0), Vector.new(2,0))
-    @refrector.facing(ray).should == :lower
+    ray.facing.should == :lower
   end
 
   it "should return :true when questioned 'How refrector and Ray (2,-3) to (1,1) are facing?'" do
     ray = Ray.new(Vector.new(2,-3), Vector.new(1,1))
-    @refrector.facing(ray).should == :true
+    ray.facing.should == :true
   end
 end
