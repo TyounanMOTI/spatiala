@@ -126,4 +126,20 @@ describe Ray do
     ray = Ray.new(Vector.new(2,-3), Vector.new(1,1))
     ray.facing.should == :true
   end
+
+  it "should return :true when questioned 'How refrector and Ray (0,-1) to (10,0)" do
+    Ray.new(Vector.new(0,-1), Vector.new(10,0)).facing.should == :true
+  end
+
+  it "should return :false when questioned 'How refrector and Ray (10,0) to (0,-1)" do
+    Ray.new(Vector.new(10,0), Vector.new(0,-1)).facing.should == :false
+  end
+
+  it "should return :true when questioned 'How refrector and Ray (10,0) to (0,1)" do
+    Ray.new(Vector.new(10,0), Vector.new(0,1)).facing.should == :true
+  end
+
+  it "should return :false when questioned 'How refrector and Ray (0,1) to (10,0)" do
+    Ray.new(Vector.new(0,1), Vector.new(10,0)).facing.should == :false
+  end
 end

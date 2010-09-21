@@ -108,13 +108,32 @@ class Ray
   end
 
   def facing
-    if (@origin - REFERENCE_REFLECTOR.origin)*normal < 0
-      if (@origin - REFERENCE_REFLECTOR.destination)*normal < 0
+    if @origin == REFERENCE_REFLECTOR.destination
+      if @destination.x > 0
+        return :true
+      else
+        return :false
+      end
+    end
+
+    if @destination == REFERENCE_REFLECTOR.origin
+      if @origin.x > 0
+        return :true
+      else
+        return :false
+      end
+    end
+
+    return :false if @origin == REFERENCE_REFLECTOR.origin
+    return :false if @destination == REFERENCE_REFLECTOR.destination
+
+    if (@origin - REFERENCE_REFLECTOR.origin)*normal <= 0
+      if (@origin - REFERENCE_REFLECTOR.destination)*normal <= 0
         return :true
       end
       return :upper
     else
-      if (@origin - REFERENCE_REFLECTOR.destination)*normal < 0
+      if (@origin - REFERENCE_REFLECTOR.destination)*normal <= 0
         return :lower
       end
       return :false
