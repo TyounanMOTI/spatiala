@@ -143,4 +143,8 @@ class Vector
   def hash
     return @elements.join.hash
   end
+
+  def eql?(obj)
+    return hash == obj.hash
+  end
 end

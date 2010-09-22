@@ -124,5 +124,9 @@ describe Vector do
   it "should return same hash when their elements are same" do
     Vector.new(1,2).hash.should == Vector.new(1,2).hash
   end
+
+  it "should return eql when their elements are same" do
+    Vector.new(1,2).eql?(Vector.new(1,2)).should == true
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)
