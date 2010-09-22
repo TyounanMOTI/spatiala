@@ -15,4 +15,10 @@ describe VisibilityRegion do
     @region.rays.should be_instance_of Array
     @region.rays.each { |i| i.should be_instance_of Ray }
   end
+
+  it "should return Array of Vector when requested its vertices" do
+    @region.vertices.should be_instance_of Array
+    @region.vertices.length.should > 0
+    @region.vertices.each { |i| i.should be_instance_of Vector }
+  end
 end
