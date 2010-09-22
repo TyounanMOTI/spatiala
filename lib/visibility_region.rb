@@ -7,6 +7,6 @@ class VisibilityRegion
   end
 
   def vertices
-    @rays.map { |ray| [ray.origin, ray.destination] }.flatten
+    return @rays.map { |ray| [ray.origin, ray.destination] }.flatten.uniq
   end
 end
