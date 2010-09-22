@@ -139,4 +139,8 @@ class Ray
       return :false
     end
   end
+
+  def reverse
+    Ray.new(@destination, @origin)
+  end
 end

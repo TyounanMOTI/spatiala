@@ -142,4 +142,8 @@ describe Ray do
   it "should return :false when questioned 'How refrector and Ray (0,1) to (10,0)" do
     Ray.new(Vector.new(0,1), Vector.new(10,0)).facing.should == :false
   end
+
+  it "should return Ray (2,3) to (4,5) when reversed Ray (4,5) to (2,3)" do
+    Ray.new(Vector.new(4,5), Vector.new(2,3)).reverse.should == Ray.new(Vector.new(2,3), Vector.new(4,5))
+  end
 end
