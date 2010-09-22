@@ -65,15 +65,15 @@ class Ray
 
     if @destination.x <= 0
       rays = [@origin.dualize]
-      rays.push Ray.new(rays[0].origin, Vector.new(BIG, 1))
-      rays.push Ray.new(rays[0].destination, Vector.new(BIG, -1))
+      rays << Ray.new(rays[0].origin, Vector.new(BIG, 1))
+      rays << Ray.new(rays[0].destination, Vector.new(BIG, -1))
       return VisibilityRegion.new(self, rays)
     end
 
     if @origin.x <= 0
       rays = [@destination.dualize]
-      rays.push Ray.new(rays[0].origin, Vector.new(-BIG, 1))
-      rays.push Ray.new(rays[0].destination, Vector.new(-BIG, -1))
+      rays << Ray.new(rays[0].origin, Vector.new(-BIG, 1))
+      rays << Ray.new(rays[0].destination, Vector.new(-BIG, -1))
       return VisibilityRegion.new(self, rays)
     end
 
@@ -83,7 +83,7 @@ class Ray
              Ray.new(@origin.dualize.origin, @origin.dualize.origin + @origin.dualize.delta * intersection),
              Ray.new(@destination.dualize.origin, @origin.dualize.origin + @origin.dualize.delta * intersection)
              ]
-      rays.push Ray.new(rays[0].origin, rays[1].origin)
+      rays << Ray.new(rays[0].origin, rays[1].origin)
       return VisibilityRegion.new(self, rays)
     end
 
@@ -93,13 +93,13 @@ class Ray
              Ray.new(@origin.dualize.destination, @origin.dualize.origin + @origin.dualize.delta * intersection),
              Ray.new(@destination.dualize.destination, @origin.dualize.origin + @origin.dualize.delta * intersection)
              ]
-      rays.push Ray.new(rays[0].origin, rays[1].origin)
+      rays << Ray.new(rays[0].origin, rays[1].origin)
       return VisibilityRegion.new(self, rays)
     end
 
     rays = [@origin.dualize, @destination.dualize]
-    rays.push Ray.new(rays[0].origin, rays[1].origin)
-    rays.push Ray.new(rays[0].destination, rays[1].destination)
+    rays << Ray.new(rays[0].origin, rays[1].origin)
+    rays << Ray.new(rays[0].destination, rays[1].destination)
     return VisibilityRegion.new(self, rays)
   end
 
