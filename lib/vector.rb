@@ -139,4 +139,8 @@ class Vector
     dest = Vector.new((@y + 1)/@x, -1)
     return Ray.new(source, dest)
   end
+
+  def hash
+    return @elements.join.hash
+  end
 end

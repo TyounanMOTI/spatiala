@@ -120,5 +120,9 @@ describe Vector do
   it "should return Vector (4,-1) when snap (4, -1 + 1.0e-15)" do
     Vector.new(4, -1 + 1.0e-15).snap.should == Vector.new(4,-1)
   end
+
+  it "should return same hash when their elements are same" do
+    Vector.new(1,2).hash.should == Vector.new(1,2).hash
+  end
 end
 # v1(3,-1,5) v2(-2,3,10)
