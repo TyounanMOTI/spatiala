@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe Vector, "with v1(3,-1,5), v2(-2,3,10)" do
+describe Vector do
   before do
     @v1 = Vector.new(3,-1,5)
     @v2 = Vector.new(-2,3,10)
