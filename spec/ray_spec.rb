@@ -78,13 +78,15 @@ describe Ray do
   end
 
   it "should include x == BIG Rays in VisibilityRegion when dualize Ray (2,3) to (-1,1)" do
-    result = Ray.new(Vector.new(2,3), Vector.new(-1,1)).dualize
-    result.rays[1].destination.x.should == Ray::BIG
+    region = Ray.new(Vector.new(2,3), Vector.new(-1,1)).dualize
+    far_point = Vector.new(Ray::BIG, 1)
+    region.vertices.include?(far_point).should == true
   end
 
-  it "should include -BIG Rays in VisibilityRegion when dualize Ray (-1,-1) to (2,0)" do
-    result = Ray.new(Vector.new(-1,-2), Vector.new(2,-2)).dualize
-    result.rays[1].destination.x.should == -Ray::BIG
+  it "should include x == -BIG Rays in VisibilityRegion when dualize Ray (-1,-1) to (2,0)" do
+    region = Ray.new(Vector.new(-1,-2), Vector.new(2,-2)).dualize
+    far_point = Vector.new(-Ray::BIG, 1)
+    region.vertices.include?(far_point).should == true
   end
 
   it "should have three Rays in VisibilityRegion when dualize Ray (1,0) to (3,0)" do
@@ -94,12 +96,12 @@ describe Ray do
 
   it "should have Ray which is part of y=1 when dualize Ray (1,0) to (3,0)" do
     result = Ray.new(Vector.new(1,0), Vector.new(3,0)).dualize
-    result.rays[2].origin.y.should == 1
+    result.rays[0].origin.y.should == 1
   end
 
   it "should have Ray which is part of y=-1 when dualize Ray (3,0) to (1,0)" do
     result = Ray.new(Vector.new(3,0), Vector.new(1,0)).dualize
-    result.rays[2].origin.y.should == -1
+    result.rays[1].origin.y.should == -1
   end
 
   it "should return Vector when normal of Ray (1,1) to (3,-1) is requested" do

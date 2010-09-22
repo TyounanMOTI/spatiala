@@ -64,42 +64,58 @@ class Ray
     end
 
     if @destination.x <= 0
-      rays = [@origin.dualize]
-      rays << Ray.new(rays[0].origin, Vector.new(BIG, 1))
-      rays << Ray.new(rays[0].destination, Vector.new(BIG, -1))
+      rays = [
+              Ray.new(Vector.new(BIG, -1), @origin.dualize.destination),
+              @origin.dualize.reverse,
+              Ray.new(@origin.dualize.origin, Vector.new(BIG, 1))
+             ]
       return VisibilityRegion.new(self, rays)
     end
 
     if @origin.x <= 0
-      rays = [@destination.dualize]
-      rays << Ray.new(rays[0].origin, Vector.new(-BIG, 1))
-      rays << Ray.new(rays[0].destination, Vector.new(-BIG, -1))
+      rays = [
+              Ray.new(Vector.new(-BIG, 1), @destination.dualize.origin),
+              @destination.dualize,
+              Ray.new(@destination.dualize.destination, Vector.new(-BIG, -1))
+             ]
       return VisibilityRegion.new(self, rays)
     end
 
     if facing == :upper
-      intersection = @origin.dualize.intersect(@destination.dualize)
-      rays = [
-             Ray.new(@origin.dualize.origin, @origin.dualize.origin + @origin.dualize.delta * intersection),
-             Ray.new(@destination.dualize.origin, @origin.dualize.origin + @origin.dualize.delta * intersection)
-             ]
-      rays << Ray.new(rays[0].origin, rays[1].origin)
+      intersection_ratio = @origin.dualize.intersect(@destination.dualize)
+      intersection_point = @origin.dualize.origin + @origin.dualize.delta * intersection_ratio
+
+      vertices = [
+                  @origin.dualize.origin,
+                  @destination.dualize.origin,
+                  intersection_point
+                 ].sort_by { |i| i.x }
+
+      rays = Polygon.new(vertices).lines
       return VisibilityRegion.new(self, rays)
     end
 
     if facing == :lower
-      intersection = @origin.dualize.intersect(@destination.dualize)
-      rays = [
-             Ray.new(@origin.dualize.destination, @origin.dualize.origin + @origin.dualize.delta * intersection),
-             Ray.new(@destination.dualize.destination, @origin.dualize.origin + @origin.dualize.delta * intersection)
-             ]
-      rays << Ray.new(rays[0].origin, rays[1].origin)
+      intersection_ratio = @origin.dualize.intersect(@destination.dualize)
+      intersection_point = @origin.dualize.origin + @origin.dualize.delta * intersection_ratio
+
+      vertices = [
+                  @origin.dualize.destination,
+                  @destination.dualize.destination,
+                  intersection_point
+                 ].sort_by { |i| i.x }
+
+      rays = Polygon.new(vertices).lines
       return VisibilityRegion.new(self, rays)
     end
 
-    rays = [@origin.dualize, @destination.dualize]
-    rays << Ray.new(rays[0].origin, rays[1].origin)
-    rays << Ray.new(rays[0].destination, rays[1].destination)
+    vertices = [
+                @origin.dualize.origin,
+                @origin.dualize.destination,
+                @destination.dualize.destination,
+                @destination.dualize.origin
+               ]
+    rays = Polygon.new(vertices).lines
     return VisibilityRegion.new(self, rays)
   end
 
