@@ -10,6 +10,8 @@ describe Geometry do
                             Vector.new(100,400),
                             Vector.new(60,300))
     @geometry = Geometry.new(triangle, rectangle)
+
+    @view_ray = Ray.new(Vector.new(0,0), Vector.new(50,50))
   end
 
   it "should generate instance" do
@@ -41,5 +43,13 @@ describe Geometry do
     lines = @geometry.lines_include_vertex vertex
     lines.should be_instance_of Array
     lines.each { |i| i.should be_instance_of Ray }
+  end
+
+  it "should return a Ray when get nearest_intersect_line_with" do
+    @geometry.nearest_intersect_line_with(@view_ray).should be_instance_of Ray
+  end
+
+  it "should return Ray (10,20) to (400,50) when get nearest_intersect_line_with Ray (0,0) to (50,50)" do
+    @geometry.nearest_intersect_line_with(@view_ray).should == Ray.new(Vector.new(10,20), Vector.new(400,50))
   end
 end

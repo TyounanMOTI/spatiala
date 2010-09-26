@@ -53,13 +53,15 @@ class Spatiala < Processing::App
     Kernel.print "==== END ====\n"
 
     @index = 0
+
+    @scale = Vector.new(1,1)
+    @offset = Vector.new(0,0)
   end
 
   def draw
     clear
-    draw_axis
-    draw_visibility_map
-    draw_ray @normalized_tracer.listener.position.dualize, 20
+    draw_geometry
+    draw_ray Ray.new(Vector.new(0,0), Vector.new(50,50))
   end
 
   def print_regions
