@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
 
-describe CrackList do
+describe CrackList, "when initialize with Array of Crack" do
   before do
     @line1 = Ray.new(Vector.new(1,0), Vector.new(10,20))
     @line2 = Ray.new(Vector.new(2,0), Vector.new(30,40))
@@ -9,6 +10,7 @@ describe CrackList do
     @crack1 = Crack.new(@line1, @ray1, @ray2)
     @crack2 = Crack.new(@line2, @ray2, @ray1)
     @crack3 = Crack.new(@line1, @ray2, @ray1)
+    @crack4 = Crack.new(@line1, @ray1, @ray2)
     @list = CrackList.new(@crack1)
   end
 
@@ -28,6 +30,7 @@ describe CrackList do
   end
 
   it "should append to existing crack when there are already exist crack which have same line" do
+    @list.append @crack4
     previous_length = @list.length
     @list.append @crack3
     @list.length.should == previous_length
@@ -44,5 +47,19 @@ describe CrackList do
 
   it "should get Beams same length of Cracks when to_beams" do
     @list.to_beams.length.should == @list.length
+  end
+end
+
+describe CrackList, "when initialize from Geometry and Listener" do
+  include BeamTracerEnvironment
+
+  before do
+    setup_geometry
+    setup_listener
+    @list = CrackList.new(@geometry, @listener)
+  end
+
+  it "should return CrackList when initialized" do
+    @list.should be_instance_of CrackList
   end
 end

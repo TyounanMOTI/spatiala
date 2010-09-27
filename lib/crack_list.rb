@@ -2,8 +2,21 @@ class CrackList
   include Enumerable
   attr_reader :cracks
 
-  def initialize(*cracks)
-    @cracks = cracks.flatten
+  def initialize(*args)
+    case args.flatten[0]
+    when Crack
+      @cracks = args.flatten
+    when Geometry
+      @geometry = args.pop
+      @listener = args.pop
+      @cracks = initialize_from_geometry_and_listener
+    else
+      @cracks = Array.new
+    end
+  end
+
+  def initialize_from_geometry_and_listener
+    return Array.new
   end
 
   def append(crack)
