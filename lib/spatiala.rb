@@ -14,7 +14,7 @@ require 'visibility_region'
 
 class Spatiala < Processing::App
   def setup
-    size 600, 400
+    size 600, 600
     frame_rate 1
     smooth
     color_mode HSB, 100
@@ -31,8 +31,10 @@ class Spatiala < Processing::App
                            Vector.new(30,420))
     wall = Polygon.new(Vector.new(100, 100),
                        Vector.new(250, 130))
+    wall2 = Polygon.new(Vector.new(150, 90),
+                        Vector.new(200, 100))
 
-    @geometry = Geometry.new(triangle, wall)
+    @geometry = Geometry.new(triangle, wall, wall2)
 
     @sources = Array.new
     @sources.push(Source.new(Vector.new(50,50)))
@@ -48,6 +50,8 @@ class Spatiala < Processing::App
     @visibility_map = VisibilityMap.new(@normalized_tracer)
     @regions = @visibility_map.regions
 
+    @crack_list = CrackList.new(@geometry, @listener)
+
     print_regions
     print_geometry
     Kernel.print "==== END ====\n"
@@ -56,12 +60,16 @@ class Spatiala < Processing::App
 
     @scale = Vector.new(1,1)
     @offset = Vector.new(0,0)
+
+    clear
+    draw_geometry
+    draw_listener
+    @crack_list.connect_listener_and_vertices.each do |i|
+      draw_ray i, 30, 50
+    end
   end
 
   def draw
-    clear
-    draw_geometry
-    draw_ray Ray.new(Vector.new(0,0), Vector.new(50,50))
   end
 
   def print_regions

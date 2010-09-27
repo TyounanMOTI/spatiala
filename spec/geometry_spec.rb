@@ -7,8 +7,10 @@ module GeometryEnvironment
                            Vector.new(30,420))
     wall = Polygon.new(Vector.new(100, 100),
                        Vector.new(250, 130))
+    wall2 = Polygon.new(Vector.new(150, 90),
+                        Vector.new(200, 100))
 
-    @geometry = Geometry.new(triangle, wall)
+    @geometry = Geometry.new(triangle, wall, wall2)
   end
 end
 
