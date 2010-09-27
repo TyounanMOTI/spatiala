@@ -34,6 +34,12 @@ class Ray
     return (((target.origin - @origin).cross(target.delta))*cross).to_f / ((cross*cross)).to_f
   end
 
+  def intersect_as_directional_line(target)
+    cross = @delta.cross(target.delta)
+    return -1 if (cross.length == 0)
+    return (((target.origin - @origin).cross(target.delta))*cross).to_f / ((cross*cross)).to_f
+  end
+
   def intersect?(wall)
     ray_to_wall = self.intersect(wall)
     wall_to_ray = wall.intersect(self)
