@@ -62,4 +62,10 @@ describe CrackList, "when initialize from Geometry and Listener" do
   it "should return CrackList when initialized" do
     @list.should be_instance_of CrackList
   end
+
+  it "should return Array of Ray when connect_listener_and_vertices" do
+    rays = @list.connect_listener_and_vertices
+    rays.should be_instance_of Array
+    rays.each { |i| i.should be_instance_of Ray }
+  end
 end

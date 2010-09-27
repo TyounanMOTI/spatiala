@@ -7,8 +7,8 @@ class CrackList
     when Crack
       @cracks = args.flatten
     when Geometry
-      @geometry = args.pop
-      @listener = args.pop
+      @geometry = args.shift
+      @listener = args.shift
       @cracks = initialize_from_geometry_and_listener
     else
       @cracks = Array.new
@@ -17,6 +17,10 @@ class CrackList
 
   def initialize_from_geometry_and_listener
     return Array.new
+  end
+
+  def connect_listener_and_vertices
+    @geometry.ends_of_lines.map { |vertex| Ray.new(@listener.position, vertex) }
   end
 
   def append(crack)
