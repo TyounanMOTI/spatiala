@@ -15,6 +15,10 @@ class Geometry
     @polygons.map { |i| i.lines }.flatten
   end
 
+  def ends_of_lines
+    lines.map { |i| [i.origin, i.destination] }.flatten
+  end
+
   def lines_include_vertex(vertex)
     self.lines.map { |i| i if i.origin == vertex || i.destination == vertex }.compact
   end

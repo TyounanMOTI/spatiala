@@ -58,4 +58,14 @@ describe Geometry do
   it "should return Ray (10,20) to (400,50) when get nearest_intersect_line_with Ray (0,0) to (50,50)" do
     @geometry.nearest_intersect_line_with(@view_ray).should == Ray.new(Vector.new(10,20), Vector.new(400,50))
   end
+
+  it "should return Array of Vectors when get ends_of_lines" do
+    vertices = @geometry.ends_of_lines
+    vertices.should be_instance_of Array
+    vertices.each { |i| i.should be_instance_of Vector }
+  end
+
+  it "should return double Vectors of lines when get ends_of_lines" do
+    @geometry.ends_of_lines.length.should == @geometry.lines.length*2
+  end
 end
