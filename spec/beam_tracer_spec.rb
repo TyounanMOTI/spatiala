@@ -1,22 +1,31 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/geometry_spec')
 
-describe BeamTracer do
-  before do
-    triangle = Polygon.new(Vector.new(10,20),
-                           Vector.new(400,50),
-                           Vector.new(30,420))
-    wall = Polygon.new(Vector.new(100, 100),
-                       Vector.new(250, 130))
+module BeamTracerEnvironment
+  include GeometryEnvironment
 
-    @geometry = Geometry.new(triangle, wall)
+  def setup_beam_tracer
+    setup_geometry
+    setup_listener
+    setup_sources
+    @tracer = BeamTracer.new(@geometry, @sources, @listener)
+  end
 
-    @sources = Array.new
-    @sources.push(Source.new(Vector.new(50,50)))
-
+  def setup_listener
     @listener = Listener.new(Vector.new(120,160),
                              Vector.new(30,30))
+  end
 
-    @tracer = BeamTracer.new(@geometry, @sources, @listener)
+  def setup_sources
+    @sources = [Source.new(Vector.new(50,50))]
+  end
+end
+
+describe BeamTracer do
+  include BeamTracerEnvironment
+
+  before do
+    setup_beam_tracer
   end
 
   it "should initialize with geometry, source, listener" do

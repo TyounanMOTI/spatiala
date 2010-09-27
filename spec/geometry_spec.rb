@@ -1,16 +1,22 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe Geometry do
-  before do
+module GeometryEnvironment
+  def setup_geometry
     triangle = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
                            Vector.new(30,420))
-    rectangle = Polygon.new(Vector.new(50,30),
-                            Vector.new(100,40),
-                            Vector.new(100,400),
-                            Vector.new(60,300))
-    @geometry = Geometry.new(triangle, rectangle)
+    wall = Polygon.new(Vector.new(100, 100),
+                       Vector.new(250, 130))
 
+    @geometry = Geometry.new(triangle, wall)
+  end
+end
+
+describe Geometry do
+  include GeometryEnvironment
+
+  before do
+    setup_geometry
     @view_ray = Ray.new(Vector.new(0,0), Vector.new(50,50))
   end
 
