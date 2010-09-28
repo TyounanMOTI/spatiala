@@ -32,37 +32,6 @@ describe BeamTracer do
     @tracer.should be_instance_of BeamTracer
   end
 
-  it "should return true when Ray((50,50), (60,60)) intersect_with_no_walls?" do
-    ray = Ray.new(Vector.new(50, 50), Vector.new(60, 60))
-    @tracer.intersect_with_no_walls?(ray).should == true
-  end
-
-  it "should return false when Ray((50,50), (500,500)) intersect_with_no_walls?" do
-    ray = Ray.new(Vector.new(50, 50), Vector.new(500, 500))
-    @tracer.intersect_with_no_walls?(ray).should == false
-  end
-
-  it "should return CrackList when make crack list" do
-    list = @tracer.make_crack_list
-    list.should be_instance_of CrackList
-    list.cracks.each { |i| i.should be_instance_of Crack }
-  end
-
-  it "should return CrackList which have one or two rays when connect_listener_to_vertices" do
-    list = @tracer.connect_listener_to_vertices
-    list.should be_instance_of CrackList
-    list.cracks.each do |i|
-      i.should be_instance_of Crack
-      i.rays.length.should <= 2
-    end
-  end
-
-  it "should return CrackList which have even rays when extend_crack" do
-    list = @tracer.connect_listener_to_vertices
-    list = @tracer.extend_cracks list
-    list.cracks.each { |i| (i.rays.length % 2).should == 0 }
-  end
-
   it "should return Matrix when get normalizer" do
     segment = @geometry.lines[0]
     @tracer.normalizer(segment).should be_instance_of Matrix
