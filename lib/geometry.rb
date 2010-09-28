@@ -27,4 +27,8 @@ class Geometry
     intersections = lines.map { |i| [ray.intersect(i), i.intersect(ray), i] }.delete_if { |i| i[0] < 0 || i[1] > 1 || i[1] < 0 }.sort
     return intersections.first[2]
   end
+
+  def occluded?(ray)
+    not lines_include_vertex(ray.destination).include?(nearest_intersect_line_with(ray))
+  end
 end

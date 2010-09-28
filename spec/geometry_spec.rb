@@ -70,4 +70,12 @@ describe Geometry do
   it "should return double Vectors of lines when get ends_of_lines" do
     @geometry.ends_of_lines.length.should == @geometry.lines.length*2
   end
+
+  it "should return false when questioned Ray(100,200)->(30,420) is occluded?" do
+    @geometry.occluded?(Ray.new(Vector.new(100,200), Vector.new(30,420))).should == false
+  end
+
+  it "should return true when questioned Ray(100,200)->(150,90) is occluded?" do
+    @geometry.occluded?(Ray.new(Vector.new(100,200), Vector.new(150,90))).should == true
+  end
 end
