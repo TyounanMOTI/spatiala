@@ -23,6 +23,10 @@ class CrackList
     @geometry.ends_of_lines.map { |vertex| Ray.new(@listener.position, vertex) }
   end
 
+  def reject_occluded_rays(rays)
+    rays.dup.delete_if { |ray| @geometry.occluded?(ray) }
+  end
+
   def append(crack)
     i = @cracks.index { |j| j.line == crack.line }
     unless i then
