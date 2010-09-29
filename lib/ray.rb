@@ -29,9 +29,8 @@ class Ray
   end
 
   def intersect(target)
-    cross = @delta.cross(target.delta)
-    return -1 if (cross.length == 0)
-    return (((target.origin - @origin).cross(target.delta))*cross).to_f / ((cross*cross)).to_f
+    return nil unless intersect?(target)
+    return intersect_as_directional_line(target)
   end
 
   def intersect_as_directional_line(target)
@@ -41,11 +40,11 @@ class Ray
   end
 
   def intersect?(wall)
-    ray_to_wall = self.intersect(wall)
-    wall_to_ray = wall.intersect(self)
+    ray_to_wall = self.intersect_as_directional_line(wall)
+    wall_to_ray = wall.intersect_as_directional_line(self)
     # return false if intersect with both end of wall
-    if ((ray_to_wall > 0 && ray_to_wall < 1) &&
-        (wall_to_ray > 0 && wall_to_ray < 1)) then
+    if ((ray_to_wall >= 0 && ray_to_wall <= 1) &&
+        (wall_to_ray >= 0 && wall_to_ray <= 1)) then
       return true
     end
     return false

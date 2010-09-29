@@ -23,6 +23,27 @@ describe Ray do
     result.should < 0
   end
 
+  it "should return a Float between 0 and 1 when intersect (0,1)->(1,-2) with (0,-1)->(1,2)" do
+    ray1 = Ray.new(Vector.new(0,1), Vector.new(1,-2))
+    ray2 = Ray.new(Vector.new(0,-1), Vector.new(1,2))
+    result = ray1.intersect(ray2)
+    result.should < 1
+    result.should > 0
+  end
+
+  it "should return nil when intersect (0,1)->(1,2) with (0,-1)->(1,-2)" do
+    ray1 = Ray.new(Vector.new(0,1), Vector.new(1,2))
+    ray2 = Ray.new(Vector.new(0,-1), Vector.new(1,-2))
+    result = ray1.intersect(ray2)
+    result.should == nil
+  end
+
+  it "should return nil when intersect (0,1)->(1,2) with (3,1)->(1,5)" do
+    ray1 = Ray.new(Vector.new(0,1), Vector.new(1,2))
+    ray2 = Ray.new(Vector.new(3,1), Vector.new(1,5))
+    ray1.intersect(ray2).should be_nil
+  end
+
   it "should re-compute delta when origin is changed" do
     ray = Ray.new(Vector.new(1,0), Vector.new(2,4))
     ray.origin = Vector.new(3,9)
@@ -44,6 +65,12 @@ describe Ray do
   it "should true when Ray((1,0),(4,2)) intersect? ((0,1),(3,4))" do
     ray = Ray.new(Vector.new(0,1), Vector.new(4,2))
     wall = Ray.new(Vector.new(1,0), Vector.new(3,4))
+    ray.intersect?(wall).should == true
+  end
+
+  it "should true when (100,200)->(400,50) intersect? (100,100)->(250,130)" do
+    ray = Ray.new(Vector.new(100,200), Vector.new(400,50))
+    wall = Ray.new(Vector.new(100,100), Vector.new(250,130))
     ray.intersect?(wall).should == true
   end
 

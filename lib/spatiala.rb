@@ -43,18 +43,8 @@ class Spatiala < Processing::App
                              Vector.new(30,30))
 
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
-    @crack_list = @tracer.make_crack_list
-    @beams = @crack_list.to_beams
-
-    @normalized_tracer = @tracer.normalize @beams[2].reference_segment
-    @visibility_map = VisibilityMap.new(@normalized_tracer)
-    @regions = @visibility_map.regions
 
     @crack_list = CrackList.new(@geometry, @listener)
-
-    print_regions
-    print_geometry
-    Kernel.print "==== END ====\n"
 
     @index = 0
 

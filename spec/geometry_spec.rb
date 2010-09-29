@@ -48,7 +48,7 @@ describe Geometry do
   end
 
   it "should return Array of Ray when get lines includes specified vertex" do
-    vertex = Vector.new(50, 30)
+    vertex = Vector.new(10, 20)
     lines = @geometry.lines_include_vertex vertex
     lines.should be_instance_of Array
     lines.each { |i| i.should be_instance_of Ray }
@@ -60,6 +60,10 @@ describe Geometry do
 
   it "should return Ray (10,20) to (400,50) when get nearest_intersect_line_with Ray (0,0) to (50,50)" do
     @geometry.nearest_intersect_line_with(@view_ray).should == Ray.new(Vector.new(10,20), Vector.new(400,50))
+  end
+
+  it "should return Ray(100,100)->(250,130) when get nearest_intersect_line_with Ray(100,200)->(400,50)" do
+    @geometry.nearest_intersect_line_with(Ray.new(Vector.new(100,200), Vector.new(400,50))).should == Ray.new(Vector.new(100,100), Vector.new(250,130))
   end
 
   it "should return Array of Vectors when get ends_of_lines" do
@@ -78,5 +82,9 @@ describe Geometry do
 
   it "should return true when questioned Ray(100,200)->(150,90) is occluded?" do
     @geometry.occluded?(Ray.new(@listener, Vector.new(150,90))).should == true
+  end
+
+  it "should return 2 intersections when intersect Ray(100,200)->(100,100).maximize" do
+    @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize).length.should == 2
   end
 end
