@@ -64,7 +64,7 @@ class Spatiala < Processing::App
     clear
     draw_geometry
     draw_listener
-    @crack_list.connect_listener_and_vertices.each do |i|
+    @crack_list.reject_occluded_rays(@crack_list.connect_listener_and_vertices).each do |i|
       draw_ray i, 30, 50
     end
   end
