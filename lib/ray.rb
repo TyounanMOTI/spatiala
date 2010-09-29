@@ -168,4 +168,8 @@ class Ray
   def maximize
     Ray.new(@origin, @origin + @delta.normalize * BIG)
   end
+
+  def *(ratio)
+    Ray.new(@origin, @origin + @delta*ratio)
+  end
 end

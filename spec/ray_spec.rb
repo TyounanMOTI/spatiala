@@ -178,4 +178,8 @@ describe Ray do
   it "should return Ray which have BIG length when maximized Ray" do
     Ray.new(Vector.new(4,5), Vector.new(2,3)).maximize.delta.length.should > Ray::BIG-1
   end
+
+  it "should return Ray(0,0)->(0,50) when Ray(0,0)->(0,100) * 0.5" do
+    (Ray.new(Vector.new(0,0), Vector.new(0,100))*0.5).should == Ray.new(Vector.new(0,0), Vector.new(0,50))
+  end
 end
