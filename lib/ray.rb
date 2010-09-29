@@ -165,4 +165,8 @@ class Ray
   def reverse
     Ray.new(@destination, @origin)
   end
+
+  def maximize
+    Ray.new(@origin, @origin + @delta.normalize * BIG)
+  end
 end

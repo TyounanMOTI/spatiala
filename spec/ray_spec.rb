@@ -147,4 +147,8 @@ describe Ray do
   it "should return Ray (2,3) to (4,5) when reversed Ray (4,5) to (2,3)" do
     Ray.new(Vector.new(4,5), Vector.new(2,3)).reverse.should == Ray.new(Vector.new(2,3), Vector.new(4,5))
   end
+
+  it "should return Ray which have BIG length when maximized Ray" do
+    Ray.new(Vector.new(4,5), Vector.new(2,3)).maximize.delta.length.should > Ray::BIG-1
+  end
 end
