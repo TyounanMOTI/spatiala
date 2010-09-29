@@ -95,4 +95,10 @@ describe CrackList, "when initialize from Geometry and Listener" do
     rays.should be_instance_of Array
     rays.each { |i| i.should be_instance_of Ray }
   end
+
+  it "should return Array of Ray when ratios_to_rays(@connected_rays)" do
+    rays = @list.ratios_to_rays(@connected_rays)
+    rays.should be_instance_of Array
+    rays.each { |i| i.should be_instance_of Ray }
+  end
 end
