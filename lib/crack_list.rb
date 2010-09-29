@@ -20,7 +20,9 @@ class CrackList
   end
 
   def connect_listener_and_vertices
-    @geometry.ends_of_lines.map { |vertex| Ray.new(@listener.position, vertex) }
+    @geometry.ends_of_lines.map do |i|
+      Ray.new(@listener.position, i[:vertex])
+    end
   end
 
   def reject_occluded_rays(rays)
@@ -32,7 +34,7 @@ class CrackList
     rays.each do |ray|
       second_intersection = @geometry.intersect(ray.maximize).fetch(1,nil)
       next if second_intersection.nil?
-      second_intersection_point = ray.origin + ray.maximize.delta*second_intersection[0]
+      second_intersection_point = ray.origin + ray.maximize.delta*second_intersection[:ratio]
       next if second_intersection_point == ray.destination
       additional_rays << Ray.new(ray.origin, second_intersection_point)
     end

@@ -66,10 +66,13 @@ describe Geometry do
     @geometry.nearest_intersect_line_with(Ray.new(Vector.new(100,200), Vector.new(400,50))).should == Ray.new(Vector.new(100,100), Vector.new(250,130))
   end
 
-  it "should return Array of Vectors when get ends_of_lines" do
+  it "should return Array of Hash which key is :vertex, :line when get ends_of_lines" do
     vertices = @geometry.ends_of_lines
     vertices.should be_instance_of Array
-    vertices.each { |i| i.should be_instance_of Vector }
+    vertices.each do |i|
+      i[:vertex].should be_instance_of Vector
+      i[:line].should be_instance_of Ray
+    end
   end
 
   it "should return double Vectors of lines when get ends_of_lines" do
@@ -86,5 +89,13 @@ describe Geometry do
 
   it "should return 2 intersections when intersect Ray(100,200)->(100,100).maximize" do
     @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize).length.should == 2
+  end
+
+  it "should return :ratio as Float, :target_ray as Ray by Hash when intersect Ray(100,200)->(100,100).maximize" do
+    intersect = @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize)
+    intersect.each do |i|
+      i[:ratio].should be_instance_of Float
+      i[:target_ray].should be_instance_of Ray
+    end
   end
 end

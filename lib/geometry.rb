@@ -16,15 +16,17 @@ class Geometry
   end
 
   def ends_of_lines
-    lines.map { |i| [i.origin, i.destination] }.flatten
+    lines.map do |line|
+      [line.origin, line.destination].map { |vertex| {:vertex => vertex, :line => line} }
+    end.flatten
   end
 
   def lines_include_vertex(vertex)
-    result = self.lines.map { |i| i if i.origin == vertex || i.destination == vertex }.compact
+    lines.map { |i| i if i.origin == vertex || i.destination == vertex }.compact
   end
 
   def nearest_intersect_line_with(ray)
-    intersect(ray).first[1]
+    intersect(ray).first[:target_ray]
   end
 
   def occluded?(ray)
@@ -32,6 +34,6 @@ class Geometry
   end
 
   def intersect(ray)
-    lines.map { |i| [ray.intersect(i), i] }.delete_if { |i| i[0].nil? }.sort_by { |i| i[0] }
+    lines.map { |i| {:ratio => ray.intersect(i), :target_ray => i} }.delete_if { |i| i[:ratio].nil? }.sort_by { |i| i[:ratio] }
   end
 end
