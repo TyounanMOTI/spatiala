@@ -49,6 +49,13 @@ class CrackList
     end
   end
 
+  def ratio_to_rays(ratio)
+    ratio[:ratios].map do |i|
+      destination = (ratio[:line]*i).destination
+      Ray.new(@listener.position, destination)
+    end
+  end
+
   def [](i)
     return @cracks[i]
   end

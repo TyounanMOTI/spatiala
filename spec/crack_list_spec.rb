@@ -89,4 +89,10 @@ describe CrackList, "when initialize from Geometry and Listener" do
     pending "Data Structure reforming for CrackList initialization"
     @expanded_rays.length.should == @rejected_rays.length + 2
   end
+
+  it "should return Array of Ray when ratio_to_rays(@connected_rays[0])" do
+    rays = @list.ratio_to_rays(@connected_rays[0])
+    rays.should be_instance_of Array
+    rays.each { |i| i.should be_instance_of Ray }
+  end
 end
