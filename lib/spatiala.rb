@@ -39,7 +39,7 @@ class Spatiala < Processing::App
     @sources = Array.new
     @sources.push(Source.new(Vector.new(50,50)))
 
-    @listener = Listener.new(Vector.new(120,160),
+    @listener = Listener.new(Vector.new(100,200),
                              Vector.new(30,30))
 
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
@@ -54,7 +54,7 @@ class Spatiala < Processing::App
     clear
     draw_geometry
     draw_listener
-    @crack_list.reject_occluded_rays(@crack_list.connect_listener_and_vertices).each do |i|
+    @crack_list.expand(@crack_list.reject_occluded_rays(@crack_list.connect_listener_and_vertices)).each do |i|
       draw_ray i, 30, 50
     end
   end

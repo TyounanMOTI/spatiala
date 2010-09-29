@@ -27,6 +27,18 @@ class CrackList
     rays.dup.delete_if { |ray| @geometry.occluded?(ray) }
   end
 
+  def expand(rays)
+    additional_rays = Array.new
+    rays.each do |ray|
+      second_intersection = @geometry.intersect(ray.maximize).fetch(1,nil)
+      next if second_intersection.nil?
+      second_intersection_point = ray.origin + ray.maximize.delta*second_intersection[0]
+      next if second_intersection_point == ray.destination
+      additional_rays << Ray.new(ray.origin, second_intersection_point)
+    end
+    return rays.dup.concat(additional_rays)
+  end
+
   def append(crack)
     i = @cracks.index { |j| j.line == crack.line }
     unless i then
