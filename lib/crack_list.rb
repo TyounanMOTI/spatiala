@@ -23,8 +23,15 @@ class CrackList
     @geometry.lines.map { |i| {:line => i, :ratios => [0.0, 1.0]} }
   end
 
-  def reject_occluded_rays(rays)
-    rays.dup.delete_if { |ray| @geometry.occluded?(ray) }
+  def reject_occluded_rays(ratios)
+    ratios.map do |ratio|
+      rays = ratio_to_rays(ratio)
+      result_ratio = ratio[:ratios].dup.delete_if do |i|
+        @geometry.occluded?(rays[ratio[:ratios].index(i)])
+      end
+      next if result_ratio.empty?
+      {:line => ratio[:line], :ratios => result_ratio}
+    end.compact
   end
 
   def expand(rays)
