@@ -20,9 +20,7 @@ class CrackList
   end
 
   def connect_listener_and_vertices
-    @geometry.ends_of_lines.map do |i|
-      Ray.new(@listener.position, i[:vertex])
-    end
+    @geometry.lines.map { |i| {:line => i, :ratios => [0.0, 1.0]} }
   end
 
   def reject_occluded_rays(rays)
