@@ -67,14 +67,13 @@ describe CrackList, "when initialize from Geometry and Listener" do
   end
 
   it "should return Array of Ray when connect_listener_and_vertices" do
-    rays = @list.connect_listener_and_vertices
-    rays.should be_instance_of Array
-    rays.each { |i| i.should be_instance_of Ray }
+    @connected_rays.should be_instance_of Array
+    @connected_rays.each { |i| i.should be_instance_of Ray }
   end
 
   it "should return Array of Ray when reject_occluded_rays" do
-    @connected_rays.should be_instance_of Array
-    @connected_rays.each { |i| i.should be_instance_of Ray }
+    @rejected_rays.should be_instance_of Array
+    @rejected_rays.each { |i| i.should be_instance_of Ray }
   end
 
   it "should return 4 less Rays when reject_occluded_rays" do
