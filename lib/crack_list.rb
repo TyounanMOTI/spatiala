@@ -23,15 +23,17 @@ class CrackList
     Intersections.new(@geometry.lines.map { |i| Intersection.new(@listener, i, [0.0, 1.0]) })
   end
 
-  def reject_occluded_rays(ratios)
-    ratios.map do |ratio|
-      rays = ratio_to_rays(ratio)
-      result_ratio = ratio[:ratios].dup.delete_if do |i|
-        @geometry.occluded?(rays[ratio[:ratios].index(i)])
+  def reject_occluded_rays(intersections)
+    result = intersections.map do |intersection|
+      rays = intersection.to_rays
+      result_ratio = intersection.ratios.dup.delete_if do |i|
+        @geometry.occluded?(rays[intersection.ratios.index(i)])
       end
       next if result_ratio.empty?
-      {:line => ratio[:line], :ratios => result_ratio}
+      Intersection.new(@listener, intersection.target_ray, result_ratio)
     end.compact
+
+    return Intersections.new(result)
   end
 
   def expand(rays)
@@ -85,7 +87,7 @@ class CrackList
       @ratios = ratios
     end
 
-    def to_ray
+    def to_rays
       @ratios.map { |i| Ray.new(@listener.position, (target_ray*i).destination) }
     end
   end
@@ -103,8 +105,8 @@ class CrackList
       @intersections.each { |i| yield i }
     end
 
-    def to_ray
-      self.map { |i| i.to_ray }.flatten
+    def to_rays
+      self.map { |i| i.to_rays }.flatten
     end
   end
 end

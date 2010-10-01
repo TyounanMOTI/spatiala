@@ -58,7 +58,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
     setup_listener
     @list = CrackList.new(@geometry, @listener)
     @connected_rays = @list.connect_listener_and_vertices
-#    @rejected_rays = @list.reject_occluded_rays(@connected_rays)
+    @rejected_rays = @list.reject_occluded_rays(@connected_rays)
 #    @expanded_rays = @list.expand(@rejected_rays)
   end
 
@@ -71,8 +71,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
   end
 
   it "should return 4 less Rays when reject_occluded_rays" do
-    pending "during convert Hash to Intersection[s]"
-    @list.ratios_to_rays(@rejected_rays).length.should == @list.ratios_to_rays(@connected_rays).length - 4
+    @rejected_rays.to_rays.length.should == @connected_rays.to_rays.length - 4
   end
 
   it "should return 2 more Rays when expand rays" do
@@ -111,7 +110,7 @@ describe CrackList::Intersection do
   end
 
   it "should return Array of Ray when convert to_rays" do
-    rays = @intersection.to_ray
+    rays = @intersection.to_rays
     rays.should be_instance_of Array
     rays.each { |i| i.should be_instance_of Ray }
   end
@@ -142,8 +141,8 @@ describe CrackList::Intersections do
     @intersections.each { |i| i.should be_instance_of CrackList::Intersection }
   end
 
-  it "should return Array of Ray when convert to_ray" do
-    @intersections.to_ray.should be_instance_of Array
-    @intersections.to_ray.each { |i| i.should be_instance_of Ray }
+  it "should return Array of Ray when convert to_rays" do
+    @intersections.to_rays.should be_instance_of Array
+    @intersections.to_rays.each { |i| i.should be_instance_of Ray }
   end
 end
