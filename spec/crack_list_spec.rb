@@ -75,7 +75,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
   end
 
   it "should return 2 more Rays when expand rays" do
-    pending "until CrackList::Intersections moves to Intersections"
+    pending "until Geometry.intersect returns by Intersections"
     @expanded_rays.length.should == @rejected_rays.length + 2
   end
 end
