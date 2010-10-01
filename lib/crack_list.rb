@@ -20,7 +20,7 @@ class CrackList
   end
 
   def connect_listener_and_vertices
-    Intersections.new(@geometry.lines.map { |i| Intersection.new(@listener, i, [0.0, 1.0]) })
+    Intersections.new(@geometry.lines.map { |i| Intersection.new(@listener.position, i, [0.0, 1.0]) })
   end
 
   def reject_occluded(intersections)
@@ -30,7 +30,7 @@ class CrackList
         @geometry.occluded?(rays[intersection.ratios.index(i)])
       end
       next if result_ratio.empty?
-      Intersection.new(@listener, intersection.target_ray, result_ratio)
+      Intersection.new(@listener.position, intersection.target_ray, result_ratio)
     end.compact
 
     return Intersections.new(result)

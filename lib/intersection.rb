@@ -1,14 +1,14 @@
 class Intersection
-  attr_reader :listener, :target_ray, :ratios
+  attr_reader :origin, :target_ray, :ratios
 
-  def initialize(listener, target_ray, ratios)
-    @listener = listener
+  def initialize(origin, target_ray, ratios)
+    @origin = origin
     @target_ray = target_ray
     @ratios = ratios
   end
 
   def to_rays
-    @ratios.map { |i| Ray.new(@listener.position, (target_ray*i).destination) }
+    @ratios.map { |i| Ray.new(@origin, (target_ray*i).destination) }
   end
 end
 

@@ -5,7 +5,7 @@ module IntersectionEnvironment
     setup_listener
     @target_ray = Ray.new(Vector.new(10,20), Vector.new(400,50))
     @ratios = [0.0, 0.3, 1.0]
-    @intersection = Intersection.new(@listener, @target_ray, @ratios)
+    @intersection = Intersection.new(@listener.position, @target_ray, @ratios)
   end
 end
 
@@ -16,12 +16,12 @@ describe Intersection do
     setup_intersection
   end
 
-  it "should initialized by its target_ray and ratios" do
+  it "should initialized by its origin, target_ray and ratios" do
     @intersection.should be_instance_of Intersection
   end
 
-  it "should have members listener, target_ray and ratios" do
-    @intersection.listener.should be_instance_of Listener
+  it "should have members origin, target_ray and ratios" do
+    @intersection.origin.should be_instance_of Vector
     @intersection.target_ray.should be_instance_of Ray
     @intersection.ratios.should be_instance_of Array
     @intersection.ratios.each { |i| i.should be_instance_of Float }
