@@ -140,4 +140,12 @@ describe CrackList::Intersections do
     @intersections.intersections.should be_instance_of Array
     @intersections.intersections.each { |i| i.should be_instance_of CrackList::Intersection }
   end
+
+  it "should have includes Enumerable" do
+    CrackList::Intersections.should be_include Enumerable
+  end
+
+  it "should be able to use 'each'" do
+    @intersections.each { |i| i.should be_instance_of CrackList::Intersection }
+  end
 end

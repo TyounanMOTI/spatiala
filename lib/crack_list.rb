@@ -101,10 +101,16 @@ class CrackList
   end
 
   class Intersections
+    include Enumerable
+
     attr_reader :intersections
 
     def initialize(intersections)
       @intersections = intersections
+    end
+
+    def each
+      @intersections.each { |i| yield i }
     end
   end
 end
