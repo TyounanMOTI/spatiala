@@ -99,4 +99,9 @@ class CrackList
       @ratios.map { |i| Ray.new(listener.position, (target_ray*i).destination) }
     end
   end
+
+  class Intersections
+    def initialize(intersections)
+    end
+  end
 end

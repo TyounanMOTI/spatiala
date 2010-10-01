@@ -123,3 +123,16 @@ describe CrackList::Intersection do
     rays.each { |i| i.should be_instance_of Ray }
   end
 end
+
+describe CrackList::Intersections do
+  include CrackList::IntersectionEnvironment
+
+  before do
+    setup_intersection
+    @intersections = CrackList::Intersections.new([@intersection] * 5)
+  end
+
+  it "should initialized by Array of Intersection" do
+    @intersections.should be_instance_of CrackList::Intersections
+  end
+end
