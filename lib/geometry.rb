@@ -26,7 +26,7 @@ class Geometry
   end
 
   def nearest_intersect_line_with(ray)
-    intersect(ray).first[:target_ray]
+    intersect(ray).intersections.first.target_ray
   end
 
   def occluded?(ray)
@@ -34,6 +34,7 @@ class Geometry
   end
 
   def intersect(ray)
-    lines.map { |i| {:ratio => ray.intersect(i), :target_ray => i} }.delete_if { |i| i[:ratio].nil? }.sort_by { |i| i[:ratio] }
+    intersections = lines.map { |line| [Intersection.new(ray.origin, line, [line.intersect(ray)]), ray.intersect(line)] }.delete_if { |i| i[1].nil? }.sort_by { |i| i[1] }
+    return Intersections.new(intersections.collect { |i| i[0] })
   end
 end

@@ -91,11 +91,7 @@ describe Geometry do
     @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize).length.should == 2
   end
 
-  it "should return :ratio as Float, :target_ray as Ray by Hash when intersect Ray(100,200)->(100,100).maximize" do
-    intersect = @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize)
-    intersect.each do |i|
-      i[:ratio].should be_instance_of Float
-      i[:target_ray].should be_instance_of Ray
-    end
+  it "should return Intersections when intersect Ray(100,200)->(100,100).maximize" do
+    @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize).should be_instance_of Intersections
   end
 end
