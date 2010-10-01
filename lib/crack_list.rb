@@ -20,7 +20,7 @@ class CrackList
   end
 
   def connect_listener_and_vertices
-    Intersections.new(@geometry.lines.map { |i| Intersection.new(i, [0.0, 1.0]) })
+    Intersections.new(@geometry.lines.map { |i| Intersection.new(@listener, i, [0.0, 1.0]) })
   end
 
   def reject_occluded_rays(ratios)
@@ -77,15 +77,16 @@ class CrackList
   end
 
   class Intersection
-    attr_reader :target_ray, :ratios
+    attr_reader :listener, :target_ray, :ratios
 
-    def initialize(target_ray, ratios)
+    def initialize(listener, target_ray, ratios)
+      @listener = listener
       @target_ray = target_ray
       @ratios = ratios
     end
 
-    def to_ray(listener)
-      @ratios.map { |i| Ray.new(listener.position, (target_ray*i).destination) }
+    def to_ray
+      @ratios.map { |i| Ray.new(@listener.position, (target_ray*i).destination) }
     end
   end
 
@@ -102,8 +103,8 @@ class CrackList
       @intersections.each { |i| yield i }
     end
 
-    def to_ray(listener)
-      self.map { |i| i.to_ray(listener) }.flatten
+    def to_ray
+      self.map { |i| i.to_ray }.flatten
     end
   end
 end

@@ -82,19 +82,20 @@ describe CrackList, "when initialize from Geometry and Listener" do
 end
 
 module CrackList::IntersectionEnvironment
+  include BeamTracerEnvironment
+
   def setup_intersection
+    setup_listener
     @target_ray = Ray.new(Vector.new(10,20), Vector.new(400,50))
     @ratios = [0.0, 0.3, 1.0]
-    @intersection = CrackList::Intersection.new(@target_ray, @ratios)
+    @intersection = CrackList::Intersection.new(@listener, @target_ray, @ratios)
   end
 end
 
 describe CrackList::Intersection do
-  include BeamTracerEnvironment
   include CrackList::IntersectionEnvironment
 
   before do
-    setup_listener
     setup_intersection
   end
 
@@ -102,14 +103,15 @@ describe CrackList::Intersection do
     @intersection.should be_instance_of CrackList::Intersection
   end
 
-  it "should have members target_ray and ratios" do
+  it "should have members listener, target_ray and ratios" do
+    @intersection.listener.should be_instance_of Listener
     @intersection.target_ray.should be_instance_of Ray
     @intersection.ratios.should be_instance_of Array
     @intersection.ratios.each { |i| i.should be_instance_of Float }
   end
 
   it "should return Array of Ray when convert to_rays" do
-    rays = @intersection.to_ray(@listener)
+    rays = @intersection.to_ray
     rays.should be_instance_of Array
     rays.each { |i| i.should be_instance_of Ray }
   end
@@ -117,10 +119,8 @@ end
 
 describe CrackList::Intersections do
   include CrackList::IntersectionEnvironment
-  include BeamTracerEnvironment
 
   before do
-    setup_listener
     setup_intersection
     @intersections = CrackList::Intersections.new([@intersection] * 5)
   end
@@ -143,7 +143,7 @@ describe CrackList::Intersections do
   end
 
   it "should return Array of Ray when convert to_ray" do
-    @intersections.to_ray(@listener).should be_instance_of Array
-    @intersections.to_ray(@listener).each { |i| i.should be_instance_of Ray }
+    @intersections.to_ray.should be_instance_of Array
+    @intersections.to_ray.each { |i| i.should be_instance_of Ray }
   end
 end
