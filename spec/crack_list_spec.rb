@@ -126,8 +126,10 @@ end
 
 describe CrackList::Intersections do
   include CrackList::IntersectionEnvironment
+  include BeamTracerEnvironment
 
   before do
+    setup_listener
     setup_intersection
     @intersections = CrackList::Intersections.new([@intersection] * 5)
   end
@@ -147,5 +149,10 @@ describe CrackList::Intersections do
 
   it "should be able to use 'each'" do
     @intersections.each { |i| i.should be_instance_of CrackList::Intersection }
+  end
+
+  it "should return Array of Ray when convert to_ray" do
+    @intersections.to_ray(@listener).should be_instance_of Array
+    @intersections.to_ray(@listener).each { |i| i.should be_instance_of Ray }
   end
 end

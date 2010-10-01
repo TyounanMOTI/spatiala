@@ -112,5 +112,9 @@ class CrackList
     def each
       @intersections.each { |i| yield i }
     end
+
+    def to_ray(listener)
+      self.map { |i| i.to_ray(listener) }.flatten
+    end
   end
 end
