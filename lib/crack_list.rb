@@ -20,7 +20,7 @@ class CrackList
   end
 
   def connect_listener_and_vertices
-    @geometry.lines.map { |i| {:line => i, :ratios => [0.0, 1.0]} }
+    Intersections.new(@geometry.lines.map { |i| Intersection.new(i, [0.0, 1.0]) })
   end
 
   def reject_occluded_rays(ratios)

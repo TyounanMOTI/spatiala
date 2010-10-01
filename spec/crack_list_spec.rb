@@ -57,7 +57,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
     setup_geometry
     setup_listener
     @list = CrackList.new(@geometry, @listener)
-#    @connected_rays = @list.connect_listener_and_vertices
+    @connected_rays = @list.connect_listener_and_vertices
 #    @rejected_rays = @list.reject_occluded_rays(@connected_rays)
 #    @expanded_rays = @list.expand(@rejected_rays)
   end
@@ -67,8 +67,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
   end
 
   it "should return Intersections when connect_listener_and_vertices" do
-    pending "during convert Hash to Intersection[s]"
-    @connected_rays.should be_instance_of Intersections
+    @connected_rays.should be_instance_of CrackList::Intersections
   end
 
   it "should return 4 less Rays when reject_occluded_rays" do
