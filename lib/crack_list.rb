@@ -108,5 +108,9 @@ class CrackList
     def to_rays
       self.map { |i| i.to_rays }.flatten
     end
+
+    def length
+      @intersections.length
+    end
   end
 end

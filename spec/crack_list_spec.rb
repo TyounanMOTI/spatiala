@@ -75,7 +75,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
   end
 
   it "should return 2 more Rays when expand rays" do
-    pending "during convert Hash to Intersection[s]"
+    pending "until implement Intersections.length"
     @expanded_rays.length.should == @rejected_rays.length + 2
   end
 end
@@ -144,5 +144,9 @@ describe CrackList::Intersections do
   it "should return Array of Ray when convert to_rays" do
     @intersections.to_rays.should be_instance_of Array
     @intersections.to_rays.each { |i| i.should be_instance_of Ray }
+  end
+
+  it "length should be 5" do
+    @intersections.length.should == 5
   end
 end
