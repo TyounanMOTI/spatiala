@@ -88,7 +88,11 @@ class CrackList
   end
 
   class Intersection
+    attr_reader :target_ray, :ratios
+
     def initialize(target_ray, ratios)
+      @target_ray = target_ray
+      @ratios = ratios
     end
   end
 end

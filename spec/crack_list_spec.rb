@@ -106,4 +106,10 @@ describe CrackList::Intersection do
   it "should initialized by its target_ray and ratios" do
     @intersection.should be_instance_of CrackList::Intersection
   end
+
+  it "should have members target_ray and ratios" do
+    @intersection.target_ray.should be_instance_of Ray
+    @intersection.ratios.should be_instance_of Array
+    @intersection.ratios.each { |i| i.should be_instance_of Float }
+  end
 end
