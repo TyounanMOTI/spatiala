@@ -83,12 +83,6 @@ describe CrackList, "when initialize from Geometry and Listener" do
     @expanded_rays.length.should == @rejected_rays.length + 2
   end
 
-  it "should return Array of Ray when ratio_to_rays(@connected_rays[0])" do
-    rays = @list.ratio_to_rays(@connected_rays[0])
-    rays.should be_instance_of Array
-    rays.each { |i| i.should be_instance_of Ray }
-  end
-
   it "should return Array of Ray when ratios_to_rays(@connected_rays)" do
     rays = @list.ratios_to_rays(@connected_rays)
     rays.should be_instance_of Array
@@ -97,7 +91,10 @@ describe CrackList, "when initialize from Geometry and Listener" do
 end
 
 describe CrackList::Intersection do
+  include BeamTracerEnvironment
+
   before do
+    setup_listener
     @target_ray = Ray.new(Vector.new(10,20), Vector.new(400,50))
     @ratios = [0.0, 0.3, 1.0]
     @intersection = CrackList::Intersection.new(@target_ray, @ratios)
@@ -111,5 +108,11 @@ describe CrackList::Intersection do
     @intersection.target_ray.should be_instance_of Ray
     @intersection.ratios.should be_instance_of Array
     @intersection.ratios.each { |i| i.should be_instance_of Float }
+  end
+
+  it "should return Array of Ray when convert to_rays" do
+    rays = @intersection.to_ray(@listener)
+    rays.should be_instance_of Array
+    rays.each { |i| i.should be_instance_of Ray }
   end
 end

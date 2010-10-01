@@ -94,5 +94,9 @@ class CrackList
       @target_ray = target_ray
       @ratios = ratios
     end
+
+    def to_ray(listener)
+      @ratios.map { |i| Ray.new(listener.position, (target_ray*i).destination) }
+    end
   end
 end
