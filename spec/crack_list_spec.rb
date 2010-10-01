@@ -90,14 +90,21 @@ describe CrackList, "when initialize from Geometry and Listener" do
   end
 end
 
-describe CrackList::Intersection do
-  include BeamTracerEnvironment
-
-  before do
-    setup_listener
+module CrackList::IntersectionEnvironment
+  def setup_intersection
     @target_ray = Ray.new(Vector.new(10,20), Vector.new(400,50))
     @ratios = [0.0, 0.3, 1.0]
     @intersection = CrackList::Intersection.new(@target_ray, @ratios)
+  end
+end
+
+describe CrackList::Intersection do
+  include BeamTracerEnvironment
+  include CrackList::IntersectionEnvironment
+
+  before do
+    setup_listener
+    setup_intersection
   end
 
   it "should initialized by its target_ray and ratios" do
