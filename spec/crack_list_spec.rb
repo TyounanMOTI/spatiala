@@ -58,7 +58,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
     setup_listener
     @list = CrackList.new(@geometry, @listener)
     @connected_rays = @list.connect_listener_and_vertices
-    @rejected_rays = @list.reject_occluded_rays(@connected_rays)
+    @rejected_rays = @list.reject_occluded(@connected_rays)
 #    @expanded_rays = @list.expand(@rejected_rays)
   end
 

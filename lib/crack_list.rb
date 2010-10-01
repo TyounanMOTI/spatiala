@@ -23,7 +23,7 @@ class CrackList
     Intersections.new(@geometry.lines.map { |i| Intersection.new(@listener, i, [0.0, 1.0]) })
   end
 
-  def reject_occluded_rays(intersections)
+  def reject_occluded(intersections)
     result = intersections.map do |intersection|
       rays = intersection.to_rays
       result_ratio = intersection.ratios.dup.delete_if do |i|
