@@ -95,3 +95,15 @@ describe CrackList, "when initialize from Geometry and Listener" do
     rays.each { |i| i.should be_instance_of Ray }
   end
 end
+
+describe CrackList::Intersection do
+  before do
+    @target_ray = Ray.new(Vector.new(10,20), Vector.new(400,50))
+    @ratios = [0.0, 0.3, 1.0]
+    @intersection = CrackList::Intersection.new(@target_ray, @ratios)
+  end
+
+  it "should initialized by its target_ray and ratios" do
+    @intersection.should be_instance_of CrackList::Intersection
+  end
+end

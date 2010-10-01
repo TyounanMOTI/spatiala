@@ -86,4 +86,9 @@ class CrackList
     self.each { |i| list << i.to_beam }
     return list
   end
+
+  class Intersection
+    def initialize(target_ray, ratios)
+    end
+  end
 end
