@@ -101,7 +101,10 @@ class CrackList
   end
 
   class Intersections
+    attr_reader :intersections
+
     def initialize(intersections)
+      @intersections = intersections
     end
   end
 end

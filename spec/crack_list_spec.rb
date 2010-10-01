@@ -135,4 +135,9 @@ describe CrackList::Intersections do
   it "should initialized by Array of Intersection" do
     @intersections.should be_instance_of CrackList::Intersections
   end
+
+  it "should have Array of Intersection" do
+    @intersections.intersections.should be_instance_of Array
+    @intersections.intersections.each { |i| i.should be_instance_of CrackList::Intersection }
+  end
 end
