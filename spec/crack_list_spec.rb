@@ -58,7 +58,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
     setup_listener
     @list = CrackList.new(@geometry, @listener)
     @connected_rays = @list.connect_listener_and_vertices
-    @rejected_rays = @list.reject_occluded(@connected_rays)
+#    @rejected_rays = @list.reject_occluded(@connected_rays)
 #    @expanded_rays = @list.expand(@rejected_rays)
   end
 
@@ -67,86 +67,16 @@ describe CrackList, "when initialize from Geometry and Listener" do
   end
 
   it "should return Intersections when connect_listener_and_vertices" do
-    @connected_rays.should be_instance_of CrackList::Intersections
+    @connected_rays.should be_instance_of Intersections
   end
 
   it "should return 4 less Rays when reject_occluded_rays" do
+    pending "until CrackList::Intersections moves to Intersections"
     @rejected_rays.to_rays.length.should == @connected_rays.to_rays.length - 4
   end
 
   it "should return 2 more Rays when expand rays" do
-    pending "until implement Intersections.length"
+    pending "until CrackList::Intersections moves to Intersections"
     @expanded_rays.length.should == @rejected_rays.length + 2
-  end
-end
-
-module CrackList::IntersectionEnvironment
-  include BeamTracerEnvironment
-
-  def setup_intersection
-    setup_listener
-    @target_ray = Ray.new(Vector.new(10,20), Vector.new(400,50))
-    @ratios = [0.0, 0.3, 1.0]
-    @intersection = CrackList::Intersection.new(@listener, @target_ray, @ratios)
-  end
-end
-
-describe CrackList::Intersection do
-  include CrackList::IntersectionEnvironment
-
-  before do
-    setup_intersection
-  end
-
-  it "should initialized by its target_ray and ratios" do
-    @intersection.should be_instance_of CrackList::Intersection
-  end
-
-  it "should have members listener, target_ray and ratios" do
-    @intersection.listener.should be_instance_of Listener
-    @intersection.target_ray.should be_instance_of Ray
-    @intersection.ratios.should be_instance_of Array
-    @intersection.ratios.each { |i| i.should be_instance_of Float }
-  end
-
-  it "should return Array of Ray when convert to_rays" do
-    rays = @intersection.to_rays
-    rays.should be_instance_of Array
-    rays.each { |i| i.should be_instance_of Ray }
-  end
-end
-
-describe CrackList::Intersections do
-  include CrackList::IntersectionEnvironment
-
-  before do
-    setup_intersection
-    @intersections = CrackList::Intersections.new([@intersection] * 5)
-  end
-
-  it "should initialized by Array of Intersection" do
-    @intersections.should be_instance_of CrackList::Intersections
-  end
-
-  it "should have Array of Intersection" do
-    @intersections.intersections.should be_instance_of Array
-    @intersections.intersections.each { |i| i.should be_instance_of CrackList::Intersection }
-  end
-
-  it "should have includes Enumerable" do
-    CrackList::Intersections.should be_include Enumerable
-  end
-
-  it "should be able to use 'each'" do
-    @intersections.each { |i| i.should be_instance_of CrackList::Intersection }
-  end
-
-  it "should return Array of Ray when convert to_rays" do
-    @intersections.to_rays.should be_instance_of Array
-    @intersections.to_rays.each { |i| i.should be_instance_of Ray }
-  end
-
-  it "length should be 5" do
-    @intersections.length.should == 5
   end
 end
