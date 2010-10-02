@@ -77,7 +77,6 @@ describe Intersections do
   end
 
   it "length should be 5" do
-    pending "until it adapts Array"
     @intersections.length.should == 5
   end
 
