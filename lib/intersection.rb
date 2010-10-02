@@ -33,4 +33,17 @@ class Intersections
   def length
     @intersections.length
   end
+
+  def merge(intersections)
+    result = Intersections.new(@intersections.dup)
+    intersections.each do |intersection|
+      index = @intersections.index { |i| i.target_ray == intersection.target_ray }
+      if index.nil?
+        result.intersections << intersection
+      else
+        result.intersections[index].ratios.concat(intersection.ratios)
+      end
+    end
+    return result
+  end
 end

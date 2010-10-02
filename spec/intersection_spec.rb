@@ -1,3 +1,6 @@
+require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
+
 module IntersectionEnvironment
   include BeamTracerEnvironment
 
@@ -40,6 +43,10 @@ describe Intersections do
   before do
     setup_intersection
     @intersections = Intersections.new([@intersection] * 5)
+    @ray = Ray.new(Vector.new(400,50), Vector.new(30,420))
+    intersection2 = Intersection.new(@listener.position, @ray, [0.7])
+    @intersections2 = Intersections.new([intersection2])
+    @merged = @intersections.merge(@intersections2)
   end
 
   it "should initialized by Array of Intersection" do
@@ -66,5 +73,21 @@ describe Intersections do
 
   it "length should be 5" do
     @intersections.length.should == 5
+  end
+
+  it "should return Intersections when merged" do
+    @merged.should be_instance_of Intersections
+  end
+
+  it "should have record of Ray(400,50)->(30,420) when merged @intersections2" do
+    @merged.intersections.index { |i| i.target_ray == @ray }.should_not be_nil
+  end
+
+  it "should have ratio 0.9 on record of Ray(400,50)->(30,420) when merged that on @merged" do
+    intersection = Intersection.new(@listener.position, @ray, [0.9])
+    intersections = Intersections.new([intersection])
+    result = @merged.merge(intersections)
+    index = result.intersections.index { |i| i.target_ray == @ray }
+    result.intersections[index].ratios.should be_include 0.9
   end
 end
