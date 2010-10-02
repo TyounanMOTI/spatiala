@@ -14,24 +14,22 @@ end
 
 
 class Intersections < Array
-  include Enumerable
-
-  def initialize(elements)
-    super(elements)
+  def initialize(*args)
+    super
   end
 
   def to_rays
     self.map { |i| i.to_rays }.flatten
   end
 
-  def merge(intersections)
-    result = Intersections.new(@intersections.dup)
-    intersections.each do |intersection|
-      index = @intersections.index { |i| i.target_ray == intersection.target_ray }
-      if index.nil?
-        result.intersections << intersection
+  def merge(other)
+    result = Intersections.new(self.dup)
+    other.each do |i|
+      target_index = self.index { |j| j.target_ray == i.target_ray }
+      if target_index.nil?
+        result << i
       else
-        result.intersections[index].ratios.concat(intersection.ratios)
+        result[target_index].ratios.concat(i.ratios)
       end
     end
     return result

@@ -42,11 +42,11 @@ describe Intersections do
 
   before do
     setup_intersection
-    @intersections = Intersections.new([@intersection] * 5)
-#    @ray = Ray.new(Vector.new(400,50), Vector.new(30,420))
-#    intersection2 = Intersection.new(@listener.position, @ray, [0.7])
-#    @intersections2 = Intersections.new([intersection2])
-#    @merged = @intersections.merge(@intersections2)
+    @intersections = Intersections.new(5, @intersection)
+    @ray = Ray.new(Vector.new(400,50), Vector.new(30,420))
+    intersection2 = Intersection.new(@listener.position, @ray, [0.7])
+    @intersections2 = Intersections.new([intersection2])
+    @merged = @intersections.merge(@intersections2)
   end
 
   it "should superclass of Array" do
@@ -58,9 +58,7 @@ describe Intersections do
   end
 
   it "should have Array of Intersection" do
-    pending "until it adapts Array"
-    @intersections.intersections.should be_instance_of Array
-    @intersections.intersections.each { |i| i.should be_instance_of Intersection }
+    @intersections.each { |i| i.should be_instance_of Intersection }
   end
 
   it "should have includes Enumerable" do
@@ -81,21 +79,18 @@ describe Intersections do
   end
 
   it "should return Intersections when merged" do
-    pending "until it adapts Array"
     @merged.should be_instance_of Intersections
   end
 
   it "should have record of Ray(400,50)->(30,420) when merged @intersections2" do
-    pending "until it adapts Array"
-    @merged.intersections.index { |i| i.target_ray == @ray }.should_not be_nil
+    @merged.index { |i| i.target_ray == @ray }.should_not be_nil
   end
 
   it "should have ratio 0.9 on record of Ray(400,50)->(30,420) when merged that on @merged" do
-    pending "until it adapts Array"
     intersection = Intersection.new(@listener.position, @ray, [0.9])
     intersections = Intersections.new([intersection])
     result = @merged.merge(intersections)
-    index = result.intersections.index { |i| i.target_ray == @ray }
-    result.intersections[index].ratios.should be_include 0.9
+    index = result.index { |i| i.target_ray == @ray }
+    result[index].ratios.should be_include 0.9
   end
 end
