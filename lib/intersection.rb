@@ -16,22 +16,12 @@ end
 class Intersections < Array
   include Enumerable
 
-  attr_reader :intersections
-
-  def initialize(intersections)
-    super(intersections)
-  end
-
-  def each
-    @intersections.each { |i| yield i }
+  def initialize(elements)
+    super(elements)
   end
 
   def to_rays
     self.map { |i| i.to_rays }.flatten
-  end
-
-  def length
-    @intersections.length
   end
 
   def merge(intersections)

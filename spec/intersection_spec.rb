@@ -68,7 +68,6 @@ describe Intersections do
   end
 
   it "should be able to use 'each'" do
-    pending "until it adapts Array"
     @intersections.each { |i| i.should be_instance_of Intersection }
   end
 
