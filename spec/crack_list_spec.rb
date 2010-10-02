@@ -58,7 +58,7 @@ describe CrackList, "when initialize from Geometry and Listener" do
     setup_listener
     @list = CrackList.new(@geometry, @listener)
     @connected_rays = @list.connect_listener_and_vertices
-    @rejected_rays = @list.reject_occluded(@connected_rays)
+#    @rejected_rays = @list.reject_occluded(@connected_rays)
 #    @expanded_rays = @list.expand(@rejected_rays)
   end
 
@@ -71,10 +71,12 @@ describe CrackList, "when initialize from Geometry and Listener" do
   end
 
   it "should return 4 less Rays when reject_occluded_rays" do
+    pending "until it adapts Array"
     @rejected_rays.to_rays.length.should == @connected_rays.to_rays.length - 4
   end
 
   it "should return 2 more Rays when expand rays" do
+    pending "until it adapts Array"
     pending "until Geometry.intersect returns by Intersections"
     @expanded_rays.length.should == @rejected_rays.length + 2
   end

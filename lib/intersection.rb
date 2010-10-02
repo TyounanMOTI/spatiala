@@ -13,13 +13,13 @@ class Intersection
 end
 
 
-class Intersections
+class Intersections < Array
   include Enumerable
 
   attr_reader :intersections
 
   def initialize(intersections)
-    @intersections = intersections
+    super(intersections)
   end
 
   def each
