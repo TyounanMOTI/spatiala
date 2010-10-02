@@ -26,7 +26,7 @@ class Geometry
   end
 
   def nearest_intersect_line_with(ray)
-    intersect(ray).intersections.first.target_ray
+    intersect(ray).first.target_ray
   end
 
   def occluded?(ray)
