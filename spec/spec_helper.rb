@@ -13,7 +13,6 @@ require 'crack_list'
 require 'matrix'
 require 'visibility_map'
 require 'visibility_region'
-require 'intersection_points'
 require 'intersection'
 
 require 'spec'
