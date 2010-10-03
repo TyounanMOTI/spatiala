@@ -74,8 +74,6 @@ class CrackList
   end
 
   def to_beams
-    list = Array.new
-    self.each { |i| list << i.to_beam }
-    return list
+    map { |i| i.to_beam }
   end
 end
