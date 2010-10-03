@@ -1,4 +1,6 @@
 class VisibilityMap
+  attr_reader :regions
+
   def initialize(tracer)
     @regions = tracer.geometry.lines.map do |i|
       [
@@ -27,8 +29,6 @@ class VisibilityMap
   def occluded?(intersection)
     return false
   end
-
-  attr_reader :regions
 
   class IntersectionPoints < Array
     def initialize(*args)
