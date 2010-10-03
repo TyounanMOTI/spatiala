@@ -18,6 +18,17 @@ class Intersection
   def sort
     self.class.new(@origin.dup, @target_ray.dup, @ratios.sort)
   end
+
+  def to_cracks
+    cracks = []
+    @ratios.each_index do |i|
+      current_ratio, next_ratio = @ratios[i..i+1]
+      break if next_ratio.nil?
+      line = @target_ray*i
+      cracks << Crack.new(line, self.to_rays[i..i+1])
+    end
+    return cracks
+  end
 end
 
 
@@ -49,5 +60,9 @@ class Intersections < Array
 
   def sort
     self.class.new(map { |i| i.sort })
+  end
+
+  def to_cracks
+    map { |i| i.to_cracks }.flatten
   end
 end

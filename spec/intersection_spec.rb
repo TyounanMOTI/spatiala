@@ -41,6 +41,11 @@ describe Intersection do
     @intersection.dup.origin.should_not be_equal @intersection.origin
     @intersection.dup.target_ray.should_not be_equal @intersection.target_ray
   end
+
+  it "should return Array of Crack when convert to_cracks" do
+    @intersection.to_cracks.should be_instance_of Array
+    @intersection.to_cracks.each { |i| i.should be_instance_of Crack }
+  end
 end
 
 describe Intersections do
@@ -112,6 +117,11 @@ describe Intersections do
   it "should have sorted ratio when sorted" do
     sorted = @intersections.sort
     sorted.each_index { |i| sorted[i].ratios.should == @intersections[i].ratios.sort }
+  end
+
+  it "should return Array of Crack when convert to_cracks" do
+    @intersections.to_cracks.should be_instance_of Array
+    @intersections.to_cracks.each { |i| i.should be_instance_of Crack }
   end
 end
 
