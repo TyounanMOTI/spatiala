@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe VisibilityRegion do
-  before do
+module VisibilityRegion::Environment
+  def setup_region
     original = Ray.new(Vector.new(0,0), Vector.new(0,0))
     rays = [
             Ray.new(Vector.new(0,1), Vector.new(4,2)),
@@ -9,6 +9,15 @@ describe VisibilityRegion do
             Ray.new(Vector.new(1,3), Vector.new(0,1))
            ]
     @region = VisibilityRegion.new(original, rays)
+  end
+end
+
+
+describe VisibilityRegion do
+  include VisibilityRegion::Environment
+
+  before do
+    setup_region
   end
 
   it "should be initialized with Rays" do
