@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-module GeometryEnvironment
+module Geometry::Environment
   def setup_geometry
     triangle = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
@@ -16,7 +16,7 @@ module GeometryEnvironment
 end
 
 describe Geometry do
-  include GeometryEnvironment
+  include Geometry::Environment
 
   before do
     setup_geometry

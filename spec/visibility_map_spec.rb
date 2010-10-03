@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
 
 describe VisibilityMap do
-  include BeamTracerEnvironment
+  include BeamTracer::Environment
 
   before do
     setup_beam_tracer

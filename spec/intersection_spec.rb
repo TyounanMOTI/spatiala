@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
 
-module IntersectionEnvironment
-  include BeamTracerEnvironment
+module Intersection::Environment
+  include BeamTracer::Environment
 
   def setup_intersection
     setup_listener
@@ -13,7 +13,7 @@ module IntersectionEnvironment
 end
 
 describe Intersection do
-  include IntersectionEnvironment
+  include Intersection::Environment
 
   before do
     setup_intersection
@@ -49,7 +49,7 @@ describe Intersection do
 end
 
 describe Intersections do
-  include IntersectionEnvironment
+  include Intersection::Environment
 
   before do
     setup_intersection

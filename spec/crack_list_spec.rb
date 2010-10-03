@@ -56,7 +56,7 @@ describe CrackList, "when initialize with Array of Crack" do
 end
 
 describe CrackList, "when initialize from Geometry and Listener" do
-  include BeamTracerEnvironment
+  include BeamTracer::Environment
 
   before do
     setup_geometry

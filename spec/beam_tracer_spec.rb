@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/geometry_spec')
 
-module BeamTracerEnvironment
-  include GeometryEnvironment
+module BeamTracer::Environment
+  include Geometry::Environment
 
   def setup_beam_tracer
     setup_geometry
@@ -22,7 +22,7 @@ module BeamTracerEnvironment
 end
 
 describe BeamTracer do
-  include BeamTracerEnvironment
+  include BeamTracer::Environment
 
   before do
     setup_beam_tracer
