@@ -44,22 +44,14 @@ class Spatiala < Processing::App
                              Vector.new(30,30))
 
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
-
     @crack_list = CrackList.new(@geometry, @listener)
 
-    @index = 0
-
-    @scale = Vector.new(1,1)
-    @offset = Vector.new(0,0)
+    normalized_tracer = @tracer.normalize(@geometry.lines[2])
+    @map = VisibilityMap.new(normalized_tracer)
 
     clear
-    draw_geometry
-    draw_listener
-    hue = 0
-    @crack_list.to_beams.each_index do |i|
-      hue += 100.0/(@crack_list.length + 1)*i
-      draw_beam @crack_list.to_beams[i], hue, 50
-    end
+    draw_visibility_map @map
+    draw_ray normalized_tracer.listener.position.dualize
   end
 
   def draw
@@ -78,10 +70,10 @@ class Spatiala < Processing::App
     @normalized_tracer.geometry.lines.each { |i| print_ray(i) }
   end
 
-  def draw_visibility_map
+  def draw_visibility_map(map)
     hue = 0
-    @regions.each do |region|
-      hue += 100/@regions.length
+    map.regions.each do |region|
+      hue += 100/map.regions.length
       region.rays.each { |ray| draw_ray ray, hue, 50 }
     end
   end
