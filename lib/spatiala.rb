@@ -55,11 +55,11 @@ class Spatiala < Processing::App
     clear
     draw_geometry
     draw_listener
-    @crack_list.expand(@crack_list.reject_occluded(@crack_list.connect_listener_and_vertices)).to_rays.each do |i|
-      draw_ray i, 30, 50
-      print_ray i
+    hue = 0
+    @crack_list.to_beams.each_index do |i|
+      hue += 100.0/(@crack_list.length + 1)*i
+      draw_beam @crack_list.to_beams[i], hue, 50
     end
-    Kernel.print "========\n"
   end
 
   def draw
@@ -173,8 +173,8 @@ class Spatiala < Processing::App
     pop_style
   end
 
-  def draw_beam(beam)
-    beam.deltas.each { |i| draw_ray i }
+  def draw_beam(beam, hue=@hue, alpha=100)
+    beam.deltas.each { |i| draw_ray i, hue, alpha }
   end
 
   def key_released

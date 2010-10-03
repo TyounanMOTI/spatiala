@@ -2,6 +2,17 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
 require File.expand_path(File.dirname(__FILE__) + '/ray_spec')
 
+shared_examples_for "requested to convert to_beams" do
+  it "should get Array of Beam when to_beams" do
+    @list.to_beams.should be_instance_of Array
+    @list.to_beams.each { |i| i.should be_instance_of Beam }
+  end
+
+  it "should get Beams same length of Cracks when to_beams" do
+    @list.to_beams.length.should == @list.length
+  end
+end
+
 describe CrackList, "when initialize with Array of Crack" do
   before do
     @line1 = Ray.new(Vector.new(1,0), Vector.new(10,20))
@@ -41,14 +52,7 @@ describe CrackList, "when initialize with Array of Crack" do
     @list[0].should be_instance_of Crack
   end
 
-  it "should get Array of Beam when to_beams" do
-    @list.to_beams.should be_instance_of Array
-    @list.to_beams.each { |i| i.should be_instance_of Beam }
-  end
-
-  it "should get Beams same length of Cracks when to_beams" do
-    @list.to_beams.length.should == @list.length
-  end
+  it_should_behave_like "requested to convert to_beams"
 end
 
 describe CrackList, "when initialize from Geometry and Listener" do
@@ -67,6 +71,12 @@ describe CrackList, "when initialize from Geometry and Listener" do
     @list.should be_instance_of CrackList
   end
 
+  it "should have member 'cracks' which is Array of Crack" do
+    @list.cracks.should be_instance_of Array
+    @list.cracks.should_not be_empty
+    @list.cracks.each { |i| i.should be_instance_of Crack }
+  end
+
   it "should return Intersections when connect_listener_and_vertices" do
     @connected_rays.should be_instance_of Intersections
   end
@@ -82,4 +92,6 @@ describe CrackList, "when initialize from Geometry and Listener" do
   it "should return 8 Rays when expand rays" do
     @expanded_rays.to_rays.length.should == 8
   end
+
+  it_should_behave_like "requested to convert to_beams"
 end

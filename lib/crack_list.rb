@@ -16,7 +16,8 @@ class CrackList
   end
 
   def initialize_from_geometry_and_listener
-    return Array.new
+    intersections = expand(reject_occluded(connect_listener_and_vertices))
+    return intersections.sort.to_cracks
   end
 
   def connect_listener_and_vertices
