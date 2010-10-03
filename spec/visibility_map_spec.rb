@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
+require File.expand_path(File.dirname(__FILE__) + '/visibility_region_spec')
 
 describe VisibilityMap do
   include BeamTracer::Environment
@@ -55,5 +56,19 @@ describe VisibilityMap::IntersectionPoints do
 
   it "should return 7 when required length" do
     @intersection_points.length.should == 7
+  end
+end
+
+describe VisibilityMap::IntersectionPoint do
+  include VisibilityRegion::Environment
+
+  IntersectionPoint = VisibilityMap::IntersectionPoint
+
+  before do
+    @intersection_point = IntersectionPoint.new(Vector.new(1,0), @region)
+  end
+
+  it "should initialize by point as Vector and region as VisibilityRegion" do
+    @intersection_point.should be_instance_of IntersectionPoint
   end
 end

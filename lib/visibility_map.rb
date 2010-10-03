@@ -35,4 +35,9 @@ class VisibilityMap
       super
     end
   end
+
+  class IntersectionPoint
+    def initialize(point, region)
+    end
+  end
 end
