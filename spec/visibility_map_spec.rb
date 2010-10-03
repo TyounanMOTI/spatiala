@@ -19,12 +19,12 @@ describe VisibilityMap do
   end
 
   it "should return IntersectionPoints class when get_instersection_points" do
-    pending "until IntersectionPoints move to VisibilityMap::IntersectionPoints"
+    pending "until adapts IntersectionPoints as child of Array"
     @map.get_intersection_points.should be_instance_of IntersectionPoints
   end
 
   it "should return IntersectionPoints which have > 0 points when get_intersection_points" do
-    pending "until IntersectionPoints move to VisibilityMap::IntersectionPoints"
+    pending "until adapts IntersectionPoints as child of Array"
     @map.get_intersection_points.length.should > 0
   end
 end
