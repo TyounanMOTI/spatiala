@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
+require File.expand_path(File.dirname(__FILE__) + '/ray_spec')
 
 describe CrackList, "when initialize with Array of Crack" do
   before do
@@ -58,8 +59,8 @@ describe CrackList, "when initialize from Geometry and Listener" do
     setup_listener
     @list = CrackList.new(@geometry, @listener)
     @connected_rays = @list.connect_listener_and_vertices
-#    @rejected_rays = @list.reject_occluded(@connected_rays)
-#    @expanded_rays = @list.expand(@rejected_rays)
+    @rejected_rays = @list.reject_occluded(@connected_rays)
+    @expanded_rays = @list.expand(@rejected_rays)
   end
 
   it "should return CrackList when initialized" do
@@ -70,14 +71,15 @@ describe CrackList, "when initialize from Geometry and Listener" do
     @connected_rays.should be_instance_of Intersections
   end
 
-  it "should return 4 less Rays when reject_occluded_rays" do
-    pending "until it adapts Array"
-    @rejected_rays.to_rays.length.should == @connected_rays.to_rays.length - 4
+  it "should return 10 Rays when connect_listener_and_vertices" do
+    @connected_rays.to_rays.length.should == 10
   end
 
-  it "should return 2 more Rays when expand rays" do
-    pending "until it adapts Array"
-    pending "until Geometry.intersect returns by Intersections"
-    @expanded_rays.length.should == @rejected_rays.length + 2
+  it "should return 6 Rays when reject_occluded" do
+    @rejected_rays.to_rays.length.should == 6
+  end
+
+  it "should return 8 Rays when expand rays" do
+    @expanded_rays.to_rays.length.should == 8
   end
 end

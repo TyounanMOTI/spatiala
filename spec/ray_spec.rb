@@ -183,3 +183,7 @@ describe Ray do
     (Ray.new(Vector.new(0,0), Vector.new(0,100))*0.5).should == Ray.new(Vector.new(0,0), Vector.new(0,50))
   end
 end
+
+def print_ray(ray)
+  Kernel.print "- Ray (%5.1f" % ray.origin.x, ",%5.1f" % ray.origin.y, ") to (%5.1f" % ray.destination.x, ",%5.1f" % ray.destination.y, ")\n"
+end

@@ -12,7 +12,7 @@ module BeamTracerEnvironment
   end
 
   def setup_listener
-    @listener = Listener.new(Vector.new(120,160),
+    @listener = Listener.new(Vector.new(100,200),
                              Vector.new(30,30))
   end
 

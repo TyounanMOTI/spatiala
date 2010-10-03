@@ -11,6 +11,7 @@ require 'beam'
 require './matrix'
 require 'visibility_map'
 require 'visibility_region'
+require 'intersection'
 
 class Spatiala < Processing::App
   def setup
@@ -54,9 +55,11 @@ class Spatiala < Processing::App
     clear
     draw_geometry
     draw_listener
-    @crack_list.expand(@crack_list.reject_occluded_rays(@crack_list.connect_listener_and_vertices)).each do |i|
+    @crack_list.expand(@crack_list.reject_occluded(@crack_list.connect_listener_and_vertices)).to_rays.each do |i|
       draw_ray i, 30, 50
+      print_ray i
     end
+    Kernel.print "========\n"
   end
 
   def draw
@@ -84,7 +87,7 @@ class Spatiala < Processing::App
   end
 
   def print_ray(ray)
-    Kernel.print "- Ray (%2.1g" % ray.origin.x, ",%2.1g" % ray.origin.y, ") to (%2.1g" % ray.destination.x, ",%2.1g" % ray.destination.y, ")\n"
+    Kernel.print "- Ray (%5.1f" % ray.origin.x, ",%5.1f" % ray.origin.y, ") to (%5.1f" % ray.destination.x, ",%5.1f" % ray.destination.y, ")\n"
   end
 
   def clear

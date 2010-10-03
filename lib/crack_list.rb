@@ -36,16 +36,16 @@ class CrackList
     return Intersections.new(result)
   end
 
-  def expand(rays)
-    additional_rays = Array.new
-    rays.each do |ray|
+  def expand(intersections)
+    additional_intersection = Array.new
+    intersections.to_rays.each do |ray|
       second_intersection = @geometry.intersect(ray.maximize).fetch(1,nil)
       next if second_intersection.nil?
-      second_intersection_point = ray.origin + ray.maximize.delta*second_intersection[:ratio]
-      next if second_intersection_point == ray.destination
-      additional_rays << Ray.new(ray.origin, second_intersection_point)
+      ratio = second_intersection.target_ray.intersect(ray.maximize)
+      next if ratio.nil? || ratio == 0.0 || ratio == 1.0
+      additional_intersection << Intersection.new(@listener.position, second_intersection.target_ray, [ratio])
     end
-    return rays.dup.concat(additional_rays)
+    return intersections.merge(Intersections.new(additional_intersection))
   end
 
   def append(crack)
