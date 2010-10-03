@@ -14,6 +14,10 @@ class Intersection
   def dup
     self.class.new(@origin.dup, @target_ray.dup, @ratios.dup)
   end
+
+  def sort
+    self.class.new(@origin.dup, @target_ray.dup, @ratios.sort)
+  end
 end
 
 
@@ -41,5 +45,9 @@ class Intersections < Array
 
   def dup
     self.class.new(map { |i| i.dup })
+  end
+
+  def sort
+    self.class.new(map { |i| i.sort })
   end
 end

@@ -108,5 +108,10 @@ describe Intersections do
     duplicated = @intersections.dup
     duplicated.each_index { |i| @intersections[i].should_not be_equal duplicated[i] }
   end
+
+  it "should have sorted ratio when sorted" do
+    sorted = @intersections.sort
+    sorted.each_index { |i| sorted[i].ratios.should == @intersections[i].ratios.sort }
+  end
 end
 
