@@ -15,15 +15,14 @@ class VisibilityMap
 
   def get_intersection_points
     vision = @tracer.listener.position.dualize
-    intersections = @regions.map do |region|
-      region.rays.map { |ray| vision.intersect ray }
+    intersection_points = @regions.map do |region|
+      region.rays.map { |ray| IntersectionPoint.new((vision*vision.intersect(ray)).destination, region) }
     end
-    intersections.flatten!
-    intersections.reject! { |i| i <= 0 }
-    intersections.uniq!
-    intersections.sort!
-    intersections.reject! { |i| occluded?(i) }
-    return IntersectionPoints.new(intersections)
+    intersection_points = IntersectionPoints.new(intersections)
+    intersection_points.flatten!
+    intersection_points.sort_by { |i| i.point.x }
+    intersection_points.reject! { |i| occluded?(i) }
+    return intersection_points
   end
 
   def occluded?(intersection)
