@@ -37,7 +37,11 @@ class VisibilityMap
   end
 
   class IntersectionPoint
+    attr_reader :point, :region
+
     def initialize(point, region)
+      @point = point
+      @region = region
     end
   end
 end

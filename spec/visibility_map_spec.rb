@@ -65,10 +65,16 @@ describe VisibilityMap::IntersectionPoint do
   IntersectionPoint = VisibilityMap::IntersectionPoint
 
   before do
+    setup_region
     @intersection_point = IntersectionPoint.new(Vector.new(1,0), @region)
   end
 
   it "should initialize by point as Vector and region as VisibilityRegion" do
     @intersection_point.should be_instance_of IntersectionPoint
+  end
+
+  it "should have point and region as member" do
+    @intersection_point.point.should be_instance_of Vector
+    @intersection_point.region.should be_instance_of VisibilityRegion
   end
 end
