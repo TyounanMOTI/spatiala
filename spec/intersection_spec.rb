@@ -35,6 +35,12 @@ describe Intersection do
     rays.should be_instance_of Array
     rays.each { |i| i.should be_instance_of Ray }
   end
+
+  it "should not have equal ratios, origin and target_ray when duplicated" do
+    @intersection.dup.ratios.should_not be_equal @intersection.ratios
+    @intersection.dup.origin.should_not be_equal @intersection.origin
+    @intersection.dup.target_ray.should_not be_equal @intersection.target_ray
+  end
 end
 
 describe Intersections do
@@ -93,4 +99,14 @@ describe Intersections do
     index = result.index { |i| i.target_ray == @ray }
     result[index].ratios.should be_include 0.9
   end
+
+  it "should return Intersections when duplicated" do
+    @intersections.dup.should be_instance_of Intersections
+  end
+
+  it "should deep-copy when duplicated" do
+    duplicated = @intersections.dup
+    duplicated.each_index { |i| @intersections[i].should_not be_equal duplicated[i] }
+  end
 end
+

@@ -10,6 +10,10 @@ class Intersection
   def to_rays
     @ratios.map { |i| Ray.new(@origin, (target_ray*i).destination) }
   end
+
+  def dup
+    self.class.new(@origin.dup, @target_ray.dup, @ratios.dup)
+  end
 end
 
 
@@ -33,5 +37,9 @@ class Intersections < Array
       end
     end
     return result
+  end
+
+  def dup
+    self.class.new(map { |i| i.dup })
   end
 end
