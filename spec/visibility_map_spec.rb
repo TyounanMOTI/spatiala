@@ -30,8 +30,9 @@ describe VisibilityMap do
 end
 
 describe VisibilityMap::IntersectionPoints do
+  IntersectionPoints = VisibilityMap::IntersectionPoints
+
   before do
-    IntersectionPoints = VisibilityMap::IntersectionPoints
     points = [
               Vector.new(-3,-3),
               Vector.new(-2,-2),
@@ -42,6 +43,10 @@ describe VisibilityMap::IntersectionPoints do
               Vector.new(3,3)
              ]
     @intersection_points = IntersectionPoints.new(points)
+  end
+
+  it "should be child of Array" do
+    IntersectionPoints.superclass.should == Array
   end
 
   it "should generate instance of IntersectionPoints by including points" do

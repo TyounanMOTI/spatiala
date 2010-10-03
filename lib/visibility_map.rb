@@ -30,13 +30,9 @@ class VisibilityMap
 
   attr_reader :regions
 
-  class IntersectionPoints
-    def initialize(*points)
-      @points = points.flatten
-    end
-
-    def length
-      @points.length
+  class IntersectionPoints < Array
+    def initialize(*args)
+      super
     end
   end
 end
