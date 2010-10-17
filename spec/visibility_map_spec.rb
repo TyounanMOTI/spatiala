@@ -5,9 +5,12 @@ require File.expand_path(File.dirname(__FILE__) + '/visibility_region_spec')
 describe VisibilityMap do
   include BeamTracer::Environment
 
+  IntersectionPoints = VisibilityMap::IntersectionPoints
+
   before do
     setup_beam_tracer
     @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[0]))
+    @intersection_points = @map.get_intersection_points
   end
 
   it "should be initialized with BeamTracer" do
@@ -20,13 +23,11 @@ describe VisibilityMap do
   end
 
   it "should return IntersectionPoints class when get_instersection_points" do
-    pending "until VisibilityMap can occlude intersection_points"
-    @map.get_intersection_points.should be_instance_of IntersectionPoints
+    @intersection_points.should be_instance_of IntersectionPoints
   end
 
-  it "should return IntersectionPoints which have > 0 points when get_intersection_points" do
-    pending "until VisibilityMap can occlude intersection_points"
-    @map.get_intersection_points.length.should > 0
+  it "should return 4 IntersectionPoints when get_instersection_points" do
+    @intersection_points.length.should == 4
   end
 end
 
