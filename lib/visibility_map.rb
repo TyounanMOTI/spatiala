@@ -14,18 +14,23 @@ class VisibilityMap
   end
 
   def get_intersection_points
+    intersections = get_intersections
+
+    intersection_points = IntersectionPoints.new(intersections)
+    intersection_points.reject! { |i| @tracer.geometry.occluded?(Ray.new(@tracer.listener.position, i.point)) }
+    intersection_points.sort_by { |i| i.point.x }
+    return intersection_points
+  end
+
+  def get_intersections
     vision = @tracer.listener.position.dualize
-    intersections = @regions.map do |region|
+    @regions.map do |region|
       region.rays.map do |ray|
         ratio = vision.intersect(ray)
         next if ratio.nil?
         IntersectionPoint.new((vision*ratio).destination, region)
       end
     end.flatten.compact
-    intersection_points = IntersectionPoints.new(intersections)
-    intersection_points.reject! { |i| @tracer.geometry.occluded?(Ray.new(@tracer.listener.position, i.point)) }
-    intersection_points.sort_by { |i| i.point.x }
-    return intersection_points
   end
 
   class IntersectionPoints < Array

@@ -6,6 +6,7 @@ describe VisibilityMap do
   include BeamTracer::Environment
 
   IntersectionPoints = VisibilityMap::IntersectionPoints
+  IntersectionPoint = VisibilityMap::IntersectionPoint
 
   before do
     setup_beam_tracer
@@ -27,7 +28,15 @@ describe VisibilityMap do
   end
 
   it "should return 4 IntersectionPoints when get_instersection_points" do
+    pending "until complete smashing into smaller functions"
     @intersection_points.length.should == 4
+  end
+
+  it "should return Array of IntersectionPoint when get_intersections" do
+    intersections = @map.get_intersections
+    intersections.should_not be_empty
+    intersections.should be_instance_of Array
+    intersections.each { |i| i.should be_instance_of IntersectionPoint }
   end
 end
 

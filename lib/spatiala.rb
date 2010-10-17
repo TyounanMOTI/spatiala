@@ -24,7 +24,8 @@ class Spatiala < Processing::App
     @brightness = 80
     background @hue, @saturation, @brightness-50
     stroke @hue, 20, @brightness
-    @scale = Vector.new(10000, height/2 - 20)
+    @scale = Vector.new(20000, height/2 - 20)
+#    @scale = Vector.new(1, height/2 - 20)
     @offset = Vector.new(width/2, height/2)
 
     triangle = Polygon.new(Vector.new(10,20),
@@ -50,8 +51,11 @@ class Spatiala < Processing::App
     @map = VisibilityMap.new(normalized_tracer)
 
     clear
+#    draw_geometry normalized_tracer.geometry
+#    draw_listener normalized_tracer.listener
     draw_visibility_map @map
     draw_ray normalized_tracer.listener.position.dualize
+    draw_intersection_points @map.get_intersections
   end
 
   def draw
@@ -68,6 +72,11 @@ class Spatiala < Processing::App
   def print_geometry
     Kernel.print "\n+++ Geometry +++\n"
     @normalized_tracer.geometry.lines.each { |i| print_ray(i) }
+  end
+
+  def draw_intersection_points(intersection_points)
+    p intersection_points
+    intersection_points.each { |i| draw_point(i.point); p i.point; }
   end
 
   def draw_visibility_map(map)
@@ -123,8 +132,7 @@ class Spatiala < Processing::App
     stroke @hue-30, @saturation, @brightness, 90
     fill @hue-30, @saturation, @brightness, 40
 
-    draw_point(listener.position.x*@scale.x + @offset.x,
-               listener.position.y*@scale.y + @offset.y)
+    draw_point(listener.position)
 
     pop_style
   end
@@ -137,18 +145,21 @@ class Spatiala < Processing::App
     stroke @hue+30, @saturation, @brightness, 90
     fill @hue+30, @saturation, @brightness, 40
 
-    sources.each { |i| draw_point(i.position.x*@scale.x + @offset.x,
-                                  i.position.y*@scale.y + @offset.y) }
+    sources.each { |i| draw_point(i.position) }
 
     pop_style
   end
 
-  def draw_point(x, y)
-    ellipse x, y, 8, 8
+  def draw_point(x, y=0)
+    case x
+    when Vector
+      ellipse x.x*@scale.x + @offset.x, x.y*@scale.y + @offset.y, 8, 8
+    else
+      ellipse x*@scale.x + @offset.x, y*@scale.y + @offset.y, 8, 8
+    end
   end
 
   def draw_ray(ray, hue=@hue, alpha=100)
-
     push_style
 
     stroke_weight 3
@@ -159,8 +170,7 @@ class Spatiala < Processing::App
          ray.origin.y*@scale.y + @offset.y,
          ray.destination.x*@scale.x + @offset.x,
          ray.destination.y*@scale.y + @offset.y)
-    draw_point(ray.origin.x*@scale.x + @offset.x,
-               ray.origin.y*@scale.y + @offset.y)
+    draw_point(ray.origin)
 
     pop_style
   end
