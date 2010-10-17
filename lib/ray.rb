@@ -11,7 +11,7 @@ class Ray
     @delta = destination - origin
   end
 
-  REFERENCE_REFLECTOR = Ray.new(Vector.new(0,1), Vector.new(0,-1))
+  WINDOW = Ray.new(Vector.new(0,1), Vector.new(0,-1))
 
   def origin=(origin)
     @origin = origin
@@ -129,7 +129,7 @@ class Ray
   end
 
   def facing
-    if @origin == REFERENCE_REFLECTOR.destination
+    if @origin == WINDOW.destination
       if @destination.x > 0
         return :true
       else
@@ -137,7 +137,7 @@ class Ray
       end
     end
 
-    if @destination == REFERENCE_REFLECTOR.origin
+    if @destination == WINDOW.origin
       if @origin.x > 0
         return :true
       else
@@ -145,16 +145,16 @@ class Ray
       end
     end
 
-    return :false if @origin == REFERENCE_REFLECTOR.origin
-    return :false if @destination == REFERENCE_REFLECTOR.destination
+    return :false if @origin == WINDOW.origin
+    return :false if @destination == WINDOW.destination
 
-    if (@origin - REFERENCE_REFLECTOR.origin)*normal <= 0
-      if (@origin - REFERENCE_REFLECTOR.destination)*normal <= 0
+    if (@origin - WINDOW.origin)*normal <= 0
+      if (@origin - WINDOW.destination)*normal <= 0
         return :true
       end
       return :upper
     else
-      if (@origin - REFERENCE_REFLECTOR.destination)*normal <= 0
+      if (@origin - WINDOW.destination)*normal <= 0
         return :lower
       end
       return :false
