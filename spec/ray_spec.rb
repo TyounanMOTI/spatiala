@@ -206,6 +206,17 @@ describe Ray, "when @ray is Ray(-2,3)->(4,-1)" do
   end
 end
 
+describe Ray, "when @ray1 is Ray(-1,2)->(2,3), @ray2 is Ray(2,3)->(-3,1)" do
+  before do
+    @ray1 = Ray.new(Vector.new(-1, 2), Vector.new(2, 3))
+    @ray2 = Ray.new(Vector.new(2, 3), Vector.new(-3, 1))
+  end
+
+  it "should return Float when dot product @ray1 and @ray2" do
+    (@ray1*@ray2).should be_instance_of Float
+  end
+end
+
 def print_ray(ray)
   Kernel.print "- Ray (%5.1f" % ray.origin.x, ",%5.1f" % ray.origin.y, ") to (%5.1f" % ray.destination.x, ",%5.1f" % ray.destination.y, ")\n"
 end
