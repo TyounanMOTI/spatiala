@@ -172,4 +172,13 @@ class Ray
   def *(ratio)
     Ray.new(@origin, @origin + @delta*ratio)
   end
+
+  def include?(point)
+    ray = Ray.new(self.origin, point)
+    return true if ray == self || ray.delta.length == 0
+    cos = (self.delta*ray.delta) / (self.delta.length*ray.delta.length)
+    return false unless cos < 1.001 && cos > 0.999
+    return false if self.delta.length < ray.delta.length
+    return true
+  end
 end

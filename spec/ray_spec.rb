@@ -180,6 +180,28 @@ describe Ray do
   end
 end
 
+describe Ray, "when @ray is Ray(-2,3)->(4,-1)" do
+  before do
+    @ray = Ray.new(Vector.new(-2, 3), Vector.new(4, -1))
+  end
+
+  it "should true if @ray include? Vector(-2,3)" do
+    @ray.include?(Vector.new(-2,3)).should == true
+  end
+
+  it "should true if @ray include? Vector(4,-1)" do
+    @ray.include?(Vector.new(4,-1)).should == true
+  end
+
+  it "should false if @ray include? Vector(1,0)" do
+    @ray.include?(Vector.new(1,0)).should == false
+  end
+
+  it "should true if @ray include? Vector(1,1)" do
+    @ray.include?(Vector.new(1,1)).should == true
+  end
+end
+
 def print_ray(ray)
   Kernel.print "- Ray (%5.1f" % ray.origin.x, ",%5.1f" % ray.origin.y, ") to (%5.1f" % ray.destination.x, ",%5.1f" % ray.destination.y, ")\n"
 end
