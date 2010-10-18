@@ -200,6 +200,10 @@ describe Ray, "when @ray is Ray(-2,3)->(4,-1)" do
   it "should true if @ray include? Vector(1,1)" do
     @ray.include?(Vector.new(1,1)).should == true
   end
+
+  it "should return length of Ray.delta.length when get length" do
+    @ray.length.should == @ray.delta.length
+  end
 end
 
 def print_ray(ray)
