@@ -47,9 +47,10 @@ describe Geometry do
     lines.each { |i| i.should be_instance_of Ray }
   end
 
-  it "should return Array of Ray when get lines includes specified vertex" do
-    vertex = Vector.new(10, 20)
-    lines = @geometry.lines_include_vertex vertex
+  it "should return Array of Ray when lines_include Vector(10,20)" do
+    point = Vector.new(10, 20)
+    lines = @geometry.lines_include(point)
+    lines.should_not be_empty
     lines.should be_instance_of Array
     lines.each { |i| i.should be_instance_of Ray }
   end

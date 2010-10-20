@@ -21,8 +21,8 @@ class Geometry
     end.flatten
   end
 
-  def lines_include_vertex(vertex)
-    lines.map { |i| i if i.origin == vertex || i.destination == vertex }.compact
+  def lines_include(point)
+    lines.select { |i| i.include?(point) }
   end
 
   def nearest_intersect_line_with(ray)
@@ -31,7 +31,7 @@ class Geometry
   end
 
   def occluded?(ray)
-    not lines_include_vertex(ray.destination).include?(nearest_intersect_line_with(ray))
+    not lines_include(ray.destination).include?(nearest_intersect_line_with(ray))
   end
 
   def intersect(ray)
