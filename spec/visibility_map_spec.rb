@@ -91,20 +91,23 @@ end
 
 describe VisibilityMap::IntersectionPoint do
   include VisibilityRegion::Environment
+  include BeamTracer::Environment
 
   IntersectionPoint = VisibilityMap::IntersectionPoint
 
   before do
+    setup_listener
     setup_region
-    @intersection_point = IntersectionPoint.new(Vector.new(1,0), @region)
+    @intersection_point = IntersectionPoint.new(Vector.new(1,0), @region, @listener)
   end
 
   it "should initialize by point as Vector and region as VisibilityRegion" do
     @intersection_point.should be_instance_of IntersectionPoint
   end
 
-  it "should have point and region as member" do
+  it "should have point, region and listener as member" do
     @intersection_point.point.should be_instance_of Vector
     @intersection_point.region.should be_instance_of VisibilityRegion
+    @intersection_point.listener.should be_instance_of Listener
   end
 end
