@@ -17,8 +17,8 @@ class VisibilityMap
     intersections = get_intersections
 
     intersection_points = IntersectionPoints.new(intersections)
-    intersection_points.reject! { |i| @tracer.geometry.occluded?(Ray.new(@tracer.listener.position, i.point)) }
-    intersection_points.sort_by { |i| i.point.x }
+    rejected = reject_occluded_points(intersection_points)
+    rejected.sort_by { |i| i.point.x }
     return intersection_points
   end
 
@@ -31,6 +31,10 @@ class VisibilityMap
         IntersectionPoint.new((vision*ratio).destination, region)
       end
     end.flatten.compact
+  end
+
+  def reject_occluded_points(intersection_points)
+    intersection_points.delete_if { |i| @tracer.geometry.occluded?(Ray.new(@tracer.listener.position, i.point)) }
   end
 
   class IntersectionPoints < Array

@@ -11,7 +11,6 @@ describe VisibilityMap do
   before do
     setup_beam_tracer
     @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[0]))
-    @intersection_points = @map.get_intersection_points
   end
 
   it "should be initialized with BeamTracer" do
@@ -23,21 +22,42 @@ describe VisibilityMap do
     @map.regions.each { |i| i.should be_instance_of VisibilityRegion }
   end
 
-  it "should return IntersectionPoints class when get_instersection_points" do
-    @intersection_points.should be_instance_of IntersectionPoints
-  end
-
-  it "should return 4 IntersectionPoints when get_instersection_points" do
-    pending "until complete smashing into smaller functions"
-    @intersection_points.length.should == 4
-  end
-
   it "should return Array of IntersectionPoint when get_intersections" do
     intersections = @map.get_intersections
     intersections.should_not be_empty
     intersections.should be_instance_of Array
     intersections.each { |i| i.should be_instance_of IntersectionPoint }
   end
+
+  it "should return 4 IntersectionPoints when reject_occluded_points" do
+    pending "until correct get_intersection_points"
+    rejected = @map.reject_occluded_points(IntersectionPoints.new(@map.get_intersections))
+    rejected.length.should == 4
+  end
+end
+
+describe VisibilityMap, "when get @intersection_points" do
+  include BeamTracer::Environment
+
+  IntersectionPoints = VisibilityMap::IntersectionPoints
+  IntersectionPoint = VisibilityMap::IntersectionPoint
+
+  before do
+    setup_beam_tracer
+    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[0]))
+#    @intersection_points = @map.get_intersection_points
+  end
+
+  it "should return IntersectionPoints class when get_instersection_points" do
+    pending "until correct get_intersection_points"
+    @intersection_points.should be_instance_of IntersectionPoints
+  end
+
+  it "should return 4 IntersectionPoints when get_instersection_points" do
+    pending "until correct get_intersection_points"
+    @intersection_points.length.should == 4
+  end
+
 end
 
 describe VisibilityMap::IntersectionPoints do

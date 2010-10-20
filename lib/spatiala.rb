@@ -55,7 +55,7 @@ class Spatiala < Processing::App
 #    draw_listener normalized_tracer.listener
     draw_visibility_map @map
     draw_ray normalized_tracer.listener.position.dualize
-    draw_intersection_points @map.get_intersections
+    draw_intersection_points @map.reject_occluded_points(VisibilityMap::IntersectionPoints.new(@map.get_intersections))
   end
 
   def draw
@@ -75,8 +75,7 @@ class Spatiala < Processing::App
   end
 
   def draw_intersection_points(intersection_points)
-    p intersection_points
-    intersection_points.each { |i| draw_point(i.point); p i.point; }
+    intersection_points.each { |i| draw_point(i.point) }
   end
 
   def draw_visibility_map(map)
