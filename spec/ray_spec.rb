@@ -217,6 +217,21 @@ describe Ray, "when @ray1 is Ray(-1,2)->(2,3), @ray2 is Ray(2,3)->(-3,1)" do
   end
 end
 
+describe Ray, "when @ray1 is Ray(-2,1)->(2,2), @ray2 is Ray(5,0)->(4,5)" do
+  before do
+    @ray1 = Ray.new(Vector.new(-2,1), Vector.new(2,2))
+    @ray2 = Ray.new(Vector.new(5,0), Vector.new(4,5))
+  end
+
+  it "should return longer ray than @ray1 when @ray1.fit @ray2" do
+    @ray1.fit(@ray2).length.should > @ray1.length
+  end
+
+  it "should return shorter ray than @ray2 when @ray2.fit @ray1" do
+    @ray2.fit(@ray1).length.should < @ray2.length
+  end
+end
+
 def print_ray(ray)
   Kernel.print "- Ray (%5.1f" % ray.origin.x, ",%5.1f" % ray.origin.y, ") to (%5.1f" % ray.destination.x, ",%5.1f" % ray.destination.y, ")\n"
 end

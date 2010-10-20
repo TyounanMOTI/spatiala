@@ -190,4 +190,8 @@ class Ray
   def length
     @delta.length
   end
+
+  def fit(ray)
+    self*intersect_as_directional_line(ray)
+  end
 end
