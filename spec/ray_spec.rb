@@ -230,6 +230,14 @@ describe Ray, "when @ray1 is Ray(-2,1)->(2,2), @ray2 is Ray(5,0)->(4,5)" do
   it "should return shorter ray than @ray2 when @ray2.fit @ray1" do
     @ray2.fit(@ray1).length.should < @ray2.length
   end
+
+  it "should return @ray1 when @ray1.look_front" do
+    @ray1.look_front.should == @ray1
+  end
+
+  it "should return reversed @ray2 when @ray2.look_front" do
+    @ray2.look_front.should == @ray2.reverse
+  end
 end
 
 def print_ray(ray)

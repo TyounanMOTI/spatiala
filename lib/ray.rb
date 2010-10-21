@@ -194,4 +194,9 @@ class Ray
   def fit(ray)
     self*intersect_as_directional_line(ray)
   end
+
+  def look_front
+    return self if @origin.x < @destination.x
+    return self.reverse
+  end
 end
