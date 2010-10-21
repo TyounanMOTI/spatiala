@@ -30,7 +30,7 @@ describe VisibilityMap do
   end
 
   it "should return 4 IntersectionPoints when reject_occluded_points" do
-    pending "until correct get_intersection_points"
+    pending "until enumerate without WINDOW"
     rejected = @map.reject_occluded_points(IntersectionPoints.new(@map.get_intersections))
     rejected.length.should == 4
   end

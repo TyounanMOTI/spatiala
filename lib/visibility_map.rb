@@ -34,7 +34,7 @@ class VisibilityMap
   end
 
   def reject_occluded_points(intersection_points)
-    intersection_points.delete_if { |i| @tracer.geometry.occluded?(Ray.new(@tracer.listener.position, i.point)) }
+    intersection_points.delete_if { |i| @tracer.geometry.occluded?(i.dualize) }
   end
 
   class IntersectionPoints < Array
