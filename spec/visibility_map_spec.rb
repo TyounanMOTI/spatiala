@@ -110,4 +110,8 @@ describe VisibilityMap::IntersectionPoint do
     @intersection_point.region.should be_instance_of VisibilityRegion
     @intersection_point.listener.should be_instance_of Listener
   end
+
+  it "should return Ray when dualize" do
+    @intersection_point.dualize.should be_instance_of Ray
+  end
 end

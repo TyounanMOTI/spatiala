@@ -51,5 +51,11 @@ class VisibilityMap
       @region = region
       @listener = listener
     end
+
+    def dualize
+      ray = @point.dualize.look_front.fit(@region.original)
+      ray.origin = @listener.position
+      return ray
+    end
   end
 end
