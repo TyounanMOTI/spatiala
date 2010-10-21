@@ -40,6 +40,14 @@ describe Polygon, "which is triangle disabled 0, 1" do
     @polygon.disabled.length.should == 1
   end
 
+  it "should return true when 0,1 disabled?" do
+    @polygon.disabled?(0,1).should == true
+  end
+
+  it "should return false when 0,2 disabled?" do
+    @polygon.disabled?(0,2).should == false
+  end
+
   it "should return 2 lines" do
     pending "until implements disabled?"
     @polygon.lines.length.should == 2

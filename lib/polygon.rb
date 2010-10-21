@@ -27,4 +27,12 @@ class Polygon
     disabled_vertices = [vertices.index(line.origin), vertices.index(line.destination)]
     @disabled << disabled_vertices unless @disabled.include?(disabled_vertices)
   end
+
+  def disabled?(v1, v2)
+    index = @disabled.assoc(v1)
+    return true if !index.nil? && index[1] == v2
+    index = @disabled.rassoc(v2)
+    return true if !index.nil? && index[0] == v2
+    return false
+  end
 end
