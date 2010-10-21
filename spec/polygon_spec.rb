@@ -33,7 +33,7 @@ describe Polygon, "which is triangle disabled 0, 1" do
     @polygon = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
                            Vector.new(30,420))
-    @polygon.disable!(Ray.new(@polygon.vertices[0], @polygon.vertices[1]))
+    @polygon = @polygon.disable(Ray.new(@polygon.vertices[0], @polygon.vertices[1]))
   end
 
   it "should have 1 element on @disabled" do

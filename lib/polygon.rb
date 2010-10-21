@@ -26,9 +26,11 @@ class Polygon
     return Polygon.new(vertices)
   end
 
-  def disable!(line)
-    disabled_vertices = [vertices.index(line.origin), vertices.index(line.destination)]
-    @disabled << disabled_vertices unless @disabled.include?(disabled_vertices)
+  def disable(line)
+    polygon = Polygon.new(@vertices)
+    disabled_vertices = [@vertices.index(line.origin), @vertices.index(line.destination)]
+    polygon.disabled << disabled_vertices unless polygon.disabled.include?(disabled_vertices)
+    return polygon
   end
 
   def disabled?(v1, v2)
