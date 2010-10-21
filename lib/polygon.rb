@@ -1,10 +1,11 @@
 require 'ray'
 
 class Polygon
-  attr_reader :vertices
+  attr_reader :vertices, :disabled
 
   def initialize(*vertices)
     @vertices = vertices.flatten
+    @disabled = Array.new
   end
 
   def lines
@@ -20,5 +21,10 @@ class Polygon
   def transform(matrix)
     vertices = @vertices.map { |i| i.transform(matrix) }
     return Polygon.new(vertices)
+  end
+
+  def disable!(line)
+    disabled_vertices = [vertices.index(line.origin), vertices.index(line.destination)]
+    @disabled << disabled_vertices unless @disabled.include?(disabled_vertices)
   end
 end

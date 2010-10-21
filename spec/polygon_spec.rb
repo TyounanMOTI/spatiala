@@ -5,14 +5,6 @@ describe Polygon do
     Polygon.new.should be_instance_of Polygon
   end
 
-  it "should 3 lines in triangle" do
-    polygon = Polygon.new(Vector.new(10,20),
-                          Vector.new(400,50),
-                          Vector.new(30,420))
-    polygon.lines.length.should == 3
-    polygon.lines[0].should be_instance_of Ray
-  end
-
   it "should a line in 2 point polygon" do
     polygon = Polygon.new(Vector.new(3,10),
                           Vector.new(5,8))
@@ -25,5 +17,31 @@ describe Polygon do
                           Vector.new(5,8))
     polygon.transform(Matrix.translator(2,-1,0)).vertices.should ==
       [Vector.new(5,9), Vector.new(7,7)]
+  end
+
+  it "should 3 lines in triangle" do
+    polygon = Polygon.new(Vector.new(10,20),
+                           Vector.new(400,50),
+                           Vector.new(30,420))
+    polygon.lines.length.should == 3
+    polygon.lines[0].should be_instance_of Ray
+  end
+end
+
+describe Polygon, "which is triangle disabled 0, 1" do
+  before do
+    @polygon = Polygon.new(Vector.new(10,20),
+                           Vector.new(400,50),
+                           Vector.new(30,420))
+    @polygon.disable!(Ray.new(@polygon.vertices[0], @polygon.vertices[1]))
+  end
+
+  it "should have 1 element on @disabled" do
+    @polygon.disabled.length.should == 1
+  end
+
+  it "should return 2 lines" do
+    pending "until implements disabled?"
+    @polygon.lines.length.should == 2
   end
 end
