@@ -38,4 +38,9 @@ class Geometry
     intersections = lines.map { |line| [Intersection.new(ray.origin, line, [line.intersect(ray)]), ray.intersect(line)] }.delete_if { |i| i[1].nil? }.sort_by { |i| i[1] }
     return Intersections.new(intersections.collect { |i| i[0] })
   end
+
+  def normalize(normalizer)
+    polygons = @polygons.map { |i| i.transform(normalizer) }
+    return Geometry.new(polygons)
+  end
 end

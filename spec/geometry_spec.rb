@@ -96,3 +96,22 @@ describe Geometry do
     @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize).should be_instance_of Intersections
   end
 end
+
+describe Geometry, "when normalized" do
+  include Geometry::Environment
+
+  before do
+    setup_geometry
+    @tracer = BeamTracer.new(@geometry, nil, nil)
+    @normalizer = @tracer.normalizer(@geometry.lines[0])
+    @geometry = @geometry.normalize(@normalizer)
+  end
+
+  it "should Geometry" do
+    @geometry.should be_instance_of Geometry
+  end
+
+  it "should have Ray::WINDOW" do
+    @geometry.lines.should be_include Ray::WINDOW
+  end
+end

@@ -16,7 +16,7 @@ class BeamTracer
     else
       normalizer = normalizer * Matrix.reflector(Vector.new(1,0,0))
     end
-    geometry = normalize_geometry(normalizer)
+    geometry = @geometry.normalize(normalizer)
     sources = normalize_sources(normalizer)
     return BeamTracer.new(geometry, sources, listener)
   end
@@ -24,11 +24,6 @@ class BeamTracer
   def normalize_listener(normalizer)
     return Listener.new(@listener.position.transform(normalizer),
                         @listener.direction.transform(normalizer))
-  end
-
-  def normalize_geometry(normalizer)
-    polygons = @geometry.polygons.map { |i| i.transform(normalizer) }
-    return Geometry.new(polygons)
   end
 
   def normalize_sources(normalizer)
