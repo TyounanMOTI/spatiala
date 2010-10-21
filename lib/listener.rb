@@ -6,4 +6,8 @@ class Listener
     @direction = direction.normalize
     @children = Array.new
   end
+
+  def transform(transformer)
+    return Listener.new(@position.transform(transformer), @direction.transform(transformer))
+  end
 end

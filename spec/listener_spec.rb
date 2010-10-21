@@ -17,4 +17,9 @@ describe Listener do
   it "should have children array" do
     @listener.children.should be_instance_of Array
   end
+
+  it "should return Listener when transformed" do
+    @listener.transform(Matrix.translator(2,3)).should be_instance_of Listener
+  end
 end
+

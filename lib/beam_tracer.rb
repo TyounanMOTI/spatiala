@@ -10,24 +10,15 @@ class BeamTracer
 
   def normalize(segment)
     normalizer = normalizer(segment)
-    listener = normalize_listener(normalizer)
+    listener = @listener.transform(normalizer)
     if listener.position.x > 0
       listener.position = listener.position.transform(Matrix.reflector(Vector.new(1,0,0)))
     else
       normalizer = normalizer * Matrix.reflector(Vector.new(1,0,0))
     end
     geometry = @geometry.normalize(normalizer)
-    sources = normalize_sources(normalizer)
+    sources = @sources.map { |i| i.transform(normalizer) }
     return BeamTracer.new(geometry, sources, listener)
-  end
-
-  def normalize_listener(normalizer)
-    return Listener.new(@listener.position.transform(normalizer),
-                        @listener.direction.transform(normalizer))
-  end
-
-  def normalize_sources(normalizer)
-    return @sources.map { |i| Source.new(i.position.transform(normalizer)) }
   end
 
   def normalizer(segment)
