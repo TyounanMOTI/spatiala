@@ -114,4 +114,8 @@ describe Geometry, "when normalized" do
   it "should have Ray::WINDOW" do
     @geometry.lines.should be_include Ray::WINDOW
   end
+
+  it "should return geometry which doesn't include WINDOW when without_window" do
+    @geometry.without_window.lines.should_not be_include Ray::WINDOW
+  end
 end
