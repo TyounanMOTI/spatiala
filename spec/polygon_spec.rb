@@ -49,7 +49,6 @@ describe Polygon, "which is triangle disabled 0, 1" do
   end
 
   it "should return 2 lines" do
-    pending "until implements disabled?"
     @polygon.lines.length.should == 2
   end
 end
