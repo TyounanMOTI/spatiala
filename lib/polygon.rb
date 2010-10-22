@@ -10,11 +10,11 @@ class Polygon
 
   def lines
     result = Array.new
-    if vertices.length == 2 then
-      result << Ray.new(vertices[0], vertices[1]) unless disabled?(0,1)
+    if @vertices.length == 2 then
+      result << Ray.new(@vertices[0], @vertices[1]) unless disabled?(0,1)
     else
       @vertices.each_index do |i|
-        next if disabled?(i, i+1)
+        next if (@vertices[i+1].nil? && disabled?(i, 0)) || disabled?(i, i+1)
         result << Ray.new(@vertices[i], @vertices.fetch(i+1, @vertices[0]))
       end
     end
