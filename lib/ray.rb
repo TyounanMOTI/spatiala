@@ -192,7 +192,9 @@ class Ray
   end
 
   def fit(ray)
-    self*intersect_as_directional_line(ray)
+    ratio = self.intersect_as_directional_line(ray)
+    return self if ratio < 0
+    return self*ratio
   end
 
   def look_front
