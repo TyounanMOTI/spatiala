@@ -186,19 +186,19 @@ describe Ray, "when @ray is Ray(-2,3)->(4,-1)" do
   end
 
   it "should true if @ray include? Vector(-2,3)" do
-    @ray.include?(Vector.new(-2,3)).should == true
+    @ray.include_edge?(Vector.new(-2,3)).should == true
   end
 
   it "should true if @ray include? Vector(4,-1)" do
-    @ray.include?(Vector.new(4,-1)).should == true
+    @ray.include_edge?(Vector.new(4,-1)).should == true
   end
 
   it "should false if @ray include? Vector(1,0)" do
-    @ray.include?(Vector.new(1,0)).should == false
+    @ray.include_edge?(Vector.new(1,0)).should == false
   end
 
   it "should true if @ray include? Vector(1,1)" do
-    @ray.include?(Vector.new(1,1)).should == true
+    @ray.include_edge?(Vector.new(1,1)).should == false
   end
 
   it "should return length of Ray.delta.length when get length" do

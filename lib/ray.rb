@@ -178,13 +178,9 @@ class Ray
     end
   end
 
-  def include?(point)
-    ray = Ray.new(self.origin, point)
-    return true if ray == self || ray.length == 0
-    cos = (self*ray) / (self.length*ray.length)
-    return false unless cos < 1.001 && cos > 0.999
-    return false if self.length < ray.length
-    return true
+  def include_edge?(point)
+    return true if point == @origin || point == @destination
+    return false
   end
 
   def length
