@@ -51,7 +51,7 @@ class Ray
   end
 
   def ==(ray)
-    return true if @origin == ray.origin && @destination == ray.destination
+    return true if !ray.nil? && @origin == ray.origin && @destination == ray.destination
     return false
   end
 

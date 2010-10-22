@@ -15,7 +15,7 @@ require 'intersection'
 
 class Spatiala < Processing::App
   def setup
-    size 600, 600
+    size 1000, 600
     frame_rate 1
     smooth
     color_mode HSB, 100
@@ -24,9 +24,6 @@ class Spatiala < Processing::App
     @brightness = 80
     background @hue, @saturation, @brightness-50
     stroke @hue, 20, @brightness
-    @scale = Vector.new(20000, height/2 - 20)
-#    @scale = Vector.new(1, height/2 - 20)
-    @offset = Vector.new(width/2, height/2)
 
     triangle = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
@@ -49,13 +46,23 @@ class Spatiala < Processing::App
 
     normalized_tracer = @tracer.normalize(@geometry.lines[2])
     @map = VisibilityMap.new(normalized_tracer)
+    @intersection_points = @map.get_intersection_points
+    @dualized_points = @intersection_points.map { |i| i.dualize }
+    #    @scale = Vector.new(20000, height/2 - 20)
+    @scale = Vector.new(1, height/2 - 20)
+    @offset = Vector.new(width/2, height/2)
 
     clear
-#    draw_geometry normalized_tracer.geometry
-#    draw_listener normalized_tracer.listener
-    draw_visibility_map @map
-    draw_ray normalized_tracer.listener.position.dualize
-    draw_intersection_points @map.reject_occluded_points(VisibilityMap::IntersectionPoints.new(@map.get_intersections))
+    draw_geometry normalized_tracer.geometry.without_window
+    draw_listener normalized_tracer.listener
+
+    hue = 0
+#    draw_rays @dualized_points
+    draw_rays @map.get_intersections.map { |i| i.dualize }
+
+#    draw_visibility_map @map
+#    draw_ray normalized_tracer.listener.position.dualize
+#    draw_intersection_points @map.reject_occluded_points(VisibilityMap::IntersectionPoints.new(@map.get_intersections))
   end
 
   def draw
@@ -172,6 +179,14 @@ class Spatiala < Processing::App
     draw_point(ray.origin)
 
     pop_style
+  end
+
+  def draw_rays(rays)
+    hue = 0
+    rays.each do |i|
+      draw_ray i, hue, 50
+      hue += 100 / rays.length
+    end
   end
 
   def draw_beam(beam, hue=@hue, alpha=100)
