@@ -16,7 +16,7 @@ require 'intersection'
 class Spatiala < Processing::App
   def setup
     size 800, 600
-    frame_rate 1
+    frame_rate 30
     smooth
     color_mode HSB, 100
     @hue = 60
@@ -45,19 +45,22 @@ class Spatiala < Processing::App
     @crack_list = CrackList.new(@geometry, @listener)
 
     @normalized_tracer = @tracer.normalize(@geometry.lines[2])
-    @geometry = @normalized_tracer.geometry.without_window
+#    @geometry = @normalized_tracer.geometry.without_window
     @map = VisibilityMap.new(@normalized_tracer)
     @intersection_points = @map.get_intersection_points
     @dualized_points = @intersection_points.map { |i| i.dualize }
 
 
     #    @scale = Vector.new(20000, height/2 - 20)
-    @scale = Vector.new(1, height/2 - 20)
-    @offset = Vector.new(width/4, height/2)
+#    @scale = Vector.new(1, height/2 - 20)
+#    @offset = Vector.new(width/4, height/2)
 
+    @scale = Vector.new(1,1)
+    @offset = Vector.new(0,0)
 
-    hue = 0
-#    draw_rays @dualized_points
+    @ray = Ray.new(Vector.new(100,200), Vector.new(100,100)).maximize
+
+    #    draw_rays @dualized_points
 #    draw_rays @map.get_intersections.map { |i| i.dualize }
 #    draw_visibility_map @map
 #    draw_ray normalized_tracer.listener.position.dualize
@@ -67,26 +70,27 @@ class Spatiala < Processing::App
   end
 
   def draw
-    clear
-    draw_geometry @geometry
-    draw_listener @normalized_tracer.listener
+     clear
+#     draw_geometry @geometry
+#     draw_listener @normalized_tracer.listener
 
-    draw_ray @geometry.lines[3]
-    ray = @map.get_intersections[@index].dualize
-    draw_ray ray, 30
-#    draw_ray @geometry.nearest_intersect_line_with(ray)
-    draw_rays @geometry.lines_include(ray.destination)
+#     ray = @map.get_intersections[@index].dualize
+#     draw_ray ray, 30
+#     draw_ray @geometry.nearest_intersect_line_with(ray)
+# #    draw_rays @geometry.lines_include(ray.destination)
 
-    i = @geometry.lines[3]
-    j = Ray.new(i.origin, ray.destination)
-    cos = (i*j) / (i.length * j.length)
-    p cos
+#     p @geometry.lines[2].intersect_as_directional_line(ray)
 
-    @index += 1
-    if @index == @map.get_intersections.length
-      @index = 0
-    end
-  end
+#     @index += 1
+#     if @index == @map.get_intersections.length
+#       @index = 0
+#     end
+
+    @ray.destination = Vector.new(mouse_x, mouse_y)
+    draw_geometry
+    draw_ray @ray
+    @geometry.intersect(@ray).each { |i| draw_ray i.target_ray }
+end
 
   def print_regions
     @regions.each do |region|
