@@ -95,7 +95,7 @@ class Vector
   end
 
   def ==(v)
-    @elements == v.elements
+    (self - v).length < 0.0000001
   end
 
   def length

@@ -57,6 +57,10 @@ describe Vector do
     @v1.should == Vector.new(3,-1,5)
   end
 
+  it "should return true when vectors are almost same" do
+    Vector.new(0,1).should == Vector.new(0,1.00000001)
+  end
+
   it "returns false when those vectors are differ" do
     @v1.should_not == Vector.new(3,0,5)
   end
