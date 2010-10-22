@@ -2,14 +2,7 @@ class VisibilityMap
   attr_reader :regions
 
   def initialize(tracer)
-    @regions = tracer.geometry.lines.map do |i|
-      [
-       Ray.new(i.origin, i.destination).dualize,
-       Ray.new(i.destination, i.origin).dualize
-      ]
-    end
-    @regions.flatten!
-    @regions.compact!
+    @regions = tracer.geometry.lines.map { |i| [i.dualize, i.reverse.dualize] }.flatten.compact
     @tracer = tracer
   end
 
