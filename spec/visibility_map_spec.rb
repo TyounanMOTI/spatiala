@@ -10,7 +10,7 @@ describe VisibilityMap do
 
   before do
     setup_beam_tracer
-    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[0]))
+    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[1]))
   end
 
   it "should be initialized with BeamTracer" do
@@ -43,7 +43,7 @@ describe VisibilityMap, "when get @intersection_points" do
 
   before do
     setup_beam_tracer
-    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[0]))
+    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[1]))
     @intersection_points = @map.get_intersection_points
   end
 

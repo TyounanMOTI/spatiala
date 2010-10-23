@@ -20,7 +20,7 @@ class Spatiala < Processing::App
     scale_for_normalized_geometry
 
 
-    tracer = @tracer.normalize(@geometry.lines[0])
+    tracer = @tracer.normalize(@geometry.lines[1])
     geometry = tracer.geometry.without_window
     map = VisibilityMap.new(tracer)
     intersection_points = map.get_intersection_points
@@ -29,7 +29,9 @@ class Spatiala < Processing::App
 
     draw_geometry geometry
     draw_rays intersection_rays
+
     draw_intersection_points intersection_points
+    intersection_points.each { |i| p i.point.y }
     @index = 0
   end
 
