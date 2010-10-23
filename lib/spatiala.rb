@@ -15,8 +15,30 @@ require 'intersection'
 
 class Spatiala < Processing::App
   def setup
-    size 800, 600
-    frame_rate 30
+    setup_app
+    setup_tracer
+    scale_for_normalized_geometry
+
+
+    tracer = @tracer.normalize(@geometry.lines[0])
+    geometry = tracer.geometry.without_window
+    map = VisibilityMap.new(tracer)
+    intersection_points = map.get_intersection_points
+
+    intersection_rays = intersection_points.map { |i| i.dualize }
+
+    draw_geometry geometry
+    draw_rays intersection_rays
+    draw_intersection_points intersection_points
+    @index = 0
+  end
+
+  def draw
+  end
+
+  def setup_app
+    size 700, 500
+    frame_rate 1
     smooth
     color_mode HSB, 100
     @hue = 60
@@ -24,7 +46,9 @@ class Spatiala < Processing::App
     @brightness = 80
     background @hue, @saturation, @brightness-50
     stroke @hue, 20, @brightness
+  end
 
+  def setup_tracer
     triangle = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
                            Vector.new(30,420))
@@ -42,55 +66,22 @@ class Spatiala < Processing::App
                              Vector.new(30,30))
 
     @tracer = BeamTracer.new(@geometry, @sources, @listener)
-    @crack_list = CrackList.new(@geometry, @listener)
-
-    @normalized_tracer = @tracer.normalize(@geometry.lines[2])
-#    @geometry = @normalized_tracer.geometry.without_window
-    @map = VisibilityMap.new(@normalized_tracer)
-    @intersection_points = @map.get_intersection_points
-    @dualized_points = @intersection_points.map { |i| i.dualize }
-
-
-    #    @scale = Vector.new(20000, height/2 - 20)
-#    @scale = Vector.new(1, height/2 - 20)
-#    @offset = Vector.new(width/4, height/2)
-
-    @scale = Vector.new(1,1)
-    @offset = Vector.new(0,0)
-
-    @ray = Ray.new(Vector.new(100,200), Vector.new(100,100)).maximize
-
-    #    draw_rays @dualized_points
-#    draw_rays @map.get_intersections.map { |i| i.dualize }
-#    draw_visibility_map @map
-#    draw_ray normalized_tracer.listener.position.dualize
-#    draw_intersection_points @map.reject_occluded_points(VisibilityMap::IntersectionPoints.new(@map.get_intersections))
-
-    @index = 0
   end
 
-  def draw
-     clear
-#     draw_geometry @geometry
-#     draw_listener @normalized_tracer.listener
+  def scale_for_geometry
+    @scale = Vector.new(1,1)
+    @offset = Vector.new(0,0)
+  end
 
-#     ray = @map.get_intersections[@index].dualize
-#     draw_ray ray, 30
-#     draw_ray @geometry.nearest_intersect_line_with(ray)
-# #    draw_rays @geometry.lines_include(ray.destination)
+  def scale_for_normalized_geometry
+    @scale = Vector.new(1, height/2 - 20)
+    @offset = Vector.new(width/4, height/2)
+  end
 
-#     p @geometry.lines[2].intersect_as_directional_line(ray)
-
-#     @index += 1
-#     if @index == @map.get_intersections.length
-#       @index = 0
-#     end
-
-    @ray.destination = Vector.new(mouse_x, mouse_y)
-    draw_geometry
-    draw_ray @ray
-    @geometry.intersect(@ray).each { |i| draw_ray i.target_ray }
-end
+  def scale_for_visibility_map
+    @scale = Vector.new(20000, height/2 - 20)
+    @offset = Vector.new(width/2, height/2)
+  end
 
   def print_regions
     @regions.each do |region|
@@ -215,6 +206,14 @@ end
 
   def draw_beam(beam, hue=@hue, alpha=100)
     beam.deltas.each { |i| draw_ray i, hue, alpha }
+  end
+
+  def draw_beams(beams)
+    hue = 0
+    beams.each do |i|
+      draw_beam i, hue, 50
+      hue += 100 / beams.length
+    end
   end
 
   def key_released

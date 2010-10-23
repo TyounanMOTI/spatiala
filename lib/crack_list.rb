@@ -43,7 +43,7 @@ class CrackList
       second_intersection = @geometry.intersect(ray.maximize).fetch(1,nil)
       next if second_intersection.nil?
       ratio = second_intersection.target_ray.intersect(ray.maximize)
-      next if ratio.nil? || ratio == 0.0 || ratio == 1.0
+      next if ratio.nil? || ratio < 0.0001 || ratio > 0.999
       additional_intersection << Intersection.new(@listener.position, second_intersection.target_ray, [ratio])
     end
     return intersections.merge(Intersections.new(additional_intersection))

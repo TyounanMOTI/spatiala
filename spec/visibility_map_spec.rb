@@ -30,7 +30,6 @@ describe VisibilityMap do
   end
 
   it "should return 4 IntersectionPoints when reject_occluded_points" do
-    pending "until enumerate without WINDOW"
     rejected = @map.reject_occluded_points(IntersectionPoints.new(@map.get_intersections))
     rejected.length.should == 4
   end
@@ -45,16 +44,14 @@ describe VisibilityMap, "when get @intersection_points" do
   before do
     setup_beam_tracer
     @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[0]))
-#    @intersection_points = @map.get_intersection_points
+    @intersection_points = @map.get_intersection_points
   end
 
   it "should return IntersectionPoints class when get_instersection_points" do
-    pending "until correct get_intersection_points"
     @intersection_points.should be_instance_of IntersectionPoints
   end
 
   it "should return 4 IntersectionPoints when get_instersection_points" do
-    pending "until correct get_intersection_points"
     @intersection_points.length.should == 4
   end
 

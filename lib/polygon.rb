@@ -36,7 +36,7 @@ class Polygon
   def disabled?(v1, v2)
     index = @disabled.assoc(v1)
     return true if !index.nil? && index[1] == v2
-    index = @disabled.rassoc(v2)
+    index = @disabled.rassoc(v1)
     return true if !index.nil? && index[0] == v2
     return false
   end
