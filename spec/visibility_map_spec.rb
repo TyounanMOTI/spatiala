@@ -111,4 +111,8 @@ describe VisibilityMap::IntersectionPoint do
   it "should return Ray when dualize" do
     @intersection_point.dualize.should be_instance_of Ray
   end
+
+  it "should child of Vector" do
+    IntersectionPoint.superclass.should == Vector
+  end
 end

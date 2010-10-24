@@ -36,10 +36,11 @@ class VisibilityMap
     end
   end
 
-  class IntersectionPoint
+  class IntersectionPoint < Vector
     attr_reader :point, :region, :listener
 
     def initialize(point, region, listener)
+      super point.elements
       @point = point
       @region = region
       @listener = listener
