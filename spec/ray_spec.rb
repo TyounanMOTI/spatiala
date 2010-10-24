@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/visibility_map_spec')
 
 describe Ray do
   it "should generate instance" do
@@ -237,6 +238,28 @@ describe Ray, "when @ray1 is Ray(-2,1)->(2,2), @ray2 is Ray(5,0)->(4,5)" do
 
   it "should return reversed @ray2 when @ray2.look_front" do
     @ray2.look_front.should == @ray2.reverse
+  end
+end
+
+describe Ray, "when extremes are given as VisibilityMap::IntersectionPoint" do
+  include VisibilityMap::IntersectionPoints::Environment
+
+  IntersectionPoint = VisibilityMap::IntersectionPoint
+
+  before do
+    setup_intersection_points
+    @p = @intersection_points[0]
+    @q = @intersection_points[1]
+    @ray = Ray.new(@p, @q)
+  end
+
+  it "should have extremes as IntersectionPoint" do
+    @ray.origin.should be_instance_of IntersectionPoint
+    @ray.destination.should be_instance_of IntersectionPoint
+  end
+
+  it "should return Beam when dualized" do
+    @ray.dualize.should be_instance_of Beam
   end
 end
 

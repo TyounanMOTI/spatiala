@@ -60,6 +60,19 @@ class Ray
   end
 
   def dualize
+    case @origin
+    when VisibilityMap::IntersectionPoint
+      dualize_to_beam
+    when Vector
+      dualize_to_region
+    end
+  end
+
+  def dualize_to_beam
+    return Beam.new(@origin.listener.position, nil)
+  end
+
+  def dualize_to_region
     if facing == :false
       return nil
     end

@@ -28,7 +28,7 @@ class Spatiala < Processing::App
     intersection_rays = intersection_points.map { |i| i.dualize }
 
     draw_geometry geometry
-    draw_rays intersection_rays
+    draw_ray geometry.lines[2]
 
     draw_intersection_points intersection_points
     intersection_points.each { |i| p i.point.y }

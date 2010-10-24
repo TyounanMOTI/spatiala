@@ -35,16 +35,24 @@ describe VisibilityMap do
   end
 end
 
-describe VisibilityMap, "when get @intersection_points" do
+module VisibilityMap::IntersectionPoints::Environment
   include BeamTracer::Environment
+
+  def setup_intersection_points
+    setup_beam_tracer
+    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[1]))
+    @intersection_points = @map.get_intersection_points
+  end
+end
+
+describe VisibilityMap, "when get @intersection_points" do
+  include VisibilityMap::IntersectionPoints::Environment
 
   IntersectionPoints = VisibilityMap::IntersectionPoints
   IntersectionPoint = VisibilityMap::IntersectionPoint
 
   before do
-    setup_beam_tracer
-    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[1]))
-    @intersection_points = @map.get_intersection_points
+    setup_intersection_points
   end
 
   it "should return IntersectionPoints class when get_instersection_points" do
