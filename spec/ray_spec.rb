@@ -261,6 +261,10 @@ describe Ray, "when extremes are given as VisibilityMap::IntersectionPoint" do
   it "should return Beam when dualized" do
     @ray.dualize.should be_instance_of Beam
   end
+
+  it "should return Beam which reference_segment is original of p.region when dualized" do
+    @ray.dualize.reference_segment.should == @p.region.original
+  end
 end
 
 def print_ray(ray)

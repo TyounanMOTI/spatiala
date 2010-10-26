@@ -69,7 +69,9 @@ class Ray
   end
 
   def dualize_to_beam
-    return Beam.new(@origin.listener.position, nil)
+    beam = Beam.new(@origin.listener.position, nil)
+    beam.reference_segment = @origin.region.original
+    return beam
   end
 
   def dualize_to_region
