@@ -21,7 +21,7 @@ class VisibilityMap
       region.rays.map do |ray|
         ratio = vision.intersect(ray)
         next if ratio.nil?
-        IntersectionPoint.new((vision*ratio).destination, region, @tracer.listener)
+        IntersectionPoint.new(ratio, region, @tracer.listener)
       end
     end.flatten.compact
   end
@@ -37,13 +37,17 @@ class VisibilityMap
   end
 
   class IntersectionPoint < Vector
-    attr_reader :point, :region, :listener
+    attr_reader :ratio, :region, :listener
 
-    def initialize(point, region, listener)
-      super point.elements
-      @point = point
+    def initialize(ratio, region, listener)
+      @ratio = ratio
       @region = region
       @listener = listener
+      super self.point.elements
+    end
+
+    def point
+      (@listener.position.dualize * @ratio).destination
     end
 
     def dualize

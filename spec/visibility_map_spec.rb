@@ -103,7 +103,7 @@ describe VisibilityMap::IntersectionPoint do
   before do
     setup_listener
     setup_region
-    @intersection_point = IntersectionPoint.new(Vector.new(1,0), @region, @listener)
+    @intersection_point = IntersectionPoint.new(0.5, @region, @listener)
   end
 
   it "should initialize by point as Vector and region as VisibilityRegion" do
@@ -114,6 +114,10 @@ describe VisibilityMap::IntersectionPoint do
     @intersection_point.point.should be_instance_of Vector
     @intersection_point.region.should be_instance_of VisibilityRegion
     @intersection_point.listener.should be_instance_of Listener
+  end
+
+  it "should have ratio as member" do
+    @intersection_point.ratio.should be_instance_of Float
   end
 
   it "should return Ray when dualize" do
