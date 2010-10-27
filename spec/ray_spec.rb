@@ -248,8 +248,8 @@ describe Ray, "when extremes are given as VisibilityMap::IntersectionPoint" do
 
   before do
     setup_intersection_points
-    @p = @intersection_points[0]
-    @q = @intersection_points[1]
+    @p = @intersection_points[2]
+    @q = @intersection_points[3]
     @ray = Ray.new(@p, @q)
   end
 
@@ -264,6 +264,13 @@ describe Ray, "when extremes are given as VisibilityMap::IntersectionPoint" do
 
   it "should return Beam which reference_segment is original of p.region when dualized" do
     @ray.dualize.reference_segment.should == @p.region.original
+  end
+
+  it "should return closed beam when dualized" do
+    rays = @ray.dualize.deltas
+    rays.each_index do |i|
+      rays[i].destination.should == rays.fetch(i+1, rays[0]).origin
+    end
   end
 end
 
