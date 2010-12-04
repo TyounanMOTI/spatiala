@@ -15,9 +15,6 @@ require 'visibility_map'
 require 'visibility_region'
 require 'intersection'
 
-require 'spec'
-require 'spec/autorun'
-
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   include Math
 end
