@@ -9,4 +9,8 @@ class VisibilityRegion
   def vertices
     return @rays.map { |ray| [ray.origin, ray.destination] }.flatten.uniq
   end
+
+  def ==(other)
+    return (@original == other.original) && (@rays == other.rays)
+  end
 end

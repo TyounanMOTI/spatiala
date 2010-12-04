@@ -12,7 +12,6 @@ module VisibilityRegion::Environment
   end
 end
 
-
 describe VisibilityRegion do
   include VisibilityRegion::Environment
 
@@ -37,5 +36,27 @@ describe VisibilityRegion do
 
   it "should not have same vertex at vertices" do
     @region.vertices.length.should == 3
+  end
+
+  it "should return true when ==ed regions which original and rays are same" do
+    original = Ray.new(Vector.new(0,0), Vector.new(0,0))
+    rays = [
+            Ray.new(Vector.new(0,1), Vector.new(4,2)),
+            Ray.new(Vector.new(4,2), Vector.new(1,3)),
+            Ray.new(Vector.new(1,3), Vector.new(0,1))
+           ]
+    region2 = VisibilityRegion.new(original, rays)
+    (@region == region2).should == true
+  end
+
+  it "should return false when ==ed regions which original and rays are differ" do
+    original = Ray.new(Vector.new(0,0), Vector.new(0,0))
+    rays = [
+            Ray.new(Vector.new(0,1), Vector.new(4,2)),
+            Ray.new(Vector.new(4,2), Vector.new(1,3)),
+            Ray.new(Vector.new(0,0), Vector.new(0,6))
+           ]
+    region2 = VisibilityRegion.new(original, rays)
+    (@region == region2).should == false
   end
 end
