@@ -248,8 +248,8 @@ describe Ray, "when extremes are given as VisibilityMap::IntersectionPoint" do
 
   before do
     setup_intersection_points
-    @p = @intersection_points[2]
-    @q = @intersection_points[3]
+    @p = @intersection_points[0]
+    @q = @intersection_points[1]
     @ray = Ray.new(@p, @q)
   end
 

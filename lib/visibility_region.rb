@@ -1,16 +1,14 @@
-class VisibilityRegion
-  attr_reader :rays, :original
+class VisibilityRegion < Polygon
+  attr_reader :original
+  alias :rays :lines
 
   def initialize(original, *rays)
     @original = original
-    @rays = rays.flatten
-  end
-
-  def vertices
-    return @rays.map { |ray| [ray.origin, ray.destination] }.flatten.uniq
+    vertices = rays.flatten.collect { |ray| ray.origin }
+    super vertices
   end
 
   def ==(other)
-    return (@original == other.original) && (@rays == other.rays)
+    return (@original == other.original) && (rays == other.rays)
   end
 end

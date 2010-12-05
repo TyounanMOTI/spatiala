@@ -2,17 +2,17 @@ class VisibilityMap
   attr_reader :regions
 
   def initialize(tracer)
-    @regions = tracer.geometry.lines.map { |i| [i.dualize, i.reverse.dualize] }.flatten.compact
+    @regions = tracer.geometry.lines.map do |i|
+      # also dualize reversed ray, because non facing line will be nil when dualized
+      [i.dualize, i.reverse.dualize]
+    end.flatten.compact
     @tracer = tracer
   end
 
   def get_intersection_points
     intersections = get_intersections
-
-    intersection_points = IntersectionPoints.new(intersections)
-    rejected = reject_occluded_points(intersection_points)
-    rejected.sort_by { |i| i.point.x }
-    return intersection_points
+    rejected = reject_occluded_points(intersections)
+    return IntersectionPoints.new(rejected.sort_by { |i| i.point.x })
   end
 
   def get_intersections
@@ -31,7 +31,7 @@ class VisibilityMap
   end
 
   class IntersectionPoints < Array
-    def initialize(*args)
+    def initialize(args)
       super
     end
   end

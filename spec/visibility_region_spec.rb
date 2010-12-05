@@ -19,6 +19,10 @@ describe VisibilityRegion do
     setup_region
   end
 
+  it "should be child of Polygon" do
+    VisibilityRegion.superclass == Polygon
+  end
+
   it "should be initialized with Rays" do
     @region.should be_instance_of VisibilityRegion
   end

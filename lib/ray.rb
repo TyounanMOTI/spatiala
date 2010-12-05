@@ -92,27 +92,22 @@ class Ray
 
     if @origin.x <= 0 && @destination.x <= 0
       return nil
-    end
-
-    if @destination.x <= 0
-      rays = [
-              Ray.new(Vector.new(BIG, -1), @origin.dualize.destination),
-              @origin.dualize.reverse,
-              Ray.new(@origin.dualize.origin, Vector.new(BIG, 1))
+    elsif @destination.x <= 0
+      vertices = [
+              Vector.new(BIG, -1),
+              @origin.dualize.destination,
+              @origin.dualize.origin,
+              Vector.new(BIG, 1)
              ]
-      return VisibilityRegion.new(self, rays)
-    end
 
-    if @origin.x <= 0
-      rays = [
-              Ray.new(Vector.new(-BIG, 1), @destination.dualize.origin),
-              @destination.dualize,
-              Ray.new(@destination.dualize.destination, Vector.new(-BIG, -1))
+    elsif @origin.x <= 0
+      vertices = [
+              Vector.new(-BIG, 1),
+              @destination.dualize.origin,
+              @destination.dualize.destination,
+              Vector.new(-BIG, -1)
              ]
-      return VisibilityRegion.new(self, rays)
-    end
-
-    if facing == :upper
+    elsif facing == :upper
       intersection_ratio = @origin.dualize.intersect(@destination.dualize)
       intersection_point = @origin.dualize.origin + @origin.dualize.delta * intersection_ratio
 
@@ -121,12 +116,7 @@ class Ray
                   @destination.dualize.origin,
                   intersection_point
                  ].sort_by { |i| i.x }
-
-      rays = Polygon.new(vertices).lines
-      return VisibilityRegion.new(self, rays)
-    end
-
-    if facing == :lower
+    elsif facing == :lower
       intersection_ratio = @origin.dualize.intersect(@destination.dualize)
       intersection_point = @origin.dualize.origin + @origin.dualize.delta * intersection_ratio
 
@@ -135,17 +125,15 @@ class Ray
                   @destination.dualize.destination,
                   intersection_point
                  ].sort_by { |i| i.x }
-
-      rays = Polygon.new(vertices).lines
-      return VisibilityRegion.new(self, rays)
+    else
+      vertices = [
+                  @origin.dualize.origin,
+                  @origin.dualize.destination,
+                  @destination.dualize.destination,
+                  @destination.dualize.origin
+                 ]
     end
 
-    vertices = [
-                @origin.dualize.origin,
-                @origin.dualize.destination,
-                @destination.dualize.destination,
-                @destination.dualize.origin
-               ]
     rays = Polygon.new(vertices).lines
     return VisibilityRegion.new(self, rays)
   end

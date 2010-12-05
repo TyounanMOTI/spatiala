@@ -29,6 +29,10 @@ describe VisibilityMap do
     intersections.each { |i| i.should be_instance_of IntersectionPoint }
   end
 
+  it "should return 8 IntersectionPoints when get_intersections" do
+    @map.get_intersections.length.should == 8
+  end
+
   it "should return 4 IntersectionPoints when reject_occluded_points" do
     rejected = @map.reject_occluded_points(IntersectionPoints.new(@map.get_intersections))
     rejected.length.should == 4
