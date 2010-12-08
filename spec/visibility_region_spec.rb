@@ -3,12 +3,12 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 module VisibilityRegion::Environment
   def setup_region
     original = Ray.new(Vector.new(0,0), Vector.new(0,0))
-    rays = [
-            Ray.new(Vector.new(0,1), Vector.new(4,2)),
-            Ray.new(Vector.new(4,2), Vector.new(1,3)),
-            Ray.new(Vector.new(1,3), Vector.new(0,1))
+    vertices = [
+            Vector.new(0,1),
+            Vector.new(4,2),
+            Vector.new(1,3),
            ]
-    @region = VisibilityRegion.new(original, rays)
+    @region = VisibilityRegion.new(original, vertices)
   end
 end
 
@@ -44,23 +44,23 @@ describe VisibilityRegion do
 
   it "should return true when ==ed regions which original and rays are same" do
     original = Ray.new(Vector.new(0,0), Vector.new(0,0))
-    rays = [
-            Ray.new(Vector.new(0,1), Vector.new(4,2)),
-            Ray.new(Vector.new(4,2), Vector.new(1,3)),
-            Ray.new(Vector.new(1,3), Vector.new(0,1))
+    vertices = [
+            Vector.new(0,1),
+            Vector.new(4,2),
+            Vector.new(1,3),
            ]
-    region2 = VisibilityRegion.new(original, rays)
+    region2 = VisibilityRegion.new(original, vertices)
     (@region == region2).should == true
   end
 
   it "should return false when ==ed regions which original and rays are differ" do
     original = Ray.new(Vector.new(0,0), Vector.new(0,0))
-    rays = [
-            Ray.new(Vector.new(0,1), Vector.new(4,2)),
-            Ray.new(Vector.new(4,2), Vector.new(1,3)),
-            Ray.new(Vector.new(0,0), Vector.new(0,6))
+    vertices = [
+            Vector.new(0,1),
+            Vector.new(4,2),
+            Vector.new(0,0),
            ]
-    region2 = VisibilityRegion.new(original, rays)
+    region2 = VisibilityRegion.new(original, vertices)
     (@region == region2).should == false
   end
 end

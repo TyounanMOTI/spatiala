@@ -2,9 +2,8 @@ class VisibilityRegion < Polygon
   attr_reader :original
   alias :rays :lines
 
-  def initialize(original, *rays)
+  def initialize(original, vertices)
     @original = original
-    vertices = rays.flatten.collect { |ray| ray.origin }
     super vertices
   end
 

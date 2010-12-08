@@ -134,8 +134,7 @@ class Ray
                  ]
     end
 
-    rays = Polygon.new(vertices).lines
-    return VisibilityRegion.new(self, rays)
+    return VisibilityRegion.new(self, vertices)
   end
 
   def normal
