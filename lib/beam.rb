@@ -1,11 +1,10 @@
 class Beam < Polygon
   attr_reader :origin
-  attr_accessor :children, :deltas, :reference_segment
+  attr_accessor :children, :reference_segment
 
-  def initialize(origin, *deltas)
+  def initialize(origin, vertices)
     @origin = origin
-    @deltas = deltas.flatten
     @children = Array.new
-    super @deltas
+    super vertices
   end
 end

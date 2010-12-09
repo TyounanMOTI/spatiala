@@ -14,10 +14,11 @@ class Crack
 
   def to_beam
     beam = Beam.new(@rays[0].origin,
-                    @rays[0],
-                    Ray.new(@rays[0].destination, @rays[1].destination),
-                    Ray.new(@rays[1].destination, @rays[1].origin),
-                    Ray.new(@rays[0].origin, @rays[0].origin))
+                    [
+                     @rays[0].origin,
+                     @rays[0].destination,
+                     @rays[1].destination
+                    ])
     beam.reference_segment = @line
     return beam
   end

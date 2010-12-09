@@ -79,8 +79,15 @@ class Ray
     rays << Ray.new(upper_wing.destination, lower_wing.destination)
     rays << lower_wing.reverse if lower_wing.length > 0
     rays << Ray.new(lower_wing.origin, upper_wing.origin)
+    
+    vertices = [
+                (WINDOW*@origin.ratio).destination,
+                @origin.dualize.destination,
+                @destination.dualize.destination,
+                (WINDOW*@destination.ratio).destination
+               ]
 
-    beam = Beam.new(@origin.listener.position, rays)
+    beam = Beam.new(@origin.listener.position, vertices)
     beam.reference_segment = @origin.region.original
     return beam
   end

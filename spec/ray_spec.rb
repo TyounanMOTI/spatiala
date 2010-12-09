@@ -265,12 +265,9 @@ describe Ray, "when extremes are given as VisibilityMap::IntersectionPoint" do
   it "should return Beam which reference_segment is original of p.region when dualized" do
     @ray.dualize.reference_segment.should == @p.region.original
   end
-
-  it "should return closed beam when dualized" do
-    rays = @ray.dualize.deltas
-    rays.each_index do |i|
-      rays[i].destination.should == rays.fetch(i+1, rays[0]).origin
-    end
+  
+  it "should have return beam which have 4 vertices when dualized" do
+    @ray.dualize.vertices.length.should == 4
   end
 end
 
