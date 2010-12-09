@@ -11,6 +11,10 @@ describe Beam do
     @beam.should be_instance_of Beam
   end
 
+  it "should be child of Polygon" do
+    Beam.superclass.should == Polygon
+  end
+
   it "should have Vectors: origin, deltas" do
     @beam.origin.should == Vector.new(50,100)
     @beam.deltas[0].should == Vector.new(400,40)
