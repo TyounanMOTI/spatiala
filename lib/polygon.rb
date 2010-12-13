@@ -40,4 +40,8 @@ class Polygon
     return true if !index.nil? && index[0] == v2
     return false
   end
+
+  def include?(point)
+    lines.detect { |i| i.delta.cross(point - i.origin).z < 0 }.nil?
+  end
 end

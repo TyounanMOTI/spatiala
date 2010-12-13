@@ -31,6 +31,14 @@ describe Polygon, "which is triangle" do
     @polygon.lines.length.should == 3
     @polygon.lines[0].should be_instance_of Ray
   end
+
+  it "should return true when include? Vector(50, 200)" do
+    @polygon.include?(Vector.new(50,200)).should == true
+  end
+
+  it "should return false when include? Vector(400,20)" do
+    @polygon.include?(Vector.new(400,20)).should == false
+  end
 end
 
 describe Polygon, "which is triangle disabled 0, 1" do
