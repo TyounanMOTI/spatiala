@@ -98,6 +98,31 @@ describe VisibilityMap::IntersectionPoints do
   end
 end
 
+describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" do
+  include VisibilityMap::IntersectionPoints::Environment
+
+  before do
+    setup_intersection_points
+  end
+
+  it "should return Array of Beam when converted to_beams" do
+    pending "until implements to_beams"
+    beams = @intersection_points.to_beams
+    beams.should be_instance_of Array
+    beams.each { |i| i.should be_instance_of Beam }
+  end
+
+  it "should return 3 beams when converted to_beams" do
+    pending "until implements to_beams"
+    @intersection_points.to_beams.length.should == 3
+  end
+
+  it "should have 6 points when make_pairs" do
+    paired = @intersection_points.make_pairs
+    paired.length.should == 6
+  end
+end
+
 describe VisibilityMap::IntersectionPoint do
   include VisibilityRegion::Environment
   include BeamTracer::Environment

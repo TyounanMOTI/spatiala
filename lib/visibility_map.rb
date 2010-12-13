@@ -34,6 +34,26 @@ class VisibilityMap
     def initialize(args)
       super
     end
+
+    # TODO: we don't consider the case when we looks connection point of lines
+    def make_pairs
+      result = Array.new
+      each_index do |i|
+        current_point = self[i]
+        next_point = self[i+1]
+        result << current_point
+
+        break if self[i+1].nil?
+        unless current_point.region == next_point.region
+          if current_point.region.include?(next_point)
+            result << IntersectionPoint.new(next_point.ratio, current_point.region, next_point.listener)
+          else
+            result << IntersectionPoint.new(current_point.ratio, next_point.region, next_point.listener)
+          end
+        end
+      end
+      return IntersectionPoints.new(result.flatten)
+    end
   end
 
   class IntersectionPoint < Vector

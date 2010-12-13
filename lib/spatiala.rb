@@ -17,18 +17,25 @@ class Spatiala < Processing::App
   def setup
     setup_app
     setup_tracer
-    scale_for_normalized_geometry
 
-    tracer = @tracer.normalize(@geometry.lines[1])
-    geometry = tracer.geometry.without_window
-    map = VisibilityMap.new(tracer)
-    intersection_points = map.get_intersection_points
+    if true
+      scale_for_normalized_geometry
 
-    draw_geometry geometry
+      tracer = @tracer.normalize(@geometry.lines[3]) # 1
+      geometry = tracer.geometry.without_window
+      map = VisibilityMap.new(tracer)
+      intersection_points = map.get_intersection_points
 
-    draw_intersection_points intersection_points
-    intersection_points.each { |i| p i.point.y }
-    @index = 0
+      draw_geometry geometry
+      draw_listener tracer.listener
+      draw_intersection_points intersection_points
+      intersection_points.each { |i| p i.point.y }
+    else
+      scale_for_geometry
+      draw_listener
+      draw_geometry
+      draw_ray @geometry.lines[3]
+    end
   end
 
   def draw
