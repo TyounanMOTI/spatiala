@@ -18,13 +18,18 @@ describe Polygon do
     polygon.transform(Matrix.translator(2,-1,0)).vertices.should ==
       [Vector.new(5,9), Vector.new(7,7)]
   end
+end
 
-  it "should 3 lines in triangle" do
-    polygon = Polygon.new(Vector.new(10,20),
+describe Polygon, "which is triangle" do
+  before do
+    @polygon = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
                            Vector.new(30,420))
-    polygon.lines.length.should == 3
-    polygon.lines[0].should be_instance_of Ray
+  end
+
+  it "should 3 lines" do
+    @polygon.lines.length.should == 3
+    @polygon.lines[0].should be_instance_of Ray
   end
 end
 
