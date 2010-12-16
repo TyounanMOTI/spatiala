@@ -39,6 +39,31 @@ describe VisibilityMap do
   end
 end
 
+describe VisibilityMap, "which normalized by lines[3]" do
+  include BeamTracer::Environment
+
+  IntersectionPoints = VisibilityMap::IntersectionPoints
+  IntersectionPoint = VisibilityMap::IntersectionPoint
+
+  before do
+    setup_beam_tracer
+    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[3]))
+  end
+
+  it "should return 4 IntersectionPoints when get_intersection_points" do
+    pending "until disables lines left of Ray::WINDOW"
+    @map.get_intersection_points.length.should == 4
+  end
+
+  it "should return 4 points when get_intersections" do
+    @map.get_intersections.length.should == 4
+  end
+
+  it "should have 2 regions in tracer" do
+    @map.regions.length.should == 2
+  end
+end
+
 module VisibilityMap::IntersectionPoints::Environment
   include BeamTracer::Environment
 

@@ -15,30 +15,69 @@ require 'intersection'
 
 class Spatiala < Processing::App
   def setup
+    p "============"
     setup_app
     setup_tracer
 
-    if true
+    reflector = 3
+    @normalized_tracer = @tracer.normalize(@geometry.lines[reflector]) # 1
+    @normalized_geometry = @normalized_tracer.geometry
+    @map = VisibilityMap.new(@normalized_tracer)
+    intersection_points = @map.get_intersection_points
+
+    case :map
+    when :normalized
       scale_for_normalized_geometry
+      draw_geometry @normalized_geometry
+      draw_listener @normalized_tracer.listener
+      draw_intersection_points @map.get_intersection_points
 
-      tracer = @tracer.normalize(@geometry.lines[3]) # 1
-      geometry = tracer.geometry.without_window
-      map = VisibilityMap.new(tracer)
-      intersection_points = map.get_intersection_points
-
-      draw_geometry geometry
-      draw_listener tracer.listener
-      draw_intersection_points intersection_points
-      intersection_points.each { |i| p i.point.y }
-    else
+      @map.regions.each { |r| p r.original.hash, r.rays[0].origin.x }
+      @map.get_intersection_points.each { |i| p i.region.original.hash }
+    when :world
       scale_for_geometry
       draw_listener
       draw_geometry
-      draw_ray @geometry.lines[3]
+      draw_ray @geometry.lines[reflector]
+    when :map
+      scale_for_visibility_map
+      draw_axis
+
+      draw_visibility_map @map
+      draw_ray @normalized_tracer.listener.position.dualize
+      draw_intersection_points @map.get_intersections
+      @map.get_intersections.sort_by { |i| i.ratio }.each { |i| p i.ratio }
     end
+
+    @region_index = 0
+    @ray_index = 0
+    @vision = @normalized_tracer.listener.position.dualize
   end
 
   def draw
+    case :none
+    when :each_intersection
+      clear
+      region = @map.regions[@region_index]
+      ray = @map.regions[@region_index].rays[@ray_index]
+      rate = @vision.intersect(ray)
+      intersection_point = (@vision*rate).destination unless rate.nil?
+
+      draw_axis
+      draw_polygon region
+      draw_ray ray
+      draw_ray @vision
+      draw_point intersection_point unless rate.nil?
+
+      @ray_index += 1
+      if @ray_index == @map.regions[@region_index].rays.length
+        @ray_index = 0
+        @region_index += 1
+      end
+      @region_index = 0 if @region_index == @map.regions.length
+    when :each_reflector
+
+    end
   end
 
   def setup_app
@@ -79,12 +118,12 @@ class Spatiala < Processing::App
   end
 
   def scale_for_normalized_geometry
-    @scale = Vector.new(1, height/2 - 20)
+    @scale = Vector.new(1, 200)
     @offset = Vector.new(width/4, height/2)
   end
 
   def scale_for_visibility_map
-    @scale = Vector.new(20000, height/2 - 20)
+    @scale = Vector.new(15000, height/2 - 20)
     @offset = Vector.new(width/2, height/2)
   end
 
@@ -102,7 +141,12 @@ class Spatiala < Processing::App
   end
 
   def draw_intersection_points(intersection_points)
+    push_style
+    fill @hue+30, @saturation, @brightness, 50
+
     intersection_points.each { |i| draw_point(i.point) }
+
+    pop_style
   end
 
   def draw_visibility_map(map)
@@ -206,18 +250,6 @@ class Spatiala < Processing::App
     rays.each do |i|
       draw_ray i, hue, 50
       hue += 100 / rays.length
-    end
-  end
-
-  def draw_beam(beam, hue=@hue, alpha=100)
-    beam.deltas.each { |i| draw_ray i, hue, alpha }
-  end
-
-  def draw_beams(beams)
-    hue = 0
-    beams.each do |i|
-      draw_beam i, hue, 50
-      hue += 100 / beams.length
     end
   end
 

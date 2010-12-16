@@ -43,8 +43,8 @@ class Ray
     ray_to_wall = self.intersect_as_directional_line(wall)
     wall_to_ray = wall.intersect_as_directional_line(self)
     # return false if intersect with both end of wall
-    if ((ray_to_wall >= -0.0000001 && ray_to_wall <= 1.0000001) &&
-        (wall_to_ray >= -0.0000001 && wall_to_ray <= 1.0000001)) then
+    if ((ray_to_wall >= -0.1e-10 && ray_to_wall <= 1.0 + 0.1e-10) &&
+        (wall_to_ray >= -0.1e-10 && wall_to_ray <= 1.0 + 0.1e-10)) then
       return true
     end
     return false
