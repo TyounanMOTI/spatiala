@@ -25,15 +25,13 @@ class Spatiala < Processing::App
     @map = VisibilityMap.new(@normalized_tracer)
     intersection_points = @map.get_intersection_points
 
-    case :map
+    case :normalized
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @normalized_geometry
       draw_listener @normalized_tracer.listener
       draw_intersection_points @map.get_intersection_points
-
-      @map.regions.each { |r| p r.original.hash, r.rays[0].origin.x }
-      @map.get_intersection_points.each { |i| p i.region.original.hash }
+      @map.get_intersection_points.sort_by { |i| i.y }.each { |i| draw_ray i.dualize; p i.dualize.length }
     when :world
       scale_for_geometry
       draw_listener

@@ -69,22 +69,11 @@ class Ray
   end
 
   def dualize_to_beam
-    upper_wing = @origin.dualize
-    upper_wing.origin = (WINDOW*@origin.ratio).destination
-    lower_wing = @destination.dualize
-    lower_wing.origin = (WINDOW*@destination.ratio).destination
-
-    rays = Array.new
-    rays << upper_wing if upper_wing.length > 0
-    rays << Ray.new(upper_wing.destination, lower_wing.destination)
-    rays << lower_wing.reverse if lower_wing.length > 0
-    rays << Ray.new(lower_wing.origin, upper_wing.origin)
-    
     vertices = [
-                (WINDOW*@origin.ratio).destination,
+                @origin.dualize.origin,
                 @origin.dualize.destination,
                 @destination.dualize.destination,
-                (WINDOW*@destination.ratio).destination
+                @destination.dualize.origin,
                ]
 
     beam = Beam.new(@origin.listener.position, vertices)
