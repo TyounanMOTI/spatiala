@@ -25,7 +25,7 @@ class Spatiala < Processing::App
     @map = VisibilityMap.new(@normalized_tracer)
     intersection_points = @map.get_intersection_points
 
-    case :normalized
+    case :map
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @normalized_geometry
@@ -36,7 +36,6 @@ class Spatiala < Processing::App
       scale_for_geometry
       draw_listener
       draw_geometry
-      draw_ray @geometry.lines[reflector]
     when :map
       scale_for_visibility_map
       draw_axis
@@ -44,7 +43,7 @@ class Spatiala < Processing::App
       draw_visibility_map @map
       draw_ray @normalized_tracer.listener.position.dualize
       draw_intersection_points @map.get_intersections
-      @map.get_intersections.sort_by { |i| i.ratio }.each { |i| p i.ratio }
+#      @map.get_intersections.sort_by { |i| i.ratio }.each { |i| p i.ratio }
     end
 
     @region_index = 0
@@ -53,8 +52,8 @@ class Spatiala < Processing::App
   end
 
   def draw
-    case :none
-    when :each_intersection
+    case :intersection
+    when :intersection
       clear
       region = @map.regions[@region_index]
       ray = @map.regions[@region_index].rays[@ray_index]
@@ -67,20 +66,21 @@ class Spatiala < Processing::App
       draw_ray @vision
       draw_point intersection_point unless rate.nil?
 
-      @ray_index += 1
-      if @ray_index == @map.regions[@region_index].rays.length
-        @ray_index = 0
-        @region_index += 1
+      each_millis(1000) do
+        @ray_index += 1
+        if @ray_index == @map.regions[@region_index].rays.length
+          @ray_index = 0
+          @region_index += 1
+        end
+        @region_index = 0 if @region_index == @map.regions.length
       end
-      @region_index = 0 if @region_index == @map.regions.length
-    when :each_reflector
-
+    when :reflector
     end
   end
 
   def setup_app
     size 700, 500
-    frame_rate 1
+    frame_rate 30
     smooth
     color_mode HSB, 100
     @hue = 60
@@ -88,6 +88,7 @@ class Spatiala < Processing::App
     @brightness = 80
     background @hue, @saturation, @brightness-50
     stroke @hue, 20, @brightness
+    @previous_millis = millis
   end
 
   def setup_tracer
@@ -253,6 +254,13 @@ class Spatiala < Processing::App
 
   def key_released
     save_frame "../snap/spatiala-####.png" if key == 'p'
+  end
+
+  def each_millis(interval, &block)
+    if millis - @previous_millis >= interval
+      yield
+      @previous_millis = millis
+    end
   end
 end
 
