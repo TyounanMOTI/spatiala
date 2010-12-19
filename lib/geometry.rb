@@ -31,7 +31,8 @@ class Geometry
   end
 
   def occluded?(ray)
-    not lines_include(ray.destination).include?(nearest_intersect_line_with(ray))
+    return false if ray.length == 0
+    return (not lines_include(ray.destination).include?(nearest_intersect_line_with(ray)))
   end
 
   def intersect(ray)

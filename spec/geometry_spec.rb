@@ -95,6 +95,10 @@ describe Geometry do
   it "should return Intersections when intersect Ray(100,200)->(100,100).maximize" do
     @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize).should be_instance_of Intersections
   end
+
+  it "returns false when judge occlusion of zero-length Ray" do
+    @geometry.occluded?(Ray.new(Vector.new(100,100), Vector.new(100,100))) == false
+  end
 end
 
 describe Geometry, "when normalized" do
