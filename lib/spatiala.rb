@@ -25,7 +25,7 @@ class Spatiala < Processing::App
     @map = VisibilityMap.new(@normalized_tracer)
     intersection_points = @map.get_intersection_points
 
-    case :map
+    case :world
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @normalized_geometry
@@ -52,7 +52,7 @@ class Spatiala < Processing::App
   end
 
   def draw
-    case :intersection
+    case :none
     when :intersection
       clear
       region = @map.regions[@region_index]
@@ -254,6 +254,19 @@ class Spatiala < Processing::App
 
   def key_released
     save_frame "../snap/spatiala-####.png" if key == 'p'
+  end
+  
+  def mouse_pressed
+    push_style
+    
+    stroke_weight 3
+    stroke @hue+10, @saturation, @brightness
+    fill @hue+10, @saturation, @brightness, 50
+    ellipse mouse_x, mouse_y, 8, 8
+    
+    p "#{mouse_x}, #{mouse_y}"
+    
+    pop_style
   end
 
   def each_millis(interval, &block)
