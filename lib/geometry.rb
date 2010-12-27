@@ -22,7 +22,7 @@ class Geometry
   end
 
   def lines_include(point)
-    lines.select { |i| i.include_edge?(point) }
+    lines.select { |i| i.include?(point) }
   end
 
   def nearest_intersect_line_with(ray)

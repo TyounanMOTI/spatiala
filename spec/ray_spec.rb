@@ -51,11 +51,14 @@ describe Ray do
       specify { @ray.should == Ray.new(Vector.new(3,2), Vector.new(4,6)) }
     end
 
-    describe "#include_edge?" do
-      it { should be_include_edge(Vector.new(1,0)) }
-      it { should be_include_edge(Vector.new(2,4)) }
-      it { should_not be_include_edge(Vector.new(1,3)) }
-      it { should_not be_include_edge(Vector.new(1,1)) }
+    describe "#include?" do
+      it { should be_include(Vector.new(1,0)) }
+      it { should be_include(Vector.new(2,4)) }
+      it { should be_include(Vector.new(1.5,2)) }
+      it { should_not be_include(Vector.new(0,0)) }
+      it { should_not be_include(Vector.new(1,2)) }
+      it { should_not be_include(Vector.new(0,-4)) }
+      it { should_not be_include(Vector.new(3,8)) }
     end
 
     describe "#maximize" do

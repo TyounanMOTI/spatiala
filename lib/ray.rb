@@ -187,8 +187,10 @@ class Ray
     end
   end
 
-  def include_edge?(point)
-    return true if point == @origin || point == @destination
+  def include?(point)
+    target = Ray.new(@origin, point)
+    return true if (point - @origin).length < 1.0e-15
+    return true if (self*target - self.length*target.length).abs < 1.0e-15 && target.length - self.length < 1.0e-15
     return false
   end
 
