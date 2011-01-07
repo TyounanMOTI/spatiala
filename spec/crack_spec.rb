@@ -8,25 +8,33 @@ describe Crack do
     @crack = Crack.new(@ray1, @ray2, @ray3)
   end
 
-  it "should initialize with line and Rays" do
-    Crack.new(@ray1, @ray2, @ray3)
+  describe "#initialize" do
+    it "should initialize with line and Rays" do
+      Crack.new(@ray1, @ray2, @ray3).should be_a Crack
+    end
+
+    it "should initialize with line" do
+      Crack.new(@ray1).should be_a Crack
+    end
   end
 
-  it "should initialize with line" do
-    Crack.new(@ray1)
+  describe "its members" do
+    it "should have line and rays" do
+      @crack.line.should be_instance_of Ray
+      @crack.rays.each { |i| i.should be_instance_of Ray }
+    end
   end
 
-  it "should have line and rays" do
-    @crack.line.should be_instance_of Ray
-    @crack.rays.each { |i| i.should be_instance_of Ray }
+  describe "#sort!" do
+    it "can sort" do
+      @crack.sort!
+      (@crack.rays[0].delta.cross(@crack.rays[1].delta)).z.should > 0
+    end
   end
 
-  it "can sort" do
-    @crack.sort!
-    (@crack.rays[0].delta.cross(@crack.rays[1].delta)).z.should > 0
-  end
-
-  it "should return Beam when convert to_beam" do
-     @crack.to_beam.should be_instance_of Beam
+  describe "#to_beam" do
+    it "should return Beam when convert to_beam" do
+       @crack.to_beam.should be_instance_of Beam
+    end
   end
 end

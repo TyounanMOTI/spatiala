@@ -34,7 +34,6 @@ describe VisibilityMap do
   end
 
   it "should return 4 IntersectionPoints when reject_occluded_points" do
-    pending "until correct occlusion judgement"
     rejected = @map.reject_occluded_points(IntersectionPoints.new(@map.get_intersections))
     rejected.length.should == 4
   end
@@ -93,7 +92,6 @@ describe VisibilityMap, "when get @intersection_points" do
     pending "until correct reject_occluded_points"
     @intersection_points.length.should == 4
   end
-
 end
 
 describe VisibilityMap::IntersectionPoints do

@@ -23,81 +23,65 @@ describe Geometry do
     @view_ray = Ray.new(Vector.new(0,0), Vector.new(50,50))
   end
 
-  it "should generate instance" do
-    Geometry.new.should be_instance_of Geometry
+  subject { @geometry }
+
+  it { should be_a Geometry }
+
+  describe "members" do
+    its(:polygons) { should be_collection(Array).of(Polygon) }
+    its(:vertices) { should be_collection(Array).of(Vector) }
+    its(:lines) { should be_collection(Array).of(Ray) }
   end
 
-  it "should be initialized by including polygons" do
-    @geometry.should be_instance_of Geometry
-  end
-
-  it "should have including polygons" do
-    @geometry.polygons.each { |i| i.should be_instance_of Polygon }
-  end
-
-  it "should return Array of Vector when get all vertices" do
-    vertices = @geometry.vertices
-    vertices.should be_instance_of Array
-    vertices.each{ |i| i.should be_instance_of Vector }
-  end
-
-  it "should return Array of Ray when get all lines" do
-    lines = @geometry.lines
-    lines.should be_instance_of Array
-    lines.each { |i| i.should be_instance_of Ray }
-  end
-
-  it "should return Array of Ray when lines_include Vector(10,20)" do
-    point = Vector.new(10, 20)
-    lines = @geometry.lines_include(point)
-    lines.should_not be_empty
-    lines.should be_instance_of Array
-    lines.each { |i| i.should be_instance_of Ray }
-  end
-
-  it "should return a Ray when get nearest_intersect_line_with" do
-    @geometry.nearest_intersect_line_with(@view_ray).should be_instance_of Ray
-  end
-
-  it "should return Ray (10,20) to (400,50) when get nearest_intersect_line_with Ray (0,0) to (50,50)" do
-    @geometry.nearest_intersect_line_with(@view_ray).should == Ray.new(Vector.new(10,20), Vector.new(400,50))
-  end
-
-  it "should return Ray(100,100)->(250,130) when get nearest_intersect_line_with Ray(100,200)->(400,50)" do
-    @geometry.nearest_intersect_line_with(Ray.new(Vector.new(100,200), Vector.new(400,50))).should == Ray.new(Vector.new(100,100), Vector.new(250,130))
-  end
-
-  it "should return Array of Hash which key is :vertex, :line when get ends_of_lines" do
-    vertices = @geometry.ends_of_lines
-    vertices.should be_instance_of Array
-    vertices.each do |i|
-      i[:vertex].should be_instance_of Vector
-      i[:line].should be_instance_of Ray
+  describe "#lines_include" do
+    it "should return Array of Ray" do
+      lines = @geometry.lines_include(Vector.new(10, 20))
+      lines.should be_collection(Array).of(Ray)
     end
   end
 
-  it "should return double Vectors of lines when get ends_of_lines" do
-    @geometry.ends_of_lines.length.should == @geometry.lines.length*2
+  describe "#nearest_intersect_line_with" do
+    context "target_ray is Ray(0,0)->(50,50)" do
+      subject { @geometry.nearest_intersect_line_with(@view_ray) }
+
+      it { should be_instance_of Ray }
+      it { should == Ray.new(Vector.new(10,20), Vector.new(400,50)) }
+    end
+
+    it "should return Ray(100,100)->(250,130) when get nearest_intersect_line_with Ray(100,200)->(400,50)" do
+      @geometry.nearest_intersect_line_with(Ray.new(Vector.new(100,200), Vector.new(400,50))).should == Ray.new(Vector.new(100,100), Vector.new(250,130))
+    end
   end
 
-  it "should return false when questioned Ray(100,200)->(30,420) is occluded?" do
-    @geometry.occluded?(Ray.new(@listener, Vector.new(30,420))).should == false
+  describe "#ends_of_lines" do
+    subject { @geometry.ends_of_lines }
+
+    it "should return Array of Hash which key is :vertex, :line" do
+      should be_instance_of Array
+      subject.each do |i|
+        i[:vertex].should be_instance_of Vector
+        i[:line].should be_instance_of Ray
+      end
+    end
+
+    it "should return double Vectors of lines" do
+      subject.length.should == @geometry.lines.length*2
+    end
   end
 
-  it "should return true when questioned Ray(100,200)->(150,90) is occluded?" do
-    @geometry.occluded?(Ray.new(@listener, Vector.new(150,90))).should == true
+  describe "#occluded?" do #suggest: rename occluded? to occlude?
+    it { should_not be_occluded(Ray.new(@listener, Vector.new(30,420))) }
+    it { should be_occluded(Ray.new(@listener, Vector.new(150,90))) }
+
+    it "should not occlude zero-length Ray" do
+      should_not be_occluded(Ray.new(Vector.new(100,100), Vector.new(100,100)))
+    end
   end
 
-  it "should return 2 intersections when intersect Ray(100,200)->(100,100).maximize" do
-    @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize).length.should == 2
-  end
-
-  it "should return Intersections when intersect Ray(100,200)->(100,100).maximize" do
-    @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize).should be_instance_of Intersections
-  end
-
-  it "returns false when judge occlusion of zero-length Ray" do
-    @geometry.occluded?(Ray.new(Vector.new(100,100), Vector.new(100,100))) == false
+  describe "#intersect" do
+    subject { @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize) }
+    it { should be_a Intersections }
+    its(:length) { should == 2 }
   end
 end
 
@@ -111,15 +95,9 @@ describe Geometry, "when normalized" do
     @geometry = @geometry.normalize(@normalizer)
   end
 
-  it "should Geometry" do
-    @geometry.should be_instance_of Geometry
-  end
+  subject { @geometry }
 
-  it "should have Ray::WINDOW" do
-    @geometry.lines.should be_include Ray::WINDOW
-  end
-
-  it "should return geometry which doesn't include WINDOW when without_window" do
-    @geometry.without_window.lines.should_not be_include Ray::WINDOW
-  end
+  it { should be_a Geometry }
+  its(:lines) { should include Ray::WINDOW }
+  its("without_window.lines") { should_not include Ray::WINDOW }
 end

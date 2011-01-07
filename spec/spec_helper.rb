@@ -18,3 +18,14 @@ require 'intersection'
 RSpec.configure do |config|
   include Math
 end
+
+RSpec::Matchers.define :be_collection do |collection_class|
+  match do |collection|
+    collection.kind_of?(collection_class) && collection.reject {|i| i.kind_of?(@element_class)}
+  end
+
+  chain :of do |klass|
+    @element_class = klass
+  end
+end
+

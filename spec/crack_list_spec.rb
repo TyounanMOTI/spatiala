@@ -26,14 +26,10 @@ describe CrackList, "when initialize with Array of Crack" do
     @list = CrackList.new(@crack1)
   end
 
-  it "should initialize with Cracks" do
-    @list.should be_instance_of CrackList
-  end
+  subject { @list }
 
-  it "should have cracks" do
-    @list.should be_instance_of CrackList
-    @list.each { |i| i.should be_instance_of Crack }
-  end
+  it { should be_a CrackList }
+  it { should be_collection(CrackList).of(Crack) }
 
   it "should append new crack to list when there are'nt already exist crack which have same line" do
     previous_length = @list.length
@@ -67,30 +63,26 @@ describe CrackList, "when initialize from Geometry and Listener" do
     @expanded_rays = @list.expand(@rejected_rays)
   end
 
-  it "should return CrackList when initialized" do
-    @list.should be_instance_of CrackList
+  subject { @list }
+
+  it { should be_a CrackList }
+  its(:cracks) { should be_collection(Array).of(Crack) }
+
+  describe "#connect_listener_and_vertices" do
+    subject { @list.connect_listener_and_vertices }
+
+    it { should be_instance_of Intersections }
+    its("to_rays.length") { should == 10 }
   end
 
-  it "should have member 'cracks' which is Array of Crack" do
-    @list.cracks.should be_instance_of Array
-    @list.cracks.should_not be_empty
-    @list.cracks.each { |i| i.should be_instance_of Crack }
+  describe "#reject_occluded" do
+    subject { @list.reject_occluded(@list.connect_listener_and_vertices) }
+    its("to_rays.length") { should == 6 }
   end
 
-  it "should return Intersections when connect_listener_and_vertices" do
-    @connected_rays.should be_instance_of Intersections
-  end
-
-  it "should return 10 Rays when connect_listener_and_vertices" do
-    @connected_rays.to_rays.length.should == 10
-  end
-
-  it "should return 6 Rays when reject_occluded" do
-    @rejected_rays.to_rays.length.should == 6
-  end
-
-  it "should return 8 Rays when expand rays" do
-    @expanded_rays.to_rays.length.should == 8
+  describe "#expand" do
+    subject { @list.expand(@list.reject_occluded(@list.connect_listener_and_vertices)) }
+    its("to_rays.length") { should == 8 }
   end
 
   it_should_behave_like "requested to convert to_beams"

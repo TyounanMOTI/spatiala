@@ -12,8 +12,7 @@ module BeamTracer::Environment
   end
 
   def setup_listener
-    @listener = Listener.new(Vector.new(100,200),
-                             Vector.new(30,30))
+    @listener = Listener.new(Vector.new(100,200), Vector.new(30,30))
   end
 
   def setup_sources
@@ -21,36 +20,28 @@ module BeamTracer::Environment
   end
 end
 
-describe BeamTracer do
+describe BeamTracer, "when initialized with geometry, source, listener" do
   include BeamTracer::Environment
-
   before do
     setup_beam_tracer
+    @window = @geometry.lines[0]
   end
 
-  it "should initialize with geometry, source, listener" do
-    @tracer.should be_instance_of BeamTracer
-  end
+  subject { @tracer }
 
-  it "should return Matrix when get normalizer" do
-    segment = @geometry.lines[0]
-    @tracer.normalizer(segment).should be_instance_of Matrix
-  end
+  it { should be_a BeamTracer }
+  specify { subject.normalizer(@window).should be_a Matrix }
 
-  it "should return BeamTracer when normalized" do
-    result = @tracer.normalize(@geometry.lines[0])
-    result.should be_instance_of BeamTracer
-  end
+  describe "and normalized by @window" do
+    subject { @tracer.normalize(@window) }
 
-  it "should have Ray which length is 2 at normalized geometry" do
-    tracer = @tracer.normalize(@geometry.lines[0])
-    length = tracer.geometry.lines[0].delta.length
-    length.should < 2.01
-    length.should > 1.99
-  end
+    it { should be_a BeamTracer }
+    its("listener.position.x") { should < 0 }
 
-  it "should have Listener which position.x < 0 when normalized" do
-    normalized_tracer = @tracer.normalize(@geometry.lines[0])
-    normalized_tracer.listener.position.x.should < 0
+    it "should have Ray which length is 2 at normalized geometry" do
+      length = subject.geometry.lines[0].delta.length
+      length.should < 2.01
+      length.should > 1.99
+    end
   end
 end

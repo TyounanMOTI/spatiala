@@ -12,39 +12,38 @@ module Intersection::Environment
   end
 end
 
-describe Intersection do
+describe Intersection, "when initialized by its origin, target_ray and ratios" do
   include Intersection::Environment
 
   before do
     setup_intersection
   end
 
-  it "should initialized by its origin, target_ray and ratios" do
-    @intersection.should be_instance_of Intersection
+  subject { @intersection }
+
+  it { should be_instance_of Intersection }
+
+  describe "members" do
+    its(:origin) { should be_a Vector }
+    its(:target_ray) { should be_a Ray }
+    its(:ratios) { should be_collection(Array).of(Float) }
   end
 
-  it "should have members origin, target_ray and ratios" do
-    @intersection.origin.should be_instance_of Vector
-    @intersection.target_ray.should be_instance_of Ray
-    @intersection.ratios.should be_instance_of Array
-    @intersection.ratios.each { |i| i.should be_instance_of Float }
+  describe "#to_rays" do
+    its(:to_rays) { should be_collection(Array).of(Ray) }
   end
 
-  it "should return Array of Ray when convert to_rays" do
-    rays = @intersection.to_rays
-    rays.should be_instance_of Array
-    rays.each { |i| i.should be_instance_of Ray }
+  describe "#dup -ed Intersection should not have equal member" do
+    subject { @intersection.dup }
+
+    its(:ratios) { should_not be_equal @intersection.ratios }
+    its(:origin) { should_not be_equal @intersection.origin }
+    its(:target_ray) { should_not be_equal @intersection.target_ray }
   end
 
-  it "should not have equal ratios, origin and target_ray when duplicated" do
-    @intersection.dup.ratios.should_not be_equal @intersection.ratios
-    @intersection.dup.origin.should_not be_equal @intersection.origin
-    @intersection.dup.target_ray.should_not be_equal @intersection.target_ray
-  end
-
-  it "should return Array of Crack when convert to_cracks" do
-    @intersection.to_cracks.should be_instance_of Array
-    @intersection.to_cracks.each { |i| i.should be_instance_of Crack }
+  describe "#to_cracks" do
+    subject { @intersection.to_cracks }
+    it { should be_collection(Array).of(Crack) }
   end
 end
 

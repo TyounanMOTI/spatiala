@@ -1,26 +1,14 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Beam do
-  before do
-    @beam = Beam.new(Vector.new(50,100),
-                     [Vector.new(400,40), Vector.new(30,300)])
-  end
+  subject { Beam.new(Vector.new(50,100), [Vector.new(400,40), Vector.new(30,300)]) }
 
-  it "should generate instance" do
-    @beam.should be_instance_of Beam
-  end
+  it { should be_a Beam }
+  specify { described_class.superclass.should == Polygon }
 
-  it "should be child of Polygon" do
-    Beam.superclass.should == Polygon
-  end
-
-  it "should have Vectors: origin, deltas" do
-    @beam.origin.should == Vector.new(50,100)
-    @beam.vertices[0].should == Vector.new(400,40)
-    @beam.vertices[1].should == Vector.new(30,300)
-  end
-
-  it "should have children array" do
-    @beam.children.should be_instance_of Array
+  describe "#initialize" do
+    its(:origin) { should == Vector.new(50,100) }
+    its(:vertices) { should == [Vector.new(400,40), Vector.new(30,300)] }
+    its(:children) { should be_instance_of Array }
   end
 end
