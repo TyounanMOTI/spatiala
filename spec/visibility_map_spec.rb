@@ -22,21 +22,16 @@ describe VisibilityMap do
     @map.regions.each { |i| i.should be_instance_of VisibilityRegion }
   end
 
-  it "should return Array of IntersectionPoint when get_intersections" do
-    intersections = @map.get_intersections
-    intersections.should_not be_empty
-    intersections.should be_instance_of Array
-    intersections.each { |i| i.should be_instance_of IntersectionPoint }
+  describe "#get_intersections" do
+    subject { @map.get_intersections }
+    it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
+    its(:length) { should == 8 }
   end
 
-  it "should return 8 IntersectionPoints when get_intersections" do
-    @map.get_intersections.length.should == 8
-  end
-
-  it "should return 4 IntersectionPoints when reject_occluded_points" do
-    pending "until correct reject_occluded_points"
-    rejected = @map.reject_occluded_points(IntersectionPoints.new(@map.get_intersections))
-    rejected.length.should == 4
+  describe "#reject_occluded_points" do
+    subject { @map.reject_occluded_points(@map.get_intersections) }
+    it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
+    its(:length) { pending; should == 4 }
   end
 end
 

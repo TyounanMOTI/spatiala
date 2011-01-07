@@ -17,13 +17,14 @@ class VisibilityMap
 
   def get_intersections
     vision = @tracer.listener.position.dualize
-    @regions.map do |region|
+    points = @regions.map do |region|
       region.rays.map do |ray|
         ratio = vision.intersect(ray)
         next if ratio.nil?
         IntersectionPoint.new(ratio, region, @tracer.listener)
       end
     end.flatten.compact
+    return IntersectionPoints.new(points)
   end
 
   def reject_occluded_points(intersection_points)
