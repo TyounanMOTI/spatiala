@@ -31,7 +31,9 @@ describe VisibilityMap do
   describe "#reject_occluded_points" do
     subject { @map.reject_occluded_points(@map.get_intersections) }
     it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
-    its(:length) { pending; should == 4 }
+    pending "until correct Geometry#occluded?" do
+      its(:length) { should == 4 }
+    end
   end
 end
 
