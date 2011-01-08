@@ -28,7 +28,7 @@ class VisibilityMap
   end
 
   def reject_occluded_points(intersection_points)
-    intersection_points.reject { |i| @tracer.geometry.without_window.occluded?(i.dualize) }
+    intersection_points.reject { |i| @tracer.geometry.without_window.occlude?(i.dualize) }
   end
 
   class IntersectionPoints < Array

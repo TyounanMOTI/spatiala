@@ -30,7 +30,7 @@ class Geometry
     return intersect(ray).first.target_ray
   end
 
-  def occluded?(ray)
+  def occlude?(ray)
     return false if ray.length == 0
     return (not lines_include(ray.destination).include?(nearest_intersect_line_with(ray)))
   end

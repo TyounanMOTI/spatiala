@@ -28,7 +28,7 @@ class CrackList
     result = intersections.map do |intersection|
       rays = intersection.to_rays
       result_ratio = intersection.ratios.dup.delete_if do |i|
-        @geometry.occluded?(rays[intersection.ratios.index(i)])
+        @geometry.occlude?(rays[intersection.ratios.index(i)])
       end
       next if result_ratio.empty?
       Intersection.new(@listener.position, intersection.target_ray, result_ratio)

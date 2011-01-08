@@ -69,12 +69,12 @@ describe Geometry do
     end
   end
 
-  describe "#occluded?" do #suggest: rename occluded? to occlude?
-    it { should_not be_occluded(Ray.new(@listener, Vector.new(30,420))) }
-    it { should be_occluded(Ray.new(@listener, Vector.new(150,90))) }
+  describe "#occlude?" do
+    it { should_not be_occlude(Ray.new(@listener, Vector.new(30,420))) }
+    it { should be_occlude(Ray.new(@listener, Vector.new(150,90))) }
 
     it "should not occlude zero-length Ray" do
-      should_not be_occluded(Ray.new(Vector.new(100,100), Vector.new(100,100)))
+      should_not be_occlude(Ray.new(Vector.new(100,100), Vector.new(100,100)))
     end
   end
 
