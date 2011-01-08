@@ -31,9 +31,7 @@ describe VisibilityMap do
   describe "#reject_occluded_points" do
     subject { @map.reject_occluded_points(@map.get_intersections) }
     it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
-    pending "until correct Geometry#occluded?" do
-      its(:length) { should == 4 }
-    end
+    its(:length) { should == 4 }
   end
 end
 
@@ -49,7 +47,6 @@ describe VisibilityMap, "which normalized by lines[3]" do
   end
 
   it "should return 4 IntersectionPoints when get_intersection_points" do
-    pending "until correct reject_occluded_points"
     @map.get_intersection_points.length.should == 4
   end
 
@@ -87,7 +84,6 @@ describe VisibilityMap, "when get @intersection_points" do
   end
 
   it "should return 4 IntersectionPoints when get_instersection_points" do
-    pending "until correct reject_occluded_points"
     @intersection_points.length.should == 4
   end
 end
@@ -128,22 +124,23 @@ describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" d
     setup_intersection_points
   end
 
-  it "should return Array of Beam when converted to_beams" do
-    pending "until implements to_beams"
-    beams = @intersection_points.to_beams
-    beams.should be_instance_of Array
-    beams.each { |i| i.should be_instance_of Beam }
+  pending "#to_beams" do
+    it "should return Array of Beam when converted to_beams" do
+      beams = @intersection_points.to_beams
+      beams.should be_instance_of Array
+      beams.each { |i| i.should be_instance_of Beam }
+    end
+
+    it "should return 3 beams when converted to_beams" do
+      @intersection_points.to_beams.length.should == 3
+    end
   end
 
-  it "should return 3 beams when converted to_beams" do
-    pending "until implements to_beams"
-    @intersection_points.to_beams.length.should == 3
-  end
-
-  it "should have 6 points when make_pairs" do
-    pending "until correct get_intersection_points"
-    paired = @intersection_points.make_pairs
-    paired.length.should == 6
+  describe "#make_pairs" do
+    it "should have 6 points when make_pairs" do
+      paired = @intersection_points.make_pairs
+      paired.length.should == 6
+    end
   end
 end
 
