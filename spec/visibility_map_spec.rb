@@ -62,9 +62,9 @@ end
 module VisibilityMap::IntersectionPoints::Environment
   include BeamTracer::Environment
 
-  def setup_intersection_points
+  def setup_intersection_points(window=1)
     setup_beam_tracer
-    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[1]))
+    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[window]))
     @intersection_points = @map.get_intersection_points
   end
 end
@@ -140,6 +140,12 @@ describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" d
     it "should have 6 points when make_pairs" do
       paired = @intersection_points.make_pairs
       paired.length.should == 6
+    end
+
+    context "when window is 3rd line" do
+      before { setup_intersection_points(3) }
+      subject { @intersection_points.make_pairs }
+      its(:length) { pending "until make_pairs corrected"; should == 4 }
     end
   end
 end

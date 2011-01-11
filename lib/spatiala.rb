@@ -19,19 +19,19 @@ class Spatiala < Processing::App
     setup_app
     setup_tracer
 
-    reflector = 1
+    reflector = 3
     @normalized_tracer = @tracer.normalize(@geometry.lines[reflector]) # 1
     @normalized_geometry = @normalized_tracer.geometry
     @map = VisibilityMap.new(@normalized_tracer)
     intersection_points = @map.get_intersection_points
 
-    case :normalized
+    case :map
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @normalized_geometry
       draw_listener @normalized_tracer.listener
       @map.get_intersection_points.sort_by { |i| i.y }.each { |i| draw_ray i.dualize; p i.dualize.length }
-p     @map.get_intersections.sort_by { |i| i.y }.map { |i|
+      @map.get_intersections.sort_by { |i| i.y }.map { |i|
         @normalized_geometry.without_window.lines_include(i.dualize.destination).empty?
       }
     when :world
@@ -45,7 +45,7 @@ p     @map.get_intersections.sort_by { |i| i.y }.map { |i|
       draw_visibility_map @map
       draw_ray @normalized_tracer.listener.position.dualize
       draw_intersection_points @map.get_intersection_points
-      @map.get_intersection_points.sort_by { |i| i.ratio }.each { |i| p i.ratio }
+      @map.get_intersection_points.sort_by { |i| i.ratio }.each { |i| p i.region.hash }
     end
 
     @region_index = 0
