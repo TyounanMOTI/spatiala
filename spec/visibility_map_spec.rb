@@ -22,6 +22,12 @@ describe VisibilityMap do
   describe "members" do
     its(:regions) { should be_collection(Array).of(VisibilityRegion) }
     its(:geometry) { should be_a Geometry }
+    its(:normalized_geometry) do
+      should be_a Geometry
+      subject.lines.should be_include Ray::WINDOW
+    end
+    its(:normalizer) { should be_a Matrix }
+    its(:window) { should == @geometry.lines[1] }
   end
 
   pending "#get_intersections" do
