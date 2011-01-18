@@ -13,17 +13,15 @@ describe VisibilityMap do
     @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[1]))
   end
 
+  subject { @map }
+
   it "should be initialized with BeamTracer" do
-    @map.should be_instance_of VisibilityMap
+    should be_instance_of VisibilityMap
   end
 
-  it "should have regions which is Array of VisibilityRegion" do
-    @map.regions.should be_instance_of Array
-    @map.regions.each { |i| i.should be_instance_of VisibilityRegion }
-  end
-
-  it "have geometry" do
-    @map.geometry.should be_a Geometry
+  describe "members" do
+    its(:regions) { should be_collection(Array).of(VisibilityRegion) }
+    its(:geometry) { should be_a Geometry }
   end
 
   describe "#get_intersections" do
