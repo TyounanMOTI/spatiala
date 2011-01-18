@@ -1,11 +1,12 @@
 class VisibilityMap
-  attr_reader :regions
+  attr_reader :regions, :geometry
 
   def initialize(tracer)
     @regions = tracer.geometry.lines.map do |i|
       # also dualize reversed ray, because non facing line will be nil when dualized
       [i.dualize, i.reverse.dualize]
     end.flatten.compact
+    @geometry = tracer.geometry
     @tracer = tracer
   end
 
@@ -28,7 +29,7 @@ class VisibilityMap
   end
 
   def reject_occluded_points(intersection_points)
-    intersection_points.reject { |i| @tracer.geometry.without_window.occlude?(i.dualize) }
+    intersection_points.reject { |i| @geometry.without_window.occlude?(i.dualize) }
   end
 
   class IntersectionPoints < Array

@@ -22,6 +22,10 @@ describe VisibilityMap do
     @map.regions.each { |i| i.should be_instance_of VisibilityRegion }
   end
 
+  it "have geometry" do
+    @map.geometry.should be_a Geometry
+  end
+
   describe "#get_intersections" do
     subject { @map.get_intersections }
     it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
