@@ -8,18 +8,7 @@ class VisibilityMap
     end.flatten.compact
     @geometry = geometry
     @window = window
-    @normalized_geometry = @geometry.normalize(normalizer)
-  end
-
-  def normalizer
-    window_center = (@window.origin + @window.destination)/2
-    translator = Matrix.translator(-window_center.x, -window_center.y, -window_center.z)
-    translated_window = @window.transform(translator)
-    theta = Math.atan(translated_window.origin.y.to_f / translated_window.origin.x.to_f)
-    rotator = Matrix.rotator(Math::PI/2 - theta)
-    rotated_window = translated_window.transform(rotator)
-    scaler = Matrix.scaler(1,1/rotated_window.origin.y)
-    return translator * rotator * scaler
+    @normalized_geometry = @geometry.normalize(@window)
   end
 
   def get_intersection_points

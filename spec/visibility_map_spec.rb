@@ -26,7 +26,6 @@ describe VisibilityMap do
       should be_a Geometry
       subject.lines.should be_include Ray::WINDOW
     end
-    its(:normalizer) { should be_a Matrix }
     its(:window) { should == @geometry.lines[1] }
   end
 

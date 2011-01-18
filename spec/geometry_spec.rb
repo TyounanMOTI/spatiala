@@ -94,18 +94,27 @@ describe Geometry do
 end
 
 describe Geometry, "which normalized" do
-  pending "until VisibilityMap#normalize moves to Geometry" do
-    include Geometry::Environment
+  include Geometry::Environment
 
-    before do
-      setup_geometry
-      @geometry = @geometry.normalize(@geometry.lines[0])
-    end
+  before do
+    setup_geometry
+    @window = @geometry.lines[0]
+    @geometry = @geometry.normalize(@window)
+  end
 
-    subject { @geometry }
+  subject { @geometry }
 
-    it { should be_a Geometry }
+  it { should be_a Geometry }
+
+  describe "#normalizer" do
+    specify { subject.normalizer(@window).should be_a Matrix}
+  end
+
+  describe "#normalize" do
     its(:lines) { should include Ray::WINDOW }
+  end
+
+  describe "#without_window" do
     its("without_window.lines") { should_not include Ray::WINDOW }
   end
 end

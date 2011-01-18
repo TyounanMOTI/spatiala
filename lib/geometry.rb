@@ -40,9 +40,19 @@ class Geometry
     return Intersections.new(intersections.collect { |i| i[0] })
   end
 
-  def normalize(normalizer)
-    polygons = @polygons.map { |i| i.transform(normalizer) }
-    return Geometry.new(polygons)
+  def normalize(window)
+    return transform(normalizer(window))
+  end
+
+  def normalizer(window)
+    window_center = (window.origin + window.destination)/2
+    translator = Matrix.translator(-window_center.x, -window_center.y, -window_center.z)
+    translated_window = window.transform(translator)
+    theta = Math.atan(translated_window.origin.y.to_f / translated_window.origin.x.to_f)
+    rotator = Matrix.rotator(Math::PI/2 - theta)
+    rotated_window = translated_window.transform(rotator)
+    scaler = Matrix.scaler(1,1/rotated_window.origin.y)
+    return translator * rotator * scaler
   end
 
   def transform(matrix)
