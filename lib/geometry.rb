@@ -45,6 +45,11 @@ class Geometry
     return Geometry.new(polygons)
   end
 
+  def transform(matrix)
+    polygons = @polygons.map { |i| i.transform(matrix) }
+    return Geometry.new(polygons)
+  end
+
   def without_window
     Geometry.new(@polygons.map { |i| i.disable(Ray::WINDOW) })
   end

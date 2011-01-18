@@ -83,6 +83,14 @@ describe Geometry do
     it { should be_a Intersections }
     its(:length) { should == 2 }
   end
+
+  describe "#transform when translate (1,1,0)" do
+    subject { @geometry.transform(Matrix.translator(1,1,0)) }
+    it { should be_a Geometry }
+    it "should translate vertex[0]" do
+      subject.vertices[0].should == @geometry.vertices[0] + Vector.new(1,1,0)
+    end
+  end
 end
 
 describe Geometry, "which normalized" do
@@ -91,9 +99,7 @@ describe Geometry, "which normalized" do
 
     before do
       setup_geometry
-      @tracer = BeamTracer.new(@geometry, nil, nil)
-      @normalizer = @tracer.normalizer(@geometry.lines[0])
-      @geometry = @geometry.normalize(@normalizer)
+      @geometry = @geometry.normalize(@geometry.lines[0])
     end
 
     subject { @geometry }
