@@ -1,13 +1,12 @@
 class VisibilityMap
   attr_reader :regions, :geometry
 
-  def initialize(tracer)
-    @regions = tracer.geometry.lines.map do |i|
+  def initialize(geometry, window)
+    @regions = geometry.lines.map do |i|
       # also dualize reversed ray, because non facing line will be nil when dualized
       [i.dualize, i.reverse.dualize]
     end.flatten.compact
-    @geometry = tracer.geometry
-    @tracer = tracer
+    @geometry = geometry
   end
 
   def get_intersection_points

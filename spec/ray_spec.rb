@@ -199,21 +199,23 @@ describe Ray do
   end
 
   context "when extremes are given as VisibilityMap::IntersectionPoint" do
-    include VisibilityMap::IntersectionPoints::Environment
-    IntersectionPoint = VisibilityMap::IntersectionPoint
+    pending "until VisibilityMap adopts new initialization form" do
+      include VisibilityMap::IntersectionPoints::Environment
+      IntersectionPoint = VisibilityMap::IntersectionPoint
 
-    before(:all) do
-      setup_intersection_points
-      @p = @intersection_points[0]
-      @q = @intersection_points[1]
+      before(:all) do
+        setup_intersection_points
+        @p = @intersection_points[0]
+        @q = @intersection_points[1]
+      end
+
+      subject { Ray.new(@p, @q) }
+
+      its(:origin) { should be_instance_of IntersectionPoint }
+      its(:destination) { should be_instance_of IntersectionPoint }
+      its(:dualize) { should be_instance_of Beam }
+      its("dualize.reference_segment") { should == @p.region.original }
+      its("dualize.vertices.length") { should == 4 }
     end
-
-    subject { Ray.new(@p, @q) }
-
-    its(:origin) { should be_instance_of IntersectionPoint }
-    its(:destination) { should be_instance_of IntersectionPoint }
-    its(:dualize) { should be_instance_of Beam }
-    its("dualize.reference_segment") { should == @p.region.original }
-    its("dualize.vertices.length") { should == 4 }
   end
 end
