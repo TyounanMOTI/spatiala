@@ -10,7 +10,8 @@ describe VisibilityMap do
 
   before do
     setup_beam_tracer
-    @map = VisibilityMap.new(@geometry, @geometry.lines[1])
+    @window = @geometry.lines[1]
+    @map = VisibilityMap.new(@geometry, @window)
   end
 
   subject { @map }
@@ -26,7 +27,7 @@ describe VisibilityMap do
       should be_a Geometry
       subject.lines.should be_include Ray::WINDOW
     end
-    its(:window) { should == @geometry.lines[1] }
+    its(:window) { should == @window }
   end
 
   pending "#get_intersections" do
