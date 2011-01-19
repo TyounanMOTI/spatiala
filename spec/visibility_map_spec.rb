@@ -2,17 +2,23 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
 require File.expand_path(File.dirname(__FILE__) + '/visibility_region_spec')
 
-describe VisibilityMap do
+module VisibilityMap::Environment
   include BeamTracer::Environment
 
   IntersectionPoints = VisibilityMap::IntersectionPoints
   IntersectionPoint = VisibilityMap::IntersectionPoint
 
-  before do
+  def setup_visibility_map(window=1)
     setup_beam_tracer
-    @window = @geometry.lines[1]
+    @window = @geometry.lines[window]
     @map = VisibilityMap.new(@geometry, @window)
   end
+end
+
+describe VisibilityMap do
+  include VisibilityMap::Environment
+
+  before { setup_visibility_map }
 
   subject { @map }
 
@@ -22,80 +28,33 @@ describe VisibilityMap do
 
   describe "members" do
     its(:regions) { should be_collection(Array).of(VisibilityRegion) }
-    its(:geometry) { should be_a Geometry }
-    its(:normalized_geometry) do
+    its(:geometry) do
       should be_a Geometry
-      subject.lines.should be_include Ray::WINDOW
+      subject.lines.should be_include Ray::WINDOW #should be normalized
     end
     its(:window) { should == @window }
+    its(:normalizer) { should be_a Matrix }
   end
 
-  pending "#get_intersections" do
-    subject { @map.get_intersections }
-    it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
-    its(:length) { should == 8 }
-  end
-
-  pending "#reject_occluded_points" do
-    subject { @map.reject_occluded_points(@map.get_intersections) }
-    it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
-    its(:length) { should == 4 }
-  end
-end
-
-describe VisibilityMap, "which normalized by lines[3]" do
-  pending "until adopt new initialization form" do
-    include BeamTracer::Environment
-
-    IntersectionPoints = VisibilityMap::IntersectionPoints
-    IntersectionPoint = VisibilityMap::IntersectionPoint
-
-    before do
-      setup_beam_tracer
-      @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[3]))
-    end
-
-    it "should return 4 IntersectionPoints when get_intersection_points" do
-      @map.get_intersection_points.length.should == 4
-    end
-
-    it "should return 4 points when get_intersections" do
-      @map.get_intersections.length.should == 4
-    end
-
-    it "should have 2 regions in tracer" do
-      @map.regions.length.should == 2
+  describe "#normalize_listener_position" do
+    subject { @map.normalize_listener_position(@listener.position) }
+    it "should place listener to x < 0 region" do
+      subject.x < 0
     end
   end
-end
 
-module VisibilityMap::IntersectionPoints::Environment
-  include BeamTracer::Environment
+  context "acquired @normalized_listener_position" do
+    before { @normalized_listener_position = @map.normalize_listener_position(@listener.position) }
 
-  def setup_intersection_points(window=1)
-    setup_beam_tracer
-    @map = VisibilityMap.new(@tracer.normalize(@geometry.lines[window]))
-    @intersection_points = @map.get_intersection_points
-  end
-end
-
-describe VisibilityMap, "when get @intersection_points" do
-  pending "until adopt new initialization form" do
-    include VisibilityMap::IntersectionPoints::Environment
-
-    IntersectionPoints = VisibilityMap::IntersectionPoints
-    IntersectionPoint = VisibilityMap::IntersectionPoint
-
-    before do
-      setup_intersection_points
+    describe "#intersections_with_regions" do
+      subject { @map.intersections_with_regions(@normalized_listener_position) }
+      it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
+      its(:length) { should == 8 }
     end
 
-    it "should return IntersectionPoints class when get_instersection_points" do
-      @intersection_points.should be_instance_of IntersectionPoints
-    end
-
-    it "should return 4 IntersectionPoints when get_instersection_points" do
-      @intersection_points.length.should == 4
+    describe "#intersection_points" do
+      subject { @map.intersection_points(@normalized_listener_position) }
+      it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
     end
   end
 end
@@ -129,78 +88,92 @@ describe VisibilityMap::IntersectionPoints do
   end
 end
 
+module VisibilityMap::IntersectionPoints::Environment
+  include VisibilityMap::Environment
+
+  def setup_intersection_points(window=1)
+    setup_visibility_map(window)
+    @normalized_listener_position = @map.normalize_listener_position(@listener.position)
+    @intersection_points = @map.intersection_points(@normalized_listener_position)
+  end
+end
+
 describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" do
-  pending "until VisibilityMap adopts new initialization form" do
-    include VisibilityMap::IntersectionPoints::Environment
+  include VisibilityMap::IntersectionPoints::Environment
 
-    before do
-      setup_intersection_points
+  before do
+    setup_intersection_points
+  end
+
+  describe "#reject_occluded_by" do
+    before { @intersections = @map.intersections_with_regions(@normalized_listener_position) }
+    subject { @intersections.reject_occluded_by(@map.geometry)}
+
+    it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
+    its(:length) { should == 4 }
+  end
+
+  pending "#to_beams" do
+    it "should return Array of Beam when converted to_beams" do
+      beams = @intersection_points.to_beams
+      beams.should be_instance_of Array
+      beams.each { |i| i.should be_instance_of Beam }
     end
 
-    pending "#to_beams" do
-      it "should return Array of Beam when converted to_beams" do
-        beams = @intersection_points.to_beams
-        beams.should be_instance_of Array
-        beams.each { |i| i.should be_instance_of Beam }
-      end
+    it "should return 3 beams when converted to_beams" do
+      @intersection_points.to_beams.length.should == 3
+    end
+  end
 
-      it "should return 3 beams when converted to_beams" do
-        @intersection_points.to_beams.length.should == 3
-      end
+  pending "#make_pairs" do
+    it "should have 6 points when make_pairs" do
+      paired = @intersection_points.make_pairs
+      paired.length.should == 6
     end
 
-    describe "#make_pairs" do
-      it "should have 6 points when make_pairs" do
-        paired = @intersection_points.make_pairs
-        paired.length.should == 6
-      end
-
-      context "when window is 3rd line" do
-        before { setup_intersection_points(3) }
-        subject { @intersection_points.make_pairs }
-        its(:length) { pending "until make_pairs corrected"; should == 4 }
-      end
+    context "when window is 3rd line" do
+      before { setup_intersection_points(3) }
+      subject { @intersection_points.make_pairs }
+      its(:length) { pending "until make_pairs corrected"; should == 4 }
     end
   end
 end
 
 describe VisibilityMap::IntersectionPoint do
-  pending "until VisibilityMap adopts new initialization form" do
-    include VisibilityRegion::Environment
-    include BeamTracer::Environment
+  include VisibilityRegion::Environment
+  include BeamTracer::Environment
 
-    IntersectionPoint = VisibilityMap::IntersectionPoint
+  IntersectionPoint = VisibilityMap::IntersectionPoint
 
-    before do
-      setup_listener
-      setup_region
-      @intersection_point = IntersectionPoint.new(0.5, @region, @listener)
-    end
+  before do
+    setup_listener
+    setup_region
+    @intersection_point = IntersectionPoint.new(0.5, @region, @listener.position)
+  end
 
-    it "should initialize by point as Vector and region as VisibilityRegion" do
-      @intersection_point.should be_instance_of IntersectionPoint
-    end
+  it "should initialize by point as Vector and region as VisibilityRegion" do
+    @intersection_point.should be_instance_of IntersectionPoint
+  end
 
-    it "should have point, region and listener as member" do
-      @intersection_point.point.should be_instance_of Vector
-      @intersection_point.region.should be_instance_of VisibilityRegion
-      @intersection_point.listener.should be_instance_of Listener
-    end
+  it "should have point, region and listener as member" do
+    @intersection_point.point.should be_instance_of Vector
+    @intersection_point.region.should be_instance_of VisibilityRegion
+    @intersection_point.listener_position.should be_instance_of Vector
+  end
 
-    it "should have ratio as member" do
-      @intersection_point.ratio.should be_instance_of Float
-    end
+  it "should have ratio as member" do
+    @intersection_point.ratio.should be_instance_of Float
+  end
 
-    it "should return Ray when dualize" do
-      @intersection_point.dualize.should be_instance_of Ray
-    end
+  it "should return Ray when dualize" do
+    @intersection_point.dualize.should be_instance_of Ray
+  end
 
-    it "should child of Vector" do
-      IntersectionPoint.superclass.should == Vector
-    end
+  it "should child of Vector" do
+    IntersectionPoint.superclass.should == Vector
+  end
 
-    it "should begins on Ray::WINDOW" do
-      @intersection_point.dualize.origin.x = Ray::WINDOW.origin.x
-    end
+  it "should begins on Ray::WINDOW" do
+    @intersection_point.dualize.origin.x = Ray::WINDOW.origin.x
   end
 end

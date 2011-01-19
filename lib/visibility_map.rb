@@ -1,41 +1,43 @@
 class VisibilityMap
-  attr_reader :regions, :geometry, :window, :normalized_geometry
+  attr_reader :regions, :geometry, :window, :normalizer
 
   def initialize(geometry, window)
-    @geometry = geometry
     @window = window
-    @normalized_geometry = @geometry.normalize(@window)
-    @regions = @normalized_geometry.lines.map do |i|
+    @geometry = geometry.normalize(@window)
+    @normalizer = geometry.normalizer(@window)
+    @regions = @geometry.lines.map do |i|
       # also dualize reversed ray, because non facing line will be nil when dualized
       [i.dualize, i.reverse.dualize]
     end.flatten.compact
   end
 
-  def get_intersection_points
-    intersections = get_intersections
-    rejected = reject_occluded_points(intersections)
-    return IntersectionPoints.new(rejected.sort_by { |i| i.point.x })
+  def intersection_points(listener_position)
+    return IntersectionPoints.new(intersections_with_regions(listener_position).reject_occluded_by(@geometry).sort_by { |i| i.point.x })
   end
 
-  def get_intersections
-    vision = @tracer.listener.position.dualize
+  def intersections_with_regions(listener_position)
+    ray = listener_position.dualize
     points = @regions.map do |region|
-      region.rays.map do |ray|
-        ratio = vision.intersect(ray)
+      region.rays.map do |line|
+        ratio = ray.intersect(line)
         next if ratio.nil?
-        IntersectionPoint.new(ratio, region, @tracer.listener)
+        IntersectionPoint.new(ratio, region, listener_position)
       end
     end.flatten.compact
     return IntersectionPoints.new(points)
   end
 
-  def reject_occluded_points(intersection_points)
-    intersection_points.reject { |i| @geometry.without_window.occlude?(i.dualize) }
+  def normalize_listener_position(listener_position)
+    return listener_position.transform(@normalizer * Matrix.reflector(Vector.new(1,0,0)))
   end
 
   class IntersectionPoints < Array
     def initialize(args)
       super
+    end
+
+    def reject_occluded_by(geometry)
+      reject { |i| geometry.without_window.occlude?(i.dualize) }
     end
 
     # TODO: we don't consider the case when we looks connection point of lines
@@ -60,21 +62,21 @@ class VisibilityMap
   end
 
   class IntersectionPoint < Vector
-    attr_reader :ratio, :region, :listener
+    attr_reader :ratio, :region, :listener_position
 
-    def initialize(ratio, region, listener)
+    def initialize(ratio, region, listener_position)
       @ratio = ratio
       @region = region
-      @listener = listener
+      @listener_position = listener_position
       super self.point.elements
     end
 
     def point
-      (@listener.position.dualize * @ratio).destination
+      (@listener_position.dualize * @ratio).destination
     end
 
     def dualize
-      ray = Ray.new(@listener.position, Vector.new(0, @y)).fit(@region.original)
+      ray = Ray.new(@listener_position, Vector.new(0, @y)).fit(@region.original)
       ray.origin = Vector.new(0, @y)
       return ray
     end

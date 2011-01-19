@@ -19,21 +19,18 @@ class Spatiala < Processing::App
     setup_app
     setup_tracer
 
-    reflector = 3
-    @normalized_tracer = @tracer.normalize(@geometry.lines[reflector]) # 1
-    @normalized_geometry = @normalized_tracer.geometry
-    @map = VisibilityMap.new(@normalized_tracer)
-    intersection_points = @map.get_intersection_points
+    reflector = 1
+    @map = VisibilityMap.new(@geometry, @geometry.lines[reflector])
+    @normalized_listener = Listener.new(@map.normalize_listener_position(@listener.position), @listener.direction)
+    @intersection_points = @map.intersection_points(@normalized_listener.position)
 
-    case :map
+    case :normalized
     when :normalized
       scale_for_normalized_geometry
-      draw_geometry @normalized_geometry
-      draw_listener @normalized_tracer.listener
-      @map.get_intersection_points.sort_by { |i| i.y }.each { |i| draw_ray i.dualize; p i.dualize.length }
-      @map.get_intersections.sort_by { |i| i.y }.map { |i|
-        @normalized_geometry.without_window.lines_include(i.dualize.destination).empty?
-      }
+      draw_geometry @map.geometry
+      draw_listener @normalized_listener
+
+      @intersection_points.sort_by { |i| i.ratio }.each { |i| draw_ray i.dualize; p i.dualize.length }
     when :world
       scale_for_geometry
       draw_listener
@@ -43,14 +40,14 @@ class Spatiala < Processing::App
       draw_axis
 
       draw_visibility_map @map
-      draw_ray @normalized_tracer.listener.position.dualize
-      draw_intersection_points @map.get_intersection_points
-      @map.get_intersection_points.sort_by { |i| i.ratio }.each { |i| p i.region.hash }
+      draw_ray @normalized_listener.position.dualize
+      draw_intersection_points @intersection_points
+      @intersection_points.sort_by { |i| i.ratio }.each { |i| p i.region.hash }
     end
 
     @region_index = 0
     @ray_index = 0
-    @vision = @normalized_tracer.listener.position.dualize
+    @vision = @normalized_listener.position.dualize
   end
 
   def draw
