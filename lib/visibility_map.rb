@@ -16,14 +16,9 @@ class VisibilityMap
   end
 
   def intersections_with_regions(listener_position)
-    ray = listener_position.dualize
     points = @regions.map do |region|
-      region.rays.map do |line|
-        ratio = ray.intersect(line)
-        next if ratio.nil?
-        IntersectionPoint.new(ratio, region, listener_position)
-      end
-    end.flatten.compact
+      region.intersect(listener_position)
+    end.flatten
     return IntersectionPoints.new(points)
   end
 
