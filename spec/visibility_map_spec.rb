@@ -1,19 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
-require File.expand_path(File.dirname(__FILE__) + '/visibility_region_spec')
-
-module VisibilityMap::Environment
-  include BeamTracer::Environment
-
-  IntersectionPoints = VisibilityMap::IntersectionPoints
-  IntersectionPoint = VisibilityMap::IntersectionPoint
-
-  def setup_visibility_map(window=1)
-    setup_beam_tracer
-    @window = @geometry.lines[window]
-    @map = VisibilityMap.new(@geometry, @window)
-  end
-end
 
 describe VisibilityMap do
   include VisibilityMap::Environment

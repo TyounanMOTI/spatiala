@@ -1,6 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/beam_tracer_spec')
-require File.expand_path(File.dirname(__FILE__) + '/ray_spec')
 
 shared_examples_for "requested to convert to_beams" do
   it "should get Array of Beam when to_beams" do

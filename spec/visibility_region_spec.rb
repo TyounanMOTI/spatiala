@@ -1,17 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-module VisibilityRegion::Environment
-  def setup_region
-    original = Ray.new(Vector.new(0,0), Vector.new(0,0))
-    vertices = [
-            Vector.new(0,1),
-            Vector.new(4,2),
-            Vector.new(1,3),
-           ]
-    @region = VisibilityRegion.new(original, vertices)
-  end
-end
-
 describe VisibilityRegion do
   include VisibilityRegion::Environment
 
