@@ -109,19 +109,6 @@ describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" d
       @intersection_points.to_beams.length.should == 3
     end
   end
-
-  pending "#make_pairs" do
-    it "should have 6 points when make_pairs" do
-      paired = @intersection_points.make_pairs
-      paired.length.should == 6
-    end
-
-    context "when window is 3rd line" do
-      before { setup_intersection_points(3) }
-      subject { @intersection_points.make_pairs }
-      its(:length) { pending "until make_pairs corrected"; should == 4 }
-    end
-  end
 end
 
 describe VisibilityMap::IntersectionPoint do
