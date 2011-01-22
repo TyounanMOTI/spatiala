@@ -212,7 +212,6 @@ describe Ray do
     its(:origin) { should be_instance_of IntersectionPoint }
     its(:destination) { should be_instance_of IntersectionPoint }
     its(:dualize) { should be_instance_of Beam }
-    its("dualize.reference_segment") { should == @p.region.original }
     its("dualize.vertices.length") { should == 4 }
   end
 end

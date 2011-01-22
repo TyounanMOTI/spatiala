@@ -77,7 +77,6 @@ class Ray
                ]
 
     beam = Beam.new(vertices)
-    beam.reference_segment = @origin.region.original
     return beam
   end
 

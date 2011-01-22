@@ -1,5 +1,5 @@
 class Beam < Polygon
-  attr_accessor :children, :reference_segment
+  attr_accessor :children
 
   def initialize(vertices)
     @children = Array.new

@@ -18,7 +18,6 @@ class Crack
                      @rays[0].destination,
                      @rays[1].destination
                     ])
-    beam.reference_segment = @line
     return beam
   end
 end
