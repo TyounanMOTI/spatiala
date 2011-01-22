@@ -37,11 +37,11 @@ class VisibilityMap
   end
 
   class IntersectionPoint < Vector
-    attr_reader :ratio, :region, :listener_position
+    attr_reader :ratio, :target_ray, :listener_position
 
-    def initialize(ratio, region, listener_position)
+    def initialize(ratio, target_ray, listener_position)
       @ratio = ratio
-      @region = region
+      @target_ray = target_ray
       @listener_position = listener_position
       super self.point.elements
     end
@@ -51,7 +51,7 @@ class VisibilityMap
     end
 
     def dualize
-      ray = Ray.new(@listener_position, Vector.new(0, @y)).fit(@region.original)
+      ray = Ray.new(@listener_position, Vector.new(0, @y)).fit(@target_ray)
       ray.origin = Vector.new(0, @y)
       return ray
     end
