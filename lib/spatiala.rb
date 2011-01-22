@@ -19,12 +19,12 @@ class Spatiala < Processing::App
     setup_app
     setup_tracer
 
-    reflector = 1
+    reflector = 2
     @map = VisibilityMap.new(@geometry, @geometry.lines[reflector])
     @normalized_listener = Listener.new(@map.normalize_listener_position(@listener.position), @listener.direction)
     @intersection_points = @map.intersection_points(@normalized_listener.position)
 
-    case :normalized
+    case :map
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @map.geometry
@@ -35,6 +35,8 @@ class Spatiala < Processing::App
       scale_for_geometry
       draw_listener
       draw_geometry
+
+      draw_ray @geometry.lines[reflector]
     when :map
       scale_for_visibility_map
       draw_axis
@@ -94,12 +96,15 @@ class Spatiala < Processing::App
     triangle = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
                            Vector.new(30,420))
-    wall = Polygon.new(Vector.new(100, 100),
-                       Vector.new(250, 130))
+#    wall = Polygon.new(Vector.new(100, 100),
+#                       Vector.new(250, 130))
+    wall = Polygon.new(Vector.new(400,50),
+                       Vector.new(100,300))
     wall2 = Polygon.new(Vector.new(150, 90),
                         Vector.new(200, 100))
 
-    @geometry = Geometry.new(triangle, wall, wall2)
+#    @geometry = Geometry.new(triangle, wall, wall2)
+    @geometry = Geometry.new(triangle, wall)
 
     @sources = Array.new
     @sources.push(Source.new(Vector.new(50,50)))

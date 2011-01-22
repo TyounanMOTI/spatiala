@@ -87,3 +87,14 @@ module VisibilityMap::Environment
     @map = VisibilityMap.new(@geometry, @window)
   end
 end
+
+module VisibilityMap::IntersectionPoints::Environment
+  include VisibilityMap::Environment
+
+  def setup_intersection_points(window=1)
+    setup_visibility_map(window)
+    @normalized_listener_position = @map.normalize_listener_position(@listener.position)
+    @intersection_points = @map.intersection_points(@normalized_listener_position)
+  end
+end
+

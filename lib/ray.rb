@@ -76,7 +76,7 @@ class Ray
                 @destination.dualize.origin,
                ]
 
-    beam = Beam.new(@origin.listener.position, vertices)
+    beam = Beam.new(@origin.listener_position, vertices)
     beam.reference_segment = @origin.region.original
     return beam
   end
