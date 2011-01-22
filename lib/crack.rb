@@ -13,8 +13,7 @@ class Crack
   end
 
   def to_beam
-    beam = Beam.new(@rays[0].origin,
-                    [
+    beam = Beam.new([
                      @rays[0].origin,
                      @rays[0].destination,
                      @rays[1].destination
