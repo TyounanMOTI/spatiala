@@ -81,6 +81,7 @@ describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" d
     @intersections = @map.intersections_with_regions(@normalized_listener_position)
     @rejected = @intersections.reject_occluded_by(@map.geometry)
     @packed = @rejected.pack_same_ratios
+    @paired = @packed.make_pairs
   end
 
   describe "#reject_occluded_by" do
@@ -105,16 +106,10 @@ describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" d
     its(:length) { should == @packed.length - 1 }
   end
 
-  pending "#to_beams" do
-    it "should return Array of Beam when converted to_beams" do
-      beams = @intersection_points.to_beams
-      beams.should be_instance_of Array
-      beams.each { |i| i.should be_instance_of Beam }
-    end
-
-    it "should return 3 beams when converted to_beams" do
-      @intersection_points.to_beams.length.should == 3
-    end
+  describe "#to_beams" do
+    subject { @paired.to_beams(@map.geometry) }
+    it { should be_collection(Array).of(Beam) }
+    its(:length) { should == 3 }
   end
 end
 

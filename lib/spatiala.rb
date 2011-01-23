@@ -30,8 +30,10 @@ class Spatiala < Processing::App
       draw_geometry @map.geometry
       draw_listener @normalized_listener
 
-      @intersections_with_regions = @map.intersections_with_regions(@normalized_listener.position)
-      @intersections_with_regions.sort_by { |i| i.ratio }.each { |i| draw_ray i.dualize; p i.ratio }
+      @beams = @intersection_points.pack_same_ratios.make_pairs.to_beams(@map.geometry)
+      draw_beams @beams
+
+      @beams.first.lines.each { |i| print_ray i }
     when :world
       scale_for_geometry
       draw_listener
@@ -175,11 +177,20 @@ class Spatiala < Processing::App
     pop_style
   end
 
-  def draw_polygon(polygon)
+  def draw_polygon(polygon, weight=1, hue=@hue, alpha=0)
+    push_style
+
+    stroke_weight weight
+    color_mode HSB, 100
+    stroke hue, @saturation, @brightness, 100
+    fill hue, @saturation, @brightness-20, alpha
+
     polygon.lines.each { |i| line(i.origin.x*@scale.x + @offset.x,
                                   i.origin.y*@scale.y + @offset.y,
                                   i.destination.x*@scale.x + @offset.x,
                                   i.destination.y*@scale.y + @offset.y) }
+
+    pop_style
   end
 
   def draw_geometry(geometry = @geometry)
@@ -257,10 +268,23 @@ class Spatiala < Processing::App
     end
   end
 
+  def draw_beam(beam, hue=@hue, alpha=0)
+    draw_polygon(beam, 3, hue, alpha)
+  end
+
+  def draw_beams(beams)
+    hue = 0
+    beams.each do |i|
+      draw_beam i, hue, 50
+      hue += 100 / beams.length
+    end
+  end
+
   def key_released
     save_frame "../snap/spatiala-####.png" if key == 'p'
   end
 
+=begin
   def mouse_pressed
     push_style
 
@@ -273,6 +297,7 @@ class Spatiala < Processing::App
 
     pop_style
   end
+=end
 
   def each_millis(interval, &block)
     if millis - @previous_millis >= interval
