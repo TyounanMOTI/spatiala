@@ -130,27 +130,20 @@ describe VisibilityMap::IntersectionPoint do
     @intersection_point = IntersectionPoint.new(0.5, @region.original, @listener.position)
   end
 
-  it "should initialize by point as Vector and region as VisibilityRegion" do
-    @intersection_point.should be_instance_of IntersectionPoint
-  end
-
-  describe "members" do
-    subject { @intersection_point }
-    its(:point) { should be_a Vector }
-    its(:target_ray) { should be_a Ray }
-    its(:listener_position) { should be_a Vector }
-    its(:ratio) { should be_a Float }
-  end
-
-  it "should return Ray when dualize" do
-    @intersection_point.dualize.should be_instance_of Ray
-  end
+  subject { @intersection_point }
 
   it "should child of Vector" do
     IntersectionPoint.superclass.should == Vector
   end
 
-  it "should begins on Ray::WINDOW" do
-    @intersection_point.dualize.origin.x = Ray::WINDOW.origin.x
+  describe "#dualize" do
+    subject { @intersection_point.dualize }
+    it { should be_a Ray }
+    its("origin.x") { should == Ray::WINDOW.origin.x }
+
+    context "when target_ray is nil" do
+      subject { IntersectionPoint.new(0.5, nil, @listener.position).dualize }
+      its(:length) { should > Ray::BIG - 1 }
+    end
   end
 end
