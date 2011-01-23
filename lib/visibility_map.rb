@@ -27,12 +27,21 @@ class VisibilityMap
   end
 
   class IntersectionPoints < Array
-    def initialize(args)
+    def initialize(args=0)
       super
     end
 
     def reject_occluded_by(geometry)
       reject { |i| geometry.without_window.occlude?(i.dualize) }
+    end
+
+    def pack_same_ratios
+      sorted = self.sort_by { |i| i.ratio }
+      result = IntersectionPoints.new
+      each do |i|
+        result << IntersectionPoint.new(i.ratio, nil, i.listener_position) unless result.include?(i)
+      end
+      return result
     end
   end
 

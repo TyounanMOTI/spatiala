@@ -19,18 +19,19 @@ class Spatiala < Processing::App
     setup_app
     setup_tracer
 
-    reflector = 2
+    reflector = 1
     @map = VisibilityMap.new(@geometry, @geometry.lines[reflector])
     @normalized_listener = Listener.new(@map.normalize_listener_position(@listener.position), @listener.direction)
     @intersection_points = @map.intersection_points(@normalized_listener.position)
 
-    case :map
+    case :normalized
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @map.geometry
       draw_listener @normalized_listener
 
-      @intersection_points.sort_by { |i| i.ratio }.each { |i| draw_ray i.dualize; p i.dualize.length }
+      @intersections_with_regions = @map.intersections_with_regions(@normalized_listener.position)
+      @intersections_with_regions.sort_by { |i| i.ratio }.each { |i| draw_ray i.dualize; p i.ratio }
     when :world
       scale_for_geometry
       draw_listener
@@ -44,7 +45,7 @@ class Spatiala < Processing::App
       draw_visibility_map @map
       draw_ray @normalized_listener.position.dualize
       draw_intersection_points @intersection_points
-      @intersection_points.sort_by { |i| i.ratio }.each { |i| p i.region.hash }
+      @intersection_points.sort_by { |i| i.ratio }
     end
 
     @region_index = 0
@@ -96,15 +97,15 @@ class Spatiala < Processing::App
     triangle = Polygon.new(Vector.new(10,20),
                            Vector.new(400,50),
                            Vector.new(30,420))
-#    wall = Polygon.new(Vector.new(100, 100),
-#                       Vector.new(250, 130))
-    wall = Polygon.new(Vector.new(400,50),
-                       Vector.new(100,300))
+    wall = Polygon.new(Vector.new(100, 100),
+                       Vector.new(250, 130))
     wall2 = Polygon.new(Vector.new(150, 90),
                         Vector.new(200, 100))
+    @geometry = Geometry.new(triangle, wall, wall2)
 
-#    @geometry = Geometry.new(triangle, wall, wall2)
-    @geometry = Geometry.new(triangle, wall)
+#    wall = Polygon.new(Vector.new(130,30),
+#                       Vector.new(100,300))
+#   @geometry = Geometry.new(triangle, wall)
 
     @sources = Array.new
     @sources.push(Source.new(Vector.new(50,50)))

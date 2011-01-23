@@ -78,14 +78,22 @@ describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" d
 
   before do
     setup_intersection_points
+    @intersections = @map.intersections_with_regions(@normalized_listener_position)
   end
 
   describe "#reject_occluded_by" do
-    before { @intersections = @map.intersections_with_regions(@normalized_listener_position) }
     subject { @intersections.reject_occluded_by(@map.geometry)}
 
     it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
     its(:length) { should == 4 }
+  end
+
+  describe "#pack_same_ratios" do
+    subject { @intersections.pack_same_ratios }
+
+    it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
+    its(:length) { should < @intersections.length }
+    specify { subject[4].target_ray.should be_nil }
   end
 
   pending "#to_beams" do
