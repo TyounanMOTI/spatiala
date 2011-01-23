@@ -43,6 +43,15 @@ class VisibilityMap
       end
       return result
     end
+
+    def make_pairs
+      result = IntersectionPoints.new
+      each_index do |i|
+        break if self[i+1].nil?
+        result << IntersectionPoints.new([self[i], self[i+1]])
+      end
+      return result
+    end
   end
 
   class IntersectionPoint < Vector
