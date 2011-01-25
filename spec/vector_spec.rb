@@ -6,6 +6,10 @@ describe Vector do
     @v2 = Vector.new(-2,3,10)
   end
 
+  it "can initialize by Vector[1,2,3] format" do
+    Vector[1,2,3].should == Vector.new(1,2,3)
+  end
+
   it "should return 3 when v1.x" do
     @v1.x.should == 3
   end

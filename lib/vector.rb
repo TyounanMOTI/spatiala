@@ -3,12 +3,15 @@ class Vector
   attr_reader :x, :y, :z, :w, :elements
 
   def initialize(*elements)
-    elements.flatten!
-    @elements = elements.map { |i| i.to_f }
+    @elements = elements.flatten.map { |i| i.to_f }
     self.x = @elements.fetch(0, 0).to_f
     self.y = @elements.fetch(1, 0).to_f
     self.z = @elements.fetch(2, 0).to_f
     self.w = @elements.fetch(3, 0).to_f
+  end
+
+  def self.[](*elements)
+    Vector.new(elements)
   end
 
   def x=(x)

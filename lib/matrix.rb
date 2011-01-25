@@ -64,10 +64,10 @@ class Matrix < Array
   class Translator < Matrix
     def initialize(x,y,z=0)
       super [
-             Vector.new(1,0,0,0),
-             Vector.new(0,1,0,0),
-             Vector.new(0,0,1,0),
-             Vector.new(x,y,z,1)
+             Vector[1,0,0,0],
+             Vector[0,1,0,0],
+             Vector[0,0,1,0],
+             Vector[x,y,z,1]
             ]
     end
 
