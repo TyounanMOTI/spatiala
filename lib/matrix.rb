@@ -105,5 +105,20 @@ class Matrix < Array
       Reflector.new(x,y,z)
     end
   end
+
+  class Rotator < Matrix
+    def initialize(radian)
+      super [
+             Vector[cos(radian), sin(radian), 0,0],
+             Vector[-sin(radian),cos(radian), 0,0],
+             Vector[0,0,1,0],
+             Vector[0,0,0,1]
+            ]
+    end
+
+    def self.[](radian)
+      Rotator.new(radian)
+    end
+  end
 end
 

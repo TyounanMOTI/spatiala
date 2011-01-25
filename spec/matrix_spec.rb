@@ -119,3 +119,14 @@ describe Matrix::Reflector do
                                              ]
   end
 end
+
+describe Matrix::Rotator do
+  specify do
+    Matrix::Rotator[PI/6].should == Matrix[
+                                   [cos(PI/6),sin(PI/6),0,0],
+                                   [-sin(PI/6),cos(PI/6),0,0],
+                                   [0,0,1,0],
+                                   [0,0,0,1]
+                                  ]
+  end
+end
