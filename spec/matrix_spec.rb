@@ -14,10 +14,6 @@ describe Matrix do
                      Vector.new(-1,  1,  3, 1))
   end
 
-  it "should initialize with 4*3 vectors" do
-    @m1.should be_instance_of Matrix
-  end
-
   it "should have row vector" do
     @m1.row(1).should == Vector.new(1, 2, 3, 0)
   end

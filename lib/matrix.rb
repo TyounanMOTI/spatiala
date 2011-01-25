@@ -1,32 +1,26 @@
-class Matrix
+class Matrix < Array
   extend Math
-  attr_reader :vectors
 
   def initialize(*vectors)
-    @vectors = vectors.flatten
+    super vectors.flatten
   end
 
   def row(i)
-    return @vectors[i]
+    return self[i]
   end
 
   def column(i)
     result = Vector.new
-    @vectors.each_index { |v| result[v] = @vectors[v][i]}
+    each_index { |v| result[v] = self[v][i] }
     return result
-  end
-
-  def ==(m)
-    return true if @vectors == m.vectors
-    return false
   end
 
   def *(m)
     result = Matrix.new
-    @vectors.each_index do |i|
-      result.vectors[i] = Vector.new
-      @vectors[i].each_with_index do |e, j|
-        result.vectors[i][j] = self.row(i) * m.column(j)
+    each_index do |i|
+      result[i] = Vector.new
+      self[i].each_with_index do |e, j|
+        result[i][j] = self.row(i) * m.column(j)
       end
     end
     return result
