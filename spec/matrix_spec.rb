@@ -71,8 +71,8 @@ describe Matrix do
   end
 
   it "should generate reflection Matrix when Matrix.reflector" do
-    Matrix.reflector(Vector.new(1,0,0)) == Matrix.new(Vector.new(1,0,0,0),
-                                                      Vector.new(0,-1,0,0),
+    Matrix.reflector(Vector.new(1,0,0)).should == Matrix.new(Vector.new(-1,0,0,0),
+                                                      Vector.new(0,1,0,0),
                                                       Vector.new(0,0,1,0),
                                                       Vector.new(0,0,0,1))
   end
@@ -106,5 +106,16 @@ describe Matrix::Scaler do
                                    [0,0,3,0],
                                    [0,0,0,1]
                                   ]
+  end
+end
+
+describe Matrix::Reflector do
+  specify do
+    Matrix::Reflector[1,0,0].should == Matrix[
+                                              [-1,0,0,0],
+                                              [0,1,0,0],
+                                              [0,0,1,0],
+                                              [0,0,0,1]
+                                             ]
   end
 end

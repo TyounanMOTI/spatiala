@@ -56,7 +56,7 @@ class Matrix < Array
     y = normal.y
     z = normal.z
     Matrix.new(Vector.new(1 - 2*(x**2), -2*x*y, -2*x*z,0),
-               Vector.new(-2*x*y, 1 - 2*(x**2), -2*y*z,0),
+               Vector.new(-2*x*y, 1 - 2*(y**2), -2*y*z,0),
                Vector.new(-2*x*z, -2*y*z, 1 - 2*(z**2),0),
                Vector.new(0,0,0,1))
   end
@@ -90,4 +90,20 @@ class Matrix < Array
       Scaler.new(x,y,z)
     end
   end
+
+  class Reflector < Matrix
+    def initialize(x,y,z)
+      super [
+             Vector[1 - 2*(x**2), -2*x*y, -2*x*z,0],
+             Vector[-2*x*y, 1 - 2*(y**2), -2*y*z,0],
+             Vector[-2*x*z, -2*y*z, 1 - 2*(z**2),0],
+             Vector[0,0,0,1]
+            ]
+    end
+
+    def self.[](x,y,z)
+      Reflector.new(x,y,z)
+    end
+  end
 end
+

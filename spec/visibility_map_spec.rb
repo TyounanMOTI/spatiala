@@ -78,7 +78,7 @@ describe VisibilityMap::IntersectionPoints do
   end
 end
 
-describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" do
+describe VisibilityMap::IntersectionPoints do
   include VisibilityMap::IntersectionPoints::Environment
 
   before do
@@ -93,7 +93,7 @@ describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" d
     subject { @intersections.reject_occluded_by(@map.geometry)}
 
     it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
-    its(:length) { should == 4 }
+    its(:length) { should == 6 }
   end
 
   describe "#pack_same_ratios" do
@@ -114,7 +114,7 @@ describe VisibilityMap::IntersectionPoints, "which was built from VisilityMap" d
   describe "#to_beams" do
     subject { @paired.to_beams(@map.geometry) }
     it { should be_collection(Array).of(Beam) }
-    its(:length) { should == 3 }
+    its(:length) { should == 4 }
   end
 end
 
