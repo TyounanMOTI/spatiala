@@ -11,6 +11,10 @@ class VisibilityMap
     end.flatten.compact
   end
 
+  def emit_beam(listener)
+    intersection_points(normalize_listener_position(listener.position)).pack_same_ratios.make_pairs.to_beams(@geometry)
+  end
+
   def intersection_points(listener_position)
     return IntersectionPoints.new(intersections_with_regions(listener_position).reject_occluded_by(@geometry).sort_by { |i| i.point.x })
   end

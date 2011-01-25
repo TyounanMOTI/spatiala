@@ -42,6 +42,11 @@ describe VisibilityMap do
       it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
     end
   end
+
+  describe "#emit_beam" do
+    subject { @map.emit_beam(@listener) }
+    it { should be_collection(Array).of(Beam) }
+  end
 end
 
 describe VisibilityMap::IntersectionPoints do
