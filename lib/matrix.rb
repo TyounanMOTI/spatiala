@@ -62,4 +62,19 @@ class Matrix
                Vector.new(-2*x*z, -2*y*z, 1 - 2*(z**2),0),
                Vector.new(0,0,0,1))
   end
+
+  class Translator < Matrix
+    def initialize(x,y,z=0)
+      super [
+             Vector.new(1,0,0,0),
+             Vector.new(0,1,0,0),
+             Vector.new(0,0,1,0),
+             Vector.new(x,y,z,1)
+            ]
+    end
+
+    def self.[](x,y,z=0)
+      Translator.new(x,y,z)
+    end
+  end
 end

@@ -76,3 +76,21 @@ describe Matrix do
   end
 end
 
+describe Matrix::Translator do
+  Translator = Matrix::Translator
+
+  it "can initialize by Translator[x,y,z] format" do
+    Translator[3,2,1].should == Matrix.new(Vector.new(1,0,0,0),
+                         Vector.new(0,1,0,0),
+                         Vector.new(0,0,1,0),
+                         Vector.new(3,2,1,1))
+  end
+
+  it "can initialize by 'new'" do
+    Translator.new(3,2,1).should == Matrix.new(Vector.new(1,0,0,0),
+                                               Vector.new(0,1,0,0),
+                                               Vector.new(0,0,1,0),
+                                               Vector.new(3,2,1,1))
+  end
+end
+
