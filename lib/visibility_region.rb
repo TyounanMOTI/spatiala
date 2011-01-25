@@ -19,7 +19,7 @@ class VisibilityRegion < Polygon
     points = rays.map do |line|
       ratio = ray.intersect(line)
       next if ratio.nil?
-      IntersectionPoint.new(ratio, @original, listener_position)
+      IntersectionPoint.new(ratio, listener_position, @original)
     end.compact
     return IntersectionPoints.new(points)
   end

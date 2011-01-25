@@ -43,7 +43,7 @@ class VisibilityMap
       sorted = self.sort_by { |i| i.ratio }
       result = IntersectionPoints.new
       each do |i|
-        result << IntersectionPoint.new(i.ratio, nil, i.listener_position) unless result.include?(i)
+        result << IntersectionPoint.new(i.ratio, i.listener_position) unless result.include?(i)
       end
       return result
     end
@@ -59,7 +59,7 @@ class VisibilityMap
 
     def to_beams(geometry)
       map do |pair|
-        center = IntersectionPoint.new((pair[0].ratio + pair[1].ratio)/2, nil, pair[0].listener_position)
+        center = IntersectionPoint.new((pair[0].ratio + pair[1].ratio)/2, pair[0].listener_position)
         target_ray = geometry.without_window.intersect(center.dualize).first.target_ray
         pair.each { |i| i.target_ray = target_ray }
         Ray.new(pair[0], pair[1]).dualize
@@ -71,7 +71,7 @@ class VisibilityMap
     attr_reader :ratio, :listener_position
     attr_accessor :target_ray
 
-    def initialize(ratio, target_ray, listener_position)
+    def initialize(ratio, listener_position, target_ray=nil)
       @ratio = ratio
       @target_ray = target_ray
       @listener_position = listener_position
