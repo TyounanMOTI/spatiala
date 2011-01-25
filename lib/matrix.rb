@@ -75,4 +75,19 @@ class Matrix < Array
       Translator.new(x,y,z)
     end
   end
+
+  class Scaler < Matrix
+    def initialize(x,y,z=1)
+      super [
+             Vector[x,0,0,0],
+             Vector[0,y,0,0],
+             Vector[0,0,z,0],
+             Vector[0,0,0,1]
+            ]
+    end
+
+    def self.[](x,y,z=1)
+      Scaler.new(x,y,z)
+    end
+  end
 end

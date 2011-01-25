@@ -96,3 +96,15 @@ describe Matrix::Translator do
   end
 end
 
+describe Matrix::Scaler do
+  Scaler = Matrix::Scaler
+
+  specify do
+    Scaler[1,2,3].should == Matrix[
+                                   [1,0,0,0],
+                                   [0,2,0,0],
+                                   [0,0,3,0],
+                                   [0,0,0,1]
+                                  ]
+  end
+end
