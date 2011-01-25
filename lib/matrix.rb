@@ -5,6 +5,10 @@ class Matrix < Array
     super vectors.flatten
   end
 
+  def self.[](*vectors)
+    Matrix.new(vectors.map { |i| Vector.new(i) })
+  end
+
   def row(i)
     return self[i]
   end

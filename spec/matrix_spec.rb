@@ -3,15 +3,21 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe Matrix do
 
   before do
-    @m1 = Matrix.new(Vector.new(-2, -1,  0, 0),
-                     Vector.new( 1,  2,  3, 0),
-                     Vector.new( 1,  0, -1, 0),
-                     Vector.new( 4,  2,  1, 1))
+    @m1 = Matrix[[-2, -1,  0, 0],
+                 [ 1,  2,  3, 0],
+                 [ 1,  0, -1, 0],
+                 [ 4,  2,  1, 1]]
 
-    @m2 = Matrix.new(Vector.new( 3,  4,  1, 0),
-                     Vector.new(-2,  0,  3, 0),
-                     Vector.new( 4, -1,  3, 0),
-                     Vector.new(-1,  1,  3, 1))
+    @m2 = Matrix[[ 3,  4,  1, 0],
+                [-2,  0,  3, 0],
+                [ 4, -1,  3, 0],
+                [-1,  1,  3, 1]]
+  end
+
+  describe "initialize by Matrix[[a,b,c,d],[e,f,g,h]] format" do
+    subject { Matrix[[1,2,3,4],[5,6,7,8]] }
+    it { should == Matrix.new(Vector.new(1,2,3,4), Vector.new(5,6,7,8)) }
+    it { should be_a Matrix }
   end
 
   it "should have row vector" do
@@ -23,17 +29,17 @@ describe Matrix do
   end
 
   it "should return true when @m1 == Matrix.new(<<same value>>)" do
-    @m1.should == Matrix.new(Vector.new(-2, -1,  0, 0),
-                             Vector.new( 1,  2,  3, 0),
-                             Vector.new( 1,  0, -1, 0),
-                             Vector.new( 4,  2,  1, 1))
+    @m1.should == Matrix[[-2, -1,  0, 0],
+                        [ 1,  2,  3, 0],
+                        [ 1,  0, -1, 0],
+                        [ 4,  2,  1, 1]]
   end
 
   it "should return correct Matrix when multiply two matrix" do
-    (@m1 * @m2).should == Matrix.new(Vector.new(-4,-8,-5, 0),
-                                     Vector.new(11, 1,16, 0),
-                                     Vector.new(-1, 5,-2, 0),
-                                     Vector.new(11,16,16, 1))
+    (@m1 * @m2).should == Matrix[[-4,-8,-5, 0],
+                                 [11, 1,16, 0],
+                                 [-1, 5,-2, 0],
+                                 [11,16,16, 1]]
   end
 
   it "should return translation Matrix when Matrix.translator" do
@@ -76,17 +82,17 @@ describe Matrix::Translator do
   Translator = Matrix::Translator
 
   it "can initialize by Translator[x,y,z] format" do
-    Translator[3,2,1].should == Matrix.new(Vector.new(1,0,0,0),
-                         Vector.new(0,1,0,0),
-                         Vector.new(0,0,1,0),
-                         Vector.new(3,2,1,1))
+    Translator[3,2,1].should == Matrix[[1,0,0,0],
+                                       [0,1,0,0],
+                                       [0,0,1,0],
+                                       [3,2,1,1]]
   end
 
   it "can initialize by 'new'" do
-    Translator.new(3,2,1).should == Matrix.new(Vector.new(1,0,0,0),
-                                               Vector.new(0,1,0,0),
-                                               Vector.new(0,0,1,0),
-                                               Vector.new(3,2,1,1))
+    Translator.new(3,2,1).should == Matrix[[1,0,0,0],
+                                           [0,1,0,0],
+                                           [0,0,1,0],
+                                           [3,2,1,1]]
   end
 end
 
