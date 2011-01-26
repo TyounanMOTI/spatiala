@@ -154,6 +154,7 @@ end
 
 describe Matrix::Reflector do
   Reflector = Matrix::Reflector
+
   specify do
     Reflector[1,0,0].should == Matrix[
                                       [-1,0,0,0],
@@ -170,12 +171,19 @@ describe Matrix::Reflector do
 end
 
 describe Matrix::Rotator do
+  Rotator = Matrix::Rotator
+
   specify do
-    Matrix::Rotator[PI/6].should == Matrix[
+    Rotator[PI/6].should == Matrix[
                                    [cos(PI/6),sin(PI/6),0,0],
                                    [-sin(PI/6),cos(PI/6),0,0],
                                    [0,0,1,0],
                                    [0,0,0,1]
                                   ]
+  end
+
+  describe "#inverse" do
+    subject { Rotator[PI/6].inverse }
+    it_behaves_like "a Matrix which have a inverse matrix"
   end
 end

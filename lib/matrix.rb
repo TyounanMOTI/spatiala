@@ -135,6 +135,7 @@ class Matrix < Array
 
   class Rotator < Matrix
     def initialize(radian)
+      @radian = radian
       super [
              Vector[cos(radian), sin(radian), 0,0],
              Vector[-sin(radian),cos(radian), 0,0],
@@ -145,6 +146,10 @@ class Matrix < Array
 
     def self.[](radian)
       Rotator.new(radian)
+    end
+
+    def inverse
+      Rotator[-@radian]
     end
   end
 end
