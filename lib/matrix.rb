@@ -115,6 +115,7 @@ class Matrix < Array
 
   class Reflector < Matrix
     def initialize(x,y,z)
+      @x,@y,@z = x,y,z
       super [
              Vector[1 - 2*(x**2), -2*x*y, -2*x*z,0],
              Vector[-2*x*y, 1 - 2*(y**2), -2*y*z,0],
@@ -125,6 +126,10 @@ class Matrix < Array
 
     def self.[](x,y,z)
       Reflector.new(x,y,z)
+    end
+
+    def inverse
+      Reflector[-@x,-@y,-@z]
     end
   end
 

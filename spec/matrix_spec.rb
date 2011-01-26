@@ -153,13 +153,19 @@ describe Matrix::Scaler do
 end
 
 describe Matrix::Reflector do
+  Reflector = Matrix::Reflector
   specify do
-    Matrix::Reflector[1,0,0].should == Matrix[
-                                              [-1,0,0,0],
-                                              [0,1,0,0],
-                                              [0,0,1,0],
-                                              [0,0,0,1]
-                                             ]
+    Reflector[1,0,0].should == Matrix[
+                                      [-1,0,0,0],
+                                      [0,1,0,0],
+                                      [0,0,1,0],
+                                      [0,0,0,1]
+                                     ]
+  end
+
+  describe "#inverse" do
+    subject { Reflector[1,0,0].inverse }
+    it_behaves_like "a Matrix which have a inverse matrix"
   end
 end
 
