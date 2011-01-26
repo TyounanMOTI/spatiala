@@ -1,6 +1,6 @@
 class Matrix < Array
   extend Math
-  attr_reader :transforms
+  attr_accessor :transforms
 
   def initialize(*vectors)
     @transforms = [self]
@@ -29,6 +29,7 @@ class Matrix < Array
         result[i][j] = self.row(i) * m.column(j)
       end
     end
+    result.transforms = @transforms + m.transforms
     return result
   end
 

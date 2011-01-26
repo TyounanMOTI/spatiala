@@ -77,10 +77,22 @@ describe Matrix do
   end
 
   describe "#transforms" do
-    context "with a Translator" do
-      Translator = Matrix::Translator
+    Translator = Matrix::Translator
+    Rotator = Matrix::Rotator
+
+    context "of a Translator" do
       subject { Translator[1,2,3].transforms }
       it { should == [Translator[1,2,3]] }
+    end
+
+    context "when chains Translator->Rotator" do
+      subject { (Translator[1,2,3]*Rotator[PI/6]).transforms }
+      it { should == [Translator[1,2,3],Rotator[PI/6]] }
+    end
+
+    context "when chains Translator->Translator->Rotator" do
+      subject { (Translator[1,2,3]*Translator[4,3,2]*Rotator[PI/3]).transforms}
+      it { should == [Translator[1,2,3],Translator[4,3,2],Rotator[PI/3]] }
     end
   end
 end
