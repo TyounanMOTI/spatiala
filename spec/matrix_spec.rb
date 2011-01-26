@@ -1,9 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 shared_examples_for "a Matrix which have an inverse matrix" do
-  describe "#inverse" do
-    specify { (subject*subject.inverse).should == Matrix.I_4 }
-  end
+  specify { (subject*subject.inverse).should == Matrix::I_4.new }
 end
 
 describe Matrix do
@@ -45,6 +43,16 @@ describe Matrix do
                                  [11, 1,16, 0],
                                  [-1, 5,-2, 0],
                                  [11,16,16, 1]]
+  end
+
+  describe "#inverse" do
+    Translator = Matrix::Translator
+    Rotator = Matrix::Rotator
+
+    context "which is chain of Translator->Rotator" do
+      subject { (Translator[1,2,3]*Rotator[PI/6]).inverse }
+      it_behaves_like "a Matrix which have an inverse matrix"
+    end
   end
 
   it "should return translation Matrix when Matrix.translator" do

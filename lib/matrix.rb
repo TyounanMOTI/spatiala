@@ -3,21 +3,12 @@ class Matrix < Array
   attr_accessor :transforms
 
   def initialize(*vectors)
-    @transforms = [self]
     super vectors.flatten
+    @transforms = [self]
   end
 
   def self.[](*vectors)
     Matrix.new(vectors.map { |i| Vector.new(i) })
-  end
-
-  def self.I_4
-    Matrix[
-           [1,0,0,0],
-           [0,1,0,0],
-           [0,0,1,0],
-           [0,0,0,1]
-          ]
   end
 
   def row(i)
@@ -40,6 +31,10 @@ class Matrix < Array
     end
     result.transforms = @transforms + m.transforms
     return result
+  end
+
+  def inverse
+    @transforms.reverse.inject(I_4.new) { |result, i| result*(i.inverse) }
   end
 
   def self.translator(x,y=0,z=0)
@@ -150,6 +145,21 @@ class Matrix < Array
 
     def inverse
       Rotator[-@radian]
+    end
+  end
+
+  class Matrix::I_4 < Matrix
+    def initialize
+      super [
+             Vector[1,0,0,0],
+             Vector[0,1,0,0],
+             Vector[0,0,1,0],
+             Vector[0,0,0,1]
+            ]
+    end
+
+    def inverse
+      I_4.new
     end
   end
 end
