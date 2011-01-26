@@ -1,5 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
+shared_examples_for "a Matrix which have an inverse matrix" do
+  describe "#inverse" do
+    specify { (subject*subject.inverse).should == Matrix.I_4 }
+  end
+end
+
 describe Matrix do
   before do
     @m1 = Matrix[[-2, -1,  0, 0],
@@ -97,12 +103,6 @@ describe Matrix do
   end
 end
 
-shared_examples_for "a Matrix which have a inverse matrix" do
-  describe "#inverse" do
-    specify { (subject*subject.inverse).should == Matrix.I_4 }
-  end
-end
-
 describe Matrix::Translator do
   Translator = Matrix::Translator
 
@@ -129,7 +129,7 @@ describe Matrix::Translator do
                          [0,0,1,0],
                          [-1,-2,-3,1]]
       end
-      it_behaves_like "a Matrix which have a inverse matrix"
+      it_behaves_like "a Matrix which have an inverse matrix"
     end
   end
 end
@@ -148,7 +148,7 @@ describe Matrix::Scaler do
 
   describe "#inverse" do
     subject { Scaler[1,2,3].inverse }
-    it_behaves_like "a Matrix which have a inverse matrix"
+    it_behaves_like "a Matrix which have an inverse matrix"
   end
 end
 
@@ -166,7 +166,7 @@ describe Matrix::Reflector do
 
   describe "#inverse" do
     subject { Reflector[1,0,0].inverse }
-    it_behaves_like "a Matrix which have a inverse matrix"
+    it_behaves_like "a Matrix which have an inverse matrix"
   end
 end
 
@@ -184,6 +184,6 @@ describe Matrix::Rotator do
 
   describe "#inverse" do
     subject { Rotator[PI/6].inverse }
-    it_behaves_like "a Matrix which have a inverse matrix"
+    it_behaves_like "a Matrix which have an inverse matrix"
   end
 end
