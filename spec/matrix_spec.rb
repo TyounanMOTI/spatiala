@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Matrix do
-
   before do
     @m1 = Matrix[[-2, -1,  0, 0],
                  [ 1,  2,  3, 0],
@@ -75,6 +74,14 @@ describe Matrix do
                                                       Vector.new(0,1,0,0),
                                                       Vector.new(0,0,1,0),
                                                       Vector.new(0,0,0,1))
+  end
+
+  describe "#transforms" do
+    context "with a Translator" do
+      Translator = Matrix::Translator
+      subject { Translator[1,2,3].transforms }
+      it { should == [Translator[1,2,3]] }
+    end
   end
 end
 

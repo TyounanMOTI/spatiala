@@ -1,7 +1,9 @@
 class Matrix < Array
   extend Math
+  attr_reader :transforms
 
   def initialize(*vectors)
+    @transforms = [self]
     super vectors.flatten
   end
 
@@ -121,4 +123,3 @@ class Matrix < Array
     end
   end
 end
-
