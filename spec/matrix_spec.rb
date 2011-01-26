@@ -97,6 +97,12 @@ describe Matrix do
   end
 end
 
+shared_examples_for "a Matrix which have a inverse matrix" do
+  describe "#inverse" do
+    specify { (subject*subject.inverse).should == Matrix.I_4 }
+  end
+end
+
 describe Matrix::Translator do
   Translator = Matrix::Translator
 
@@ -113,6 +119,19 @@ describe Matrix::Translator do
                                            [0,0,1,0],
                                            [3,2,1,1]]
   end
+
+  describe "#inverse" do
+    context "when Translator[1,2,3]" do
+      subject { Translator[1,2,3].inverse }
+      specify do
+        should == Matrix[[1,0,0,0],
+                         [0,1,0,0],
+                         [0,0,1,0],
+                         [-1,-2,-3,1]]
+      end
+      it_behaves_like "a Matrix which have a inverse matrix"
+    end
+  end
 end
 
 describe Matrix::Scaler do
@@ -125,6 +144,11 @@ describe Matrix::Scaler do
                                    [0,0,3,0],
                                    [0,0,0,1]
                                   ]
+  end
+
+  describe "#inverse" do
+    subject { Scaler[1,2,3].inverse }
+    it_behaves_like "a Matrix which have a inverse matrix"
   end
 end
 

@@ -11,6 +11,15 @@ class Matrix < Array
     Matrix.new(vectors.map { |i| Vector.new(i) })
   end
 
+  def self.I_4
+    Matrix[
+           [1,0,0,0],
+           [0,1,0,0],
+           [0,0,1,0],
+           [0,0,0,1]
+          ]
+  end
+
   def row(i)
     return self[i]
   end
@@ -66,6 +75,7 @@ class Matrix < Array
 
   class Translator < Matrix
     def initialize(x,y,z=0)
+      @x, @y, @z = x, y, z
       super [
              Vector[1,0,0,0],
              Vector[0,1,0,0],
@@ -77,10 +87,15 @@ class Matrix < Array
     def self.[](x,y,z=0)
       Translator.new(x,y,z)
     end
+
+    def inverse
+      Translator[-@x,-@y,-@z]
+    end
   end
 
   class Scaler < Matrix
     def initialize(x,y,z=1)
+      @x, @y, @z = [x, y, z].map { |i| i.to_f }
       super [
              Vector[x,0,0,0],
              Vector[0,y,0,0],
@@ -91,6 +106,10 @@ class Matrix < Array
 
     def self.[](x,y,z=1)
       Scaler.new(x,y,z)
+    end
+
+    def inverse
+      Scaler[1/@x, 1/@y, 1/@z]
     end
   end
 
