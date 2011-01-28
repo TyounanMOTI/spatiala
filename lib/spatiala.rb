@@ -19,7 +19,7 @@ class Spatiala < Processing::App
     setup_app
     setup_tracer
 
-    @reflector = @geometry.lines[1]
+    @reflector = @geometry.lines[0]
     @map = VisibilityMap.new(@geometry, @reflector)
     @normalized_listener = Listener.new(@map.normalize_listener_position(@listener.position), @listener.direction)
     @intersection_points = @map.intersection_points(@normalized_listener.position)
@@ -33,13 +33,16 @@ class Spatiala < Processing::App
       @beams = @intersection_points.pack_same_ratios.make_pairs.to_beams(@map.geometry)
       draw_beams @beams
 
-      @beams.first.lines.each { |i| print_ray i }
+#      @beams.first.lines.each { |i| print_ray i }
     when :world
       scale_for_geometry
-      draw_listener
       draw_geometry
 
       draw_beams @map.emit_beam(@listener)
+
+      reflected_listener = @listener.transform(Matrix::Reflector[@reflector])
+      draw_listener
+      draw_listener reflected_listener
       draw_ray @reflector
     when :map
       scale_for_visibility_map

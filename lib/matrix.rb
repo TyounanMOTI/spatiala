@@ -38,17 +38,23 @@ class Matrix < Array
   end
 
   class Translator < Matrix
-    def initialize(x,y,z=0)
-      @x, @y, @z = x, y, z
+    def initialize(x,y=0,z=0)
+      case x
+      when Vector
+        @x,@y,@z = x.elements
+      when Numeric
+        @x, @y, @z = x, y, z
+      end
+
       super [
              Vector[1,0,0,0],
              Vector[0,1,0,0],
              Vector[0,0,1,0],
-             Vector[x,y,z,1]
+             Vector[@x,@y,@z,1]
             ]
     end
 
-    def self.[](x,y,z=0)
+    def self.[](x,y=0,z=0)
       Translator.new(x,y,z)
     end
 
@@ -79,17 +85,29 @@ class Matrix < Array
 
   class Reflector < Matrix
     def initialize(x,y,z)
-      @x,@y,@z = x,y,z
+      case x
+      when Vector
+        @x,@y,@z = x.elements
+      when Numeric
+        @x,@y,@z = x,y,z
+      end
       super [
-             Vector[1 - 2*(x**2), -2*x*y, -2*x*z,0],
-             Vector[-2*x*y, 1 - 2*(y**2), -2*y*z,0],
-             Vector[-2*x*z, -2*y*z, 1 - 2*(z**2),0],
+             Vector[1 - 2*(@x**2), -2*@x*@y, -2*@x*@z,0],
+             Vector[-2*@x*@y, 1 - 2*(@y**2), -2*@y*@z,0],
+             Vector[-2*@x*@z, -2*@y*@z, 1 - 2*(@z**2),0],
              Vector[0,0,0,1]
             ]
     end
 
-    def self.[](x,y,z)
-      Reflector.new(x,y,z)
+    def self.[](x,y=nil,z=nil)
+      case x
+      when Ray
+        normal = x.normal.normalize
+        translator = Translator[-x.origin]
+        return translator*Reflector[normal]*(translator.inverse)
+      else
+        Reflector.new(x,y,z)
+      end
     end
 
     def inverse
