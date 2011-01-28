@@ -10,3 +10,13 @@ class Beam < Polygon
     Beam.new(super.vertices)
   end
 end
+
+class Beams < Array
+  def initialize(beams=0)
+    super
+  end
+
+  def transform(matrix)
+    Beams.new(self.map { |i| i.transform(matrix) })
+  end
+end

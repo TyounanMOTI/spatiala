@@ -18,3 +18,17 @@ describe Beam do
     its("vertices.first.z") { should == 3 }
   end
 end
+
+describe Beams do
+  let(:beams) do
+    Beams.new([
+               Beam.new([Vector.new(1,2), Vector.new(2,3)]),
+               Beam.new([Vector.new(4,5), Vector.new(6,7)])
+              ])
+  end
+
+  describe "#transform" do
+    subject { beams.transform(Matrix::Translator[1,2,3]) }
+    it { should be_collection(Beams).of(Beam) }
+  end
+end
