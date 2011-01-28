@@ -19,12 +19,12 @@ class Spatiala < Processing::App
     setup_app
     setup_tracer
 
-    reflector = 1
-    @map = VisibilityMap.new(@geometry, @geometry.lines[reflector])
+    @reflector = @geometry.lines[1]
+    @map = VisibilityMap.new(@geometry, @reflector)
     @normalized_listener = Listener.new(@map.normalize_listener_position(@listener.position), @listener.direction)
     @intersection_points = @map.intersection_points(@normalized_listener.position)
 
-    case :normalized
+    case :world
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @map.geometry
@@ -39,7 +39,8 @@ class Spatiala < Processing::App
       draw_listener
       draw_geometry
 
-      draw_ray @geometry.lines[reflector]
+      draw_beams @map.emit_beam(@listener)
+      draw_ray @reflector
     when :map
       scale_for_visibility_map
       draw_axis
@@ -185,11 +186,10 @@ class Spatiala < Processing::App
     stroke hue, @saturation, @brightness, 100
     fill hue, @saturation, @brightness-20, alpha
 
-    polygon.lines.each { |i| line(i.origin.x*@scale.x + @offset.x,
-                                  i.origin.y*@scale.y + @offset.y,
-                                  i.destination.x*@scale.x + @offset.x,
-                                  i.destination.y*@scale.y + @offset.y) }
-
+    begin_shape
+    polygon.vertices.each { |i| vertex(i.x*@scale.x + @offset.x,
+                                       i.y*@scale.y + @offset.y) }
+    end_shape CLOSE
     pop_style
   end
 

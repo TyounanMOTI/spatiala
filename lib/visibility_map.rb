@@ -12,7 +12,7 @@ class VisibilityMap
   end
 
   def emit_beam(listener)
-    intersection_points(normalize_listener_position(listener.position)).pack_same_ratios.make_pairs.to_beams(@geometry)
+    intersection_points(normalize_listener_position(listener.position)).pack_same_ratios.make_pairs.to_beams(@geometry).transform(@normalizer.inverse)
   end
 
   def intersection_points(listener_position)

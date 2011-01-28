@@ -46,12 +46,12 @@ class Geometry
 
   def normalizer(window)
     window_center = (window.origin + window.destination)/2
-    translator = Matrix.translator(-window_center.x, -window_center.y, -window_center.z)
+    translator = Matrix::Translator[-window_center.x, -window_center.y, -window_center.z]
     translated_window = window.transform(translator)
     theta = Math.atan(translated_window.origin.y.to_f / translated_window.origin.x.to_f)
-    rotator = Matrix.rotator(Math::PI/2 - theta)
+    rotator = Matrix::Rotator[Math::PI/2 - theta]
     rotated_window = translated_window.transform(rotator)
-    scaler = Matrix.scaler(1,1/rotated_window.origin.y)
+    scaler = Matrix::Scaler[1,1/rotated_window.origin.y]
     return translator * rotator * scaler
   end
 
