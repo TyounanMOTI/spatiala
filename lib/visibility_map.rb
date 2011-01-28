@@ -58,12 +58,13 @@ class VisibilityMap
     end
 
     def to_beams(geometry)
-      map do |pair|
+      array = map do |pair|
         center = IntersectionPoint.new((pair[0].ratio + pair[1].ratio)/2, pair[0].listener_position)
         target_ray = geometry.without_window.intersect(center.dualize).first.target_ray
         pair.each { |i| i.target_ray = target_ray }
         Ray.new(pair[0], pair[1]).dualize
       end
+      return Beams.new(array)
     end
   end
 

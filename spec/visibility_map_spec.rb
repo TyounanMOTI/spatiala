@@ -113,7 +113,7 @@ describe VisibilityMap::IntersectionPoints do
 
   describe "#to_beams" do
     subject { @paired.to_beams(@map.geometry) }
-    it { should be_collection(Array).of(Beam) }
+    it { should be_collection(Beams).of(Beam) }
     its(:length) { should == 4 }
   end
 end
