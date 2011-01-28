@@ -45,8 +45,8 @@ describe Ray do
       end
     end
 
-    context "and #transform by Matrix.translator(2,2,0)" do
-      before { @ray = subject.transform(Matrix.translator(2,2,0)) }
+    context "and #transform by Matrix::Translator[2,2]" do
+      before { @ray = subject.transform(Matrix::Translator[2,2]) }
       specify { @ray.should == Ray.new(Vector.new(3,2), Vector.new(4,6)) }
     end
 

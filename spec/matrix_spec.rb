@@ -55,41 +55,6 @@ describe Matrix do
     end
   end
 
-  it "should return translation Matrix when Matrix.translator" do
-    Matrix.translator(3, 4, 5).should == Matrix.new(Vector.new(1,0,0,0),
-                                                        Vector.new(0,1,0,0),
-                                                        Vector.new(0,0,1,0),
-                                                        Vector.new(3,4,5,1))
-  end
-
-  it "should return correct Matrix when argument in Matrix.translator is < 3" do
-    Matrix.translator(3).should == Matrix.new(Vector.new(1,0,0,0),
-                                               Vector.new(0,1,0,0),
-                                               Vector.new(0,0,1,0),
-                                               Vector.new(3,0,0,1))
-  end
-
-  it "should generate rotation Matrix when Matrix.rotator" do
-    Matrix.rotator(PI/6).should == Matrix.new(Vector.new(cos(PI/6), sin(PI/6), 0, 0),
-                                                Vector.new(-sin(PI/6),cos(PI/6), 0, 0),
-                                                Vector.new(0, 0, 1, 0),
-                                                Vector.new(0, 0, 0, 1))
-  end
-
-  it "should generate scale Matrix when Matrix.scaler" do
-    Matrix.scaler(5, 10).should == Matrix.new(Vector.new(5, 0, 0, 0),
-                                                 Vector.new(0,10, 0, 0),
-                                                 Vector.new(0, 0, 1, 0),
-                                                 Vector.new(0, 0, 0, 1))
-  end
-
-  it "should generate reflection Matrix when Matrix.reflector" do
-    Matrix.reflector(Vector.new(1,0,0)).should == Matrix.new(Vector.new(-1,0,0,0),
-                                                      Vector.new(0,1,0,0),
-                                                      Vector.new(0,0,1,0),
-                                                      Vector.new(0,0,0,1))
-  end
-
   describe "#transforms" do
     Translator = Matrix::Translator
     Rotator = Matrix::Rotator

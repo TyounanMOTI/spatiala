@@ -19,7 +19,7 @@ describe Listener do
   end
 
   it "should return Listener when transformed" do
-    @listener.transform(Matrix.translator(2,3)).should be_instance_of Listener
+    @listener.transform(Matrix::Translator[2,3]).should be_instance_of Listener
   end
 end
 

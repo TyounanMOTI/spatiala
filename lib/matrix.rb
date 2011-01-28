@@ -37,37 +37,6 @@ class Matrix < Array
     @transforms.reverse.inject(I_4.new) { |result, i| result*(i.inverse) }
   end
 
-  def self.translator(x,y=0,z=0)
-    Matrix.new(Vector.new(1,0,0,0),
-               Vector.new(0,1,0,0),
-               Vector.new(0,0,1,0),
-               Vector.new(x,y,z,1))
-  end
-
-  def self.rotator(radian)
-    Matrix.new(Vector.new(cos(radian), sin(radian), 0, 0),
-               Vector.new(-sin(radian),cos(radian), 0, 0),
-               Vector.new(0, 0, 1, 0),
-               Vector.new(0, 0, 0, 1))
-  end
-
-  def self.scaler(x,y,z=1)
-    Matrix.new(Vector.new(x, 0, 0, 0),
-               Vector.new(0, y, 0, 0),
-               Vector.new(0, 0, z, 0),
-               Vector.new(0, 0, 0, 1))
-  end
-
-  def self.reflector(normal)
-    x = normal.x
-    y = normal.y
-    z = normal.z
-    Matrix.new(Vector.new(1 - 2*(x**2), -2*x*y, -2*x*z,0),
-               Vector.new(-2*x*y, 1 - 2*(y**2), -2*y*z,0),
-               Vector.new(-2*x*z, -2*y*z, 1 - 2*(z**2),0),
-               Vector.new(0,0,0,1))
-  end
-
   class Translator < Matrix
     def initialize(x,y,z=0)
       @x, @y, @z = x, y, z

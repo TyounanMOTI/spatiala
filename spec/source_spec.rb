@@ -14,6 +14,6 @@ describe Source do
   end
 
   it "should return Source when transformed" do
-    @source.transform(Matrix.translator(3,3)).should be_instance_of Source
+    @source.transform(Matrix::Translator[3,3]).should be_instance_of Source
   end
 end

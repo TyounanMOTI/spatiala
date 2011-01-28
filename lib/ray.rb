@@ -133,7 +133,7 @@ class Ray
   end
 
   def normal
-    @delta.transform(Matrix.rotator(Math::PI/2))
+    @delta.transform(Matrix::Rotator[Math::PI/2])
   end
 
   def facing

@@ -27,7 +27,7 @@ class VisibilityMap
   end
 
   def normalize_listener_position(listener_position)
-    return listener_position.transform(@normalizer * Matrix.reflector(Vector.new(1,0,0)))
+    return listener_position.transform(@normalizer * Matrix::Reflector[1,0,0])
   end
 
   class IntersectionPoints < Array

@@ -107,8 +107,8 @@ describe Vector do
     result.should == 7
   end
 
-  it "should transform v1 to v2 with Matrix.translator(-5,4,5)" do
-    @v1.transform(Matrix.translator(-5,4,5)).should == @v2
+  it "should transform v1 to v2 with Matrix::Translator[-5,4,5]" do
+    @v1.transform(Matrix::Translator[-5,4,5]).should == @v2
   end
 
   it "should return Ray (0,1) to (2,-1) when dualize Vector (1,1)" do
