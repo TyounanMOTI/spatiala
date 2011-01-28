@@ -5,4 +5,8 @@ class Beam < Polygon
     @children = Array.new
     super vertices
   end
+
+  def transform(matrix)
+    Beam.new(super.vertices)
+  end
 end
