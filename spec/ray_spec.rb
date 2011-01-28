@@ -102,6 +102,11 @@ describe Ray do
         @ray2.look_front.should == @ray2.reverse
       end
     end
+
+    describe "#normalizer" do
+      subject { @ray1.normalizer }
+      it { should be_a Matrix }
+    end
   end
 
   describe "#facing (with WINDOW)" do

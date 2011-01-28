@@ -59,6 +59,19 @@ class Ray
     Ray.new(@origin.transform(matrix), @destination.transform(matrix))
   end
 
+  def normalizer
+    center = (@origin + @destination)/2
+    translator = Matrix::Translator[-center.x, -center.y, -center.z]
+    translated_window = self.transform(translator)
+    theta = Math.atan(translated_window.origin.y.to_f / translated_window.origin.x.to_f)
+    rotator = Matrix::Rotator[Math::PI/2 - theta]
+    rotated_window = translated_window.transform(rotator)
+    scaler = Matrix::Scaler[1,1/rotated_window.origin.y]
+
+    transformer = translator * rotator * scaler
+    return transformer
+  end
+
   def dualize
     case @origin
     when VisibilityMap::IntersectionPoint

@@ -84,16 +84,11 @@ describe Geometry, "which normalized" do
   before do
     setup_geometry
     @window = @geometry.lines[0]
-    @geometry = @geometry.normalize(@window)
   end
 
-  subject { @geometry }
+  subject { @geometry.normalize(@window) }
 
   it { should be_a Geometry }
-
-  describe "#normalizer" do
-    specify { subject.normalizer(@window).should be_a Matrix}
-  end
 
   describe "#normalize" do
     its(:lines) { should include Ray::WINDOW }
