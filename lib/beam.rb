@@ -9,6 +9,10 @@ class Beam < Polygon
   def transform(matrix)
     Beam.new(super.vertices)
   end
+
+  def illumination_ray
+    lines[1]
+  end
 end
 
 class Beams < Array
