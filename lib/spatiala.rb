@@ -19,13 +19,13 @@ class Spatiala < Processing::App
     setup_app
     setup_tracer
 
-    reflector_index = 0
+    reflector_index = 1
     @reflector = @geometry.lines[reflector_index]
     @map = VisibilityMap.new(@geometry, @reflector)
     @normalized_listener = Listener.new(@map.normalize_listener_position(@listener.position), @listener.direction)
     @intersection_points = @map.intersection_points(@normalized_listener.position)
 
-    case :normalized
+    case :world
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @map.geometry
@@ -43,9 +43,9 @@ class Spatiala < Processing::App
       draw_beams @map.emit_beam(@listener)
 
       reflected_listener = @listener.transform(Matrix::Reflector[@reflector])
-      draw_listener
       draw_listener reflected_listener
       draw_ray @reflector
+
     when :map
       scale_for_visibility_map
       draw_axis
@@ -53,7 +53,22 @@ class Spatiala < Processing::App
       draw_visibility_map @map
       draw_ray @normalized_listener.position.dualize
       draw_intersection_points @intersection_points
-      @intersection_points.sort_by { |i| i.ratio }
+
+    when :sandbox
+      @scale = Vector.new(150,-150)
+      @offset = Vector.new(width/2, height/2)
+      draw_axis
+      draw_point 0, 1
+      draw_point 0,-1
+
+      ray = Ray.new(Vector.new(-1,-1), Vector.new(1,1))
+      theta = Math.atan(ray.origin.y.to_f/ray.origin.x.to_f)
+
+      draw_ray ray
+
+      rotated = ray.transform(Matrix::Rotator[Math::PI/2-theta])
+      draw_ray rotated, @hue-20
+      draw_ray rotated.transform(Matrix::Scaler[1,1/rotated.origin.y.abs]), @hue+20
     end
 
     @region_index = 0

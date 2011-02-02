@@ -119,8 +119,8 @@ class Matrix < Array
     def initialize(radian)
       @radian = radian
       super [
-             Vector[Math::cos(radian), Math::sin(radian), 0,0],
-             Vector[-Math::sin(radian),Math::cos(radian), 0,0],
+             Vector[Math.cos(radian), Math.sin(radian), 0,0],
+             Vector[-Math.sin(radian),Math.cos(radian), 0,0],
              Vector[0,0,1,0],
              Vector[0,0,0,1]
             ]

@@ -66,9 +66,15 @@ class Ray
     theta = Math.atan(translated_window.origin.y.to_f / translated_window.origin.x.to_f)
     rotator = Matrix::Rotator[Math::PI/2 - theta]
     rotated_window = translated_window.transform(rotator)
-    scaler = Matrix::Scaler[1,1/rotated_window.origin.y]
+    scaler = Matrix::Scaler[1,1/rotated_window.origin.y.abs]
+    window = rotated_window.transform(scaler)
 
     transformer = translator * rotator * scaler
+
+    unless window == WINDOW
+      transformer = transformer * Matrix::Reflector[0,1,0] * Matrix::Reflector[1,0,0]
+    end
+
     return transformer
   end
 

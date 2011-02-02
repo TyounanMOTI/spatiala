@@ -102,10 +102,25 @@ describe Ray do
         @ray2.look_front.should == @ray2.reverse
       end
     end
+  end
 
-    describe "#normalizer" do
-      subject { @ray1.normalizer }
-      it { should be_a Matrix }
+  describe "#normalizer" do
+    context "subject is Ray(-1,-1)->(1,1)" do
+      subject { Ray.new(Vector.new(-1,-1), Vector.new(1,1)) }
+      it "transforms subject to WINDOW" do
+        subject.transform(subject.normalizer).should == Ray::WINDOW
+      end
+
+      it "return subject when transform and inverse transform" do
+        subject.transform(subject.normalizer).transform(subject.normalizer.inverse).should == subject
+      end
+    end
+
+    context "subject is Ray(1,1)->(-1,-1)" do
+      subject { Ray.new(Vector.new(1,1), Vector.new(-1,-1)) }
+      it "transforms subject to WINDOW" do
+        subject.transform(subject.normalizer).should == Ray::WINDOW
+      end
     end
   end
 
