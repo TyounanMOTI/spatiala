@@ -10,4 +10,8 @@ class Listener
   def normalize(normalizer)
     return Listener.new(@position.transform(normalizer), @direction.transform(normalizer))
   end
+
+  def dualize
+    @position.dualize
+  end
 end

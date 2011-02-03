@@ -14,5 +14,10 @@ describe Listener do
     it { should be_a Listener }
     its(:position) { should == Vector.new(12,13) }
   end
+
+  describe "#dualize" do
+    subject { listener.dualize }
+    it { should == Ray.new(Vector.new(0.9,1), Vector.new(1.1,-1)) }
+  end
 end
 

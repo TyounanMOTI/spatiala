@@ -15,7 +15,7 @@ class VisibilityRegion < Polygon
   end
 
   def intersect(listener)
-    view_ray = listener.position.dualize
+    view_ray = listener.dualize
     points = rays.map do |line|
       ratio = view_ray.intersect(line)
       next if ratio.nil?
