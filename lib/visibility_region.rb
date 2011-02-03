@@ -14,12 +14,12 @@ class VisibilityRegion < Polygon
     return (@original == other.original) && (rays == other.rays)
   end
 
-  def intersect(listener_position)
-    ray = listener_position.dualize
+  def intersect(listener)
+    view_ray = listener.position.dualize
     points = rays.map do |line|
-      ratio = ray.intersect(line)
+      ratio = view_ray.intersect(line)
       next if ratio.nil?
-      IntersectionPoint.new(ratio, listener_position, @original)
+      IntersectionPoint.new(ratio, listener.position, @original)
     end.compact
     return IntersectionPoints.new(points)
   end

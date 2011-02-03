@@ -9,8 +9,8 @@ describe Listener do
   its(:position) { should == Vector.new(10,10) }
   its(:direction) { should == Vector.new(40,50).normalize }
 
-  describe "#transform" do
-    subject { listener.transform(Matrix::Translator[2,3]) }
+  describe "#normalize" do
+    subject { listener.normalize(Matrix::Translator[2,3]) }
     it { should be_a Listener }
     its(:position) { should == Vector.new(12,13) }
   end

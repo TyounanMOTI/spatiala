@@ -12,22 +12,22 @@ class VisibilityMap
   end
 
   def emit_beam(listener)
-    intersection_points(normalize_listener_position(listener.position)).pack_same_ratios.make_pairs.to_beams(@geometry).transform(@normalizer.inverse)
+    intersection_points(listener.normalize(reflected_normalizer)).pack_same_ratios.make_pairs.to_beams(@geometry).transform(@normalizer.inverse)
   end
 
-  def intersection_points(listener_position)
-    return IntersectionPoints.new(intersections_with_regions(listener_position).reject_occluded_by(@geometry).sort_by { |i| i.point.x })
+  def intersection_points(listener)
+    return IntersectionPoints.new(intersections_with_regions(listener).reject_occluded_by(@geometry).sort_by { |i| i.point.x })
   end
 
-  def intersections_with_regions(listener_position)
+  def intersections_with_regions(listener)
     points = @regions.map do |region|
-      region.intersect(listener_position)
+      region.intersect(listener)
     end.flatten
     return IntersectionPoints.new(points)
   end
 
-  def normalize_listener_position(listener_position)
-    return listener_position.transform(@normalizer * Matrix::Reflector[1,0,0])
+  def reflected_normalizer
+    @normalizer*Matrix::Reflector[1,0,0]
   end
 
   class IntersectionPoints < Array

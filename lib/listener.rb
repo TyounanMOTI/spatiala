@@ -7,7 +7,7 @@ class Listener
     @children = Array.new
   end
 
-  def transform(transformer)
-    return Listener.new(@position.transform(transformer), @direction.transform(transformer))
+  def normalize(normalizer)
+    return Listener.new(@position.transform(normalizer), @direction.transform(normalizer))
   end
 end

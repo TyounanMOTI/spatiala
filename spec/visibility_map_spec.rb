@@ -21,24 +21,17 @@ describe VisibilityMap do
     its(:normalizer) { should be_a Matrix }
   end
 
-  describe "#normalize_listener_position" do
-    subject { @map.normalize_listener_position(@listener.position) }
-    it "should place listener to x < 0 region" do
-      subject.x < 0
-    end
-  end
-
-  context "acquired @normalized_listener_position" do
-    before { @normalized_listener_position = @map.normalize_listener_position(@listener.position) }
+  context "acquired @normalized_listener" do
+    before { @normalized_listener = @listener.normalize(@map.reflected_normalizer) }
 
     describe "#intersections_with_regions" do
-      subject { @map.intersections_with_regions(@normalized_listener_position) }
+      subject { @map.intersections_with_regions(@normalized_listener) }
       it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
       its(:length) { should == 8 }
     end
 
     describe "#intersection_points" do
-      subject { @map.intersection_points(@normalized_listener_position) }
+      subject { @map.intersection_points(@normalized_listener) }
       it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
     end
   end
@@ -83,7 +76,7 @@ describe VisibilityMap::IntersectionPoints do
 
   before do
     setup_intersection_points
-    @intersections = @map.intersections_with_regions(@normalized_listener_position)
+    @intersections = @map.intersections_with_regions(@normalized_listener)
     @rejected = @intersections.reject_occluded_by(@map.geometry)
     @packed = @rejected.pack_same_ratios
     @paired = @packed.make_pairs

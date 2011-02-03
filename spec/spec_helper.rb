@@ -93,8 +93,8 @@ module VisibilityMap::IntersectionPoints::Environment
 
   def setup_intersection_points(window=1)
     setup_visibility_map(window)
-    @normalized_listener_position = @map.normalize_listener_position(@listener.position)
-    @intersection_points = @map.intersection_points(@normalized_listener_position)
+    @normalized_listener = @listener.normalize(@map.reflected_normalizer)
+    @intersection_points = @map.intersection_points(@normalized_listener)
   end
 end
 
