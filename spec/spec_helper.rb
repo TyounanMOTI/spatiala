@@ -85,6 +85,7 @@ module VisibilityMap::Environment
     setup_beam_tracer
     @window = @geometry.lines[window]
     @map = VisibilityMap.new(@geometry, @window)
+    @normalized_listener = @listener.normalize(@map.reflected_normalizer)
   end
 end
 
@@ -93,8 +94,6 @@ module VisibilityMap::IntersectionPoints::Environment
 
   def setup_intersection_points(window=1)
     setup_visibility_map(window)
-    @normalized_listener = @listener.normalize(@map.reflected_normalizer)
     @intersection_points = @map.intersection_points(@normalized_listener)
   end
 end
-

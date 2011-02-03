@@ -22,8 +22,6 @@ describe VisibilityMap do
   end
 
   context "acquired @normalized_listener" do
-    before { @normalized_listener = @listener.normalize(@map.reflected_normalizer) }
-
     describe "#intersections_with_regions" do
       subject { @map.intersections_with_regions(@normalized_listener) }
       it { should be_collection(IntersectionPoints).of(IntersectionPoint) }
