@@ -17,10 +17,7 @@ class VisibilityMap
   end
 
   def intersections_with_regions(listener)
-    points = @regions.map do |region|
-      region.intersect(listener)
-    end.flatten
-    return IntersectionPoints.new(points)
+    IntersectionPoints.by_ratio_originals(@regions.intersect(listener.dualize), listener)
   end
 
   def reflected_normalizer

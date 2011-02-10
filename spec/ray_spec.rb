@@ -217,7 +217,7 @@ describe Ray do
     end
   end
 
-  pending "when extremes are given as VisibilityMap::IntersectionPoint" do
+  context "when extremes are given as VisibilityMap::IntersectionPoint" do
     include VisibilityMap::IntersectionPoints::Environment
     IntersectionPoint = VisibilityMap::IntersectionPoint
 
