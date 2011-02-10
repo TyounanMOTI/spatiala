@@ -72,8 +72,17 @@ end
 
 describe VisibilityRegions do
   include VisibilityRegion::Environment
+
   before { setup_region }
   subject { VisibilityRegions.new([@region]) }
-
   it { should == [@region] }
+
+  describe "#intersect" do
+    include VisibilityMap::Environment
+    before { setup_visibility_map }
+    let(:regions) { @map.regions }
+    let(:ray) { @normalized_listener.dualize }
+    subject { regions.intersect(ray) }
+    it { should be_collection(Array).of(VisibilityRegion) }
+  end
 end

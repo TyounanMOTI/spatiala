@@ -27,4 +27,8 @@ class VisibilityRegions < Array
   def initialize(arg)
     super
   end
+
+  def intersect(ray)
+    map { |i| i.intersect(ray) }.flatten
+  end
 end
