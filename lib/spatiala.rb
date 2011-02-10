@@ -22,8 +22,8 @@ class Spatiala < Processing::App
     reflector_index = 1
     @reflector = @geometry.lines[reflector_index]
     @map = VisibilityMap.new(@geometry, @reflector)
-    @normalized_listener = Listener.new(@map.normalize_listener_position(@listener.position), @listener.direction)
-    @intersection_points = @map.intersection_points(@normalized_listener.position)
+    @normalized_listener = @listener.normalize(@map.normalizer)
+    @intersection_points = @map.intersection_points(@normalized_listener)
 
     case :world
     when :normalized
