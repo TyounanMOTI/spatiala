@@ -24,3 +24,9 @@ class VisibilityRegion < Polygon
     return IntersectionPoints.new(points)
   end
 end
+
+class VisibilityRegions < Array
+  def initialize(arg)
+    super
+  end
+end
