@@ -100,6 +100,6 @@ describe Geometry, "which normalized" do
 
   describe "#to_regions" do
     subject { @geometry.to_regions }
-    it { should be_collection(Array).of(VisibilityRegion) }
+    it { should be_collection(VisibilityRegions).of(VisibilityRegion) }
   end
 end
