@@ -13,7 +13,7 @@ class VisibilityMap
   end
 
   def intersection_points(listener)
-    return IntersectionPoints.new(intersections_with_regions(listener).reject_occluded_by(@geometry).sort_by { |i| i.point.x })
+    return IntersectionPoints.new(intersections_with_regions(listener).reject_occluded_by(@geometry).sort)
   end
 
   def intersections_with_regions(listener)
@@ -53,6 +53,10 @@ class VisibilityMap
         result << IntersectionPoints.new([self[i], self[i+1]])
       end
       return result
+    end
+
+    def sort
+      sort_by { |i| i.x }
     end
 
     def to_beams(geometry)

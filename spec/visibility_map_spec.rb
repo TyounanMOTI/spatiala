@@ -37,16 +37,19 @@ end
 
 describe VisibilityMap::IntersectionPoints do
   IntersectionPoints = VisibilityMap::IntersectionPoints
+  IntersectionPoint = VisibilityMap::IntersectionPoint
+
+  let(:listener) { Vector.new(10,10) }
 
   before do
     points = [
-              Vector.new(-3,-3),
-              Vector.new(-2,-2),
-              Vector.new(-1,-1),
-              Vector.new(0,0),
-              Vector.new(1,1),
-              Vector.new(2,2),
-              Vector.new(3,3)
+              IntersectionPoint.new(-3.0, listener),
+              IntersectionPoint.new(3.0, listener),
+              IntersectionPoint.new(-2.0, listener),
+              IntersectionPoint.new(0.0, listener),
+              IntersectionPoint.new(1.0, listener),
+              IntersectionPoint.new(-1.0, listener),
+              IntersectionPoint.new(2.0, listener)
              ]
     @intersection_points = IntersectionPoints.new(points)
   end
@@ -61,6 +64,19 @@ describe VisibilityMap::IntersectionPoints do
 
   it "should return 7 when required length" do
     @intersection_points.length.should == 7
+  end
+
+  describe "#sort" do
+    subject { @intersection_points.sort }
+    it { should == [
+                    IntersectionPoint.new(-3.0, listener),
+                    IntersectionPoint.new(-2.0, listener),
+                    IntersectionPoint.new(-1.0, listener),
+                    IntersectionPoint.new(0.0, listener),
+                    IntersectionPoint.new(1.0, listener),
+                    IntersectionPoint.new(2.0, listener),
+                    IntersectionPoint.new(3.0, listener)
+                   ]}
   end
 end
 
