@@ -11,14 +11,9 @@ describe VisibilityMap do
     should be_instance_of VisibilityMap
   end
 
-  describe "members" do
-    its(:regions) { should be_collection(Array).of(VisibilityRegion) }
-    its(:geometry) do
-      should be_a Geometry
-      subject.lines.should be_include Ray::WINDOW #should be normalized
-    end
-    its(:window) { should == @window }
-    its(:normalizer) { should be_a Matrix }
+  describe "@geometry" do
+    subject { @map.geometry }
+    its(:lines) { should be_include Ray::WINDOW }#should be normalized
   end
 
   context "acquired @normalized_listener" do
