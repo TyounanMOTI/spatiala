@@ -97,4 +97,9 @@ describe Geometry, "which normalized" do
   describe "#without_window" do
     its("without_window.lines") { should_not include Ray::WINDOW }
   end
+
+  describe "#to_regions" do
+    subject { @geometry.to_regions }
+    it { should be_collection(Array).of(VisibilityRegion) }
+  end
 end

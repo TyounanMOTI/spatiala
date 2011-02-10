@@ -5,10 +5,7 @@ class VisibilityMap
     @window = window
     @geometry = geometry.normalize(@window)
     @normalizer = @window.normalizer
-    @regions = @geometry.lines.map do |i|
-      # also dualize reversed ray, because non facing line will be nil when dualized
-      [i.dualize, i.reverse.dualize]
-    end.flatten.compact
+    @regions = @geometry.to_regions
   end
 
   def emit_beam(listener)

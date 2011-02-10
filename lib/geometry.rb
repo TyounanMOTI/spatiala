@@ -52,4 +52,9 @@ class Geometry
   def without_window
     Geometry.new(@polygons.map { |i| i.disable(Ray::WINDOW) })
   end
+
+  def to_regions
+    # also dualize reversed ray, because non facing line will be nil when dualized
+    lines.map { |i| [i.dualize, i.reverse.dualize] }.flatten.compact
+  end
 end
