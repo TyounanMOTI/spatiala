@@ -32,6 +32,10 @@ class VisibilityMap
       super
     end
 
+    def self.by_ratio_originals(data, listener)
+      IntersectionPoints.new(data.map { |i| IntersectionPoint.new(i[:ratio], listener.position, i[:original])})
+    end
+
     def reject_occluded_by(geometry)
       reject { |i| geometry.without_window.occlude?(i.dualize) }
     end
