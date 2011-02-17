@@ -95,7 +95,7 @@ class Ray
                 @destination.dualize.origin,
                ]
 
-    beam = Beam.new(vertices, @origin.listener)
+    beam = Beam.new(vertices, @origin.listener, @origin.target_ray)
     return beam
   end
 

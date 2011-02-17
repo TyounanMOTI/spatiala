@@ -251,6 +251,7 @@ describe Ray do
       it { should be_instance_of Beam }
       its("vertices.length") { should == 4 }
       its(:listener) { should == @q.listener }
+      its(:target_ray) { should == @p.target_ray }
     end
   end
 end

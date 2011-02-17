@@ -1,10 +1,11 @@
 class Beam < Polygon
-  attr_reader :listener
+  attr_reader :listener, :target_ray
   attr_accessor :children
 
-  def initialize(vertices, listener=nil)
+  def initialize(vertices, listener=nil, target_ray=nil)
     @children = Array.new
     @listener = listener
+    @target_ray = target_ray
     super vertices
   end
 
