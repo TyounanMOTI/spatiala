@@ -16,6 +16,10 @@ class Beam < Polygon
   def illuminator
     lines[1]
   end
+
+  def illumination_range
+    illuminator.range(@target_ray)
+  end
 end
 
 class Beams < Array

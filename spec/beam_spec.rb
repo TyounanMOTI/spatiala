@@ -28,6 +28,23 @@ describe Beam do
   end
 end
 
+describe Beam, "which has listener and target_ray" do
+  let(:listener) { Listener.new(Vector.new(0,0), Vector.new(1,0)) }
+  let(:target_ray) { Ray.new(Vector.new(0,10), Vector.new(10,0)) }
+  let(:range) { 0.1..0.6 }
+  let(:illuminator) { Ray.new((target_ray*range.first).destination, (target_ray*range.last).destination) }
+  let(:beam) { Beam.new([
+                         listener.position,
+                         illuminator.origin,
+                         illuminator.destination
+                        ], listener, target_ray)}
+  subject { beam }
+  its(:illuminator) { should == illuminator }
+  describe "#illumination_range" do
+    its(:illumination_range) { should == range }
+  end
+end
+
 describe Beams do
   let(:beams) do
     Beams.new([
