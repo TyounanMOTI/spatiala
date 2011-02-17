@@ -21,8 +21,8 @@ describe Beam do
     its("vertices.first.z") { should == 3 }
   end
 
-  describe "#illumination_ray" do
-    subject { beam.illumination_ray }
+  describe "#illuminator" do
+    subject { beam.illuminator }
     it { should be_a Ray }
     it { should == Ray.new(Vector.new(30,300), Vector.new(100,200)) }
   end

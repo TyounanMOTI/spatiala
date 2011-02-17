@@ -10,7 +10,7 @@ class Beam < Polygon
     Beam.new(super.vertices)
   end
 
-  def illumination_ray
+  def illuminator
     lines[1]
   end
 end
