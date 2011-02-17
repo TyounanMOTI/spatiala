@@ -40,6 +40,12 @@ describe Ray do
       end
     end
 
+    describe "#ratio" do
+      let(:point) { Vector.new(1.1,0.4) }
+      subject { ray.ratio(point) }
+      specify { (subject - 0.1).abs.should < 1.0e-15 }
+    end
+
     describe "#(member)=" do
       context "and changed its origin to (3,9)" do
         before { subject.origin = Vector.new(3,9) }
