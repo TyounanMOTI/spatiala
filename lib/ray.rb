@@ -205,6 +205,10 @@ class Ray
     end
   end
 
+  def trim(range)
+    Ray.new((self*range.first).destination, (self*range.last).destination)
+  end
+
   def include?(point)
     target = Ray.new(@origin, point)
     return true if (point - @origin).length < 1.0e-10

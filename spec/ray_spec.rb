@@ -13,7 +13,8 @@ describe Ray do
   end
 
   context "when subject is Ray(1,0)->(2,4)" do
-    subject { Ray.new(Vector.new(1,0), Vector.new(2,4)) }
+    let(:ray) { Ray.new(Vector.new(1,0), Vector.new(2,4)) }
+    subject { ray }
 
     describe "#==" do
       it { should == Ray.new(Vector.new(1,0), Vector.new(2,4)) }
@@ -26,6 +27,17 @@ describe Ray do
 
     describe "#reverse" do
       its(:reverse) { should == Ray.new(Vector.new(2,4), Vector.new(1,0)) }
+    end
+
+    describe "#trim" do
+      let(:range) { 0.1..0.5 }
+      subject { ray.trim(range) }
+      it { should == Ray.new(Vector.new(1.1,0.4), Vector.new(1.5,2.0))}
+
+      context "range is 0.0..1.0" do
+        subject { ray.trim(0.0..1.0) }
+        it { should == ray }
+      end
     end
 
     describe "#(member)=" do
