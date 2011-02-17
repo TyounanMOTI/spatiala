@@ -239,11 +239,18 @@ describe Ray do
       @q = @intersection_points[1]
     end
 
-    subject { Ray.new(@p, @q) }
+    let(:ray) { Ray.new(@p, @q) }
+    subject { ray }
 
     its(:origin) { should be_instance_of IntersectionPoint }
     its(:destination) { should be_instance_of IntersectionPoint }
-    its(:dualize) { should be_instance_of Beam }
-    its("dualize.vertices.length") { should == 4 }
+
+    describe "#dualize" do
+      subject { ray.dualize }
+
+      it { should be_instance_of Beam }
+      its("vertices.length") { should == 4 }
+      its(:listener) { should == @q.listener }
+    end
   end
 end

@@ -1,8 +1,10 @@
 class Beam < Polygon
+  attr_reader :listener
   attr_accessor :children
 
-  def initialize(vertices)
+  def initialize(vertices, listener=nil)
     @children = Array.new
+    @listener = listener
     super vertices
   end
 
