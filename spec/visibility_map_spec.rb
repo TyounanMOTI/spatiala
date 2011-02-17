@@ -141,7 +141,7 @@ describe VisibilityMap::IntersectionPoint do
   before do
     setup_listener
     setup_region
-    @intersection_point = IntersectionPoint.new(0.5, @listener.position, @region.original)
+    @intersection_point = IntersectionPoint.new(0.5, @listener, @region.original)
   end
 
   subject { @intersection_point }
@@ -156,7 +156,7 @@ describe VisibilityMap::IntersectionPoint do
     its("origin.x") { should == Ray::WINDOW.origin.x }
 
     context "when target_ray is nil" do
-      subject { IntersectionPoint.new(0.5, @listener.position).dualize }
+      subject { IntersectionPoint.new(0.5, @listener).dualize }
       its(:length) { should > Ray::BIG - 1 }
     end
   end

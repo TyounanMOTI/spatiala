@@ -30,7 +30,7 @@ class VisibilityMap
     end
 
     def self.by_ratio_originals(data, listener)
-      IntersectionPoints.new(data.map { |i| IntersectionPoint.new(i[:ratio], listener.position, i[:original])})
+      IntersectionPoints.new(data.map { |i| IntersectionPoint.new(i[:ratio], listener, i[:original])})
     end
 
     def reject_occluded_by(geometry)
@@ -41,7 +41,7 @@ class VisibilityMap
       sorted = self.sort_by { |i| i.ratio }
       result = IntersectionPoints.new
       each do |i|
-        result << IntersectionPoint.new(i.ratio, i.listener_position) unless result.include?(i)
+        result << IntersectionPoint.new(i.ratio, i.listener) unless result.include?(i)
       end
       return result
     end
@@ -61,7 +61,7 @@ class VisibilityMap
 
     def to_beams(geometry)
       array = map do |pair|
-        center = IntersectionPoint.new((pair[0].ratio + pair[1].ratio)/2, pair[0].listener_position)
+        center = IntersectionPoint.new((pair[0].ratio + pair[1].ratio)/2, pair[0].listener)
         target_ray = geometry.without_window.intersect(center.dualize).first.target_ray
         pair.each { |i| i.target_ray = target_ray }
         Ray.new(pair[0], pair[1]).dualize
@@ -71,28 +71,28 @@ class VisibilityMap
   end
 
   class IntersectionPoint < Vector
-    attr_reader :ratio, :listener_position
+    attr_reader :ratio, :listener
     attr_accessor :target_ray
 
-    def initialize(ratio, listener_position, target_ray=nil)
+    def initialize(ratio, listener, target_ray=nil)
       @ratio = ratio
       @target_ray = target_ray
-      @listener_position = listener_position
+      @listener = listener
       super self.point.elements
     end
 
     def point
-      (@listener_position.dualize * @ratio).destination
+      (@listener.dualize * @ratio).destination
     end
 
     def dualize
       if @target_ray.nil?
-        ray = Ray.new(@listener_position, Vector.new(0,@y))*Ray::BIG
+        ray = Ray.new(@listener.position, Vector.new(0,@y))*Ray::BIG
         ray.origin = Vector.new(0,@y)
         return ray
       end
 
-      ray = Ray.new(@listener_position, Vector.new(0, @y)).fit(@target_ray)
+      ray = Ray.new(@listener.position, Vector.new(0, @y)).fit(@target_ray)
       ray.origin = Vector.new(0, @y)
       return ray
     end
