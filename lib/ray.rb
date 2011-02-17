@@ -213,6 +213,10 @@ class Ray
     (point - @origin).length / @delta.length
   end
 
+  def range(target)
+    Range.new(target.ratio(@origin), target.ratio(@destination))
+  end
+
   def include?(point)
     target = Ray.new(@origin, point)
     return true if (point - @origin).length < 1.0e-10

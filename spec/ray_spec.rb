@@ -46,6 +46,13 @@ describe Ray do
       specify { (subject - 0.1).abs.should < 1.0e-15 }
     end
 
+    describe "#range" do
+      let(:receiver) { Ray.new(Vector.new(1.1, 0.4), Vector.new(1.5,2.0)) }
+      subject { receiver.range(ray) }
+      its(:first) { (subject - 0.1).abs.should < 1.0e-15 }
+      its(:last) { (subject - 0.5).abs.should < 1.0e-15 }
+    end
+
     describe "#(member)=" do
       context "and changed its origin to (3,9)" do
         before { subject.origin = Vector.new(3,9) }
