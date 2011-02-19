@@ -1,8 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe VisibilityMap do
-  include VisibilityMap::Environment
-
   before { setup_visibility_map }
 
   subject { @map }
@@ -81,8 +79,6 @@ describe VisibilityMap::IntersectionPoints do
 end
 
 describe VisibilityMap::IntersectionPoints, "initialized by ratio and originals" do
-  include BeamTracer::Environment
-
   before { setup_listener }
   describe "self.by_ratio_originals" do
     let(:ray) { Ray.new(Vector.new(0,0),Vector.new(10,10)) }
@@ -93,8 +89,6 @@ describe VisibilityMap::IntersectionPoints, "initialized by ratio and originals"
 end
 
 describe VisibilityMap::IntersectionPoints do
-  include VisibilityMap::IntersectionPoints::Environment
-
   before do
     setup_intersection_points
     @intersections = @map.intersections_with_regions(@normalized_listener)
@@ -133,9 +127,6 @@ describe VisibilityMap::IntersectionPoints do
 end
 
 describe VisibilityMap::IntersectionPoint do
-  include VisibilityRegion::Environment
-  include BeamTracer::Environment
-
   IntersectionPoint = VisibilityMap::IntersectionPoint
 
   before do

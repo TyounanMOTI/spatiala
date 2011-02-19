@@ -1,8 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Geometry do
-  include BeamTracer::Environment
-
   before do
     setup_geometry
     setup_listener
@@ -80,8 +78,6 @@ describe Geometry do
 end
 
 describe Geometry, "which normalized" do
-  include Geometry::Environment
-
   before do
     setup_geometry
     @window = @geometry.lines[0]

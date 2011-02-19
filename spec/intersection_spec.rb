@@ -1,26 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-module Intersection::Environment
-  include BeamTracer::Environment
-
-  def setup_intersection
-    setup_listener
-    @target_ray = Ray.new(Vector.new(10,20), Vector.new(400,50))
-    @ratios = [0.0, 0.3, 1.0]
-    @intersection = Intersection.new(@listener.position, @target_ray, @ratios)
-  end
-end
-
 describe Intersection, "when initialized by its origin, target_ray and ratios" do
-  include Intersection::Environment
-
-  before do
-    setup_intersection
-  end
-
+  before { setup_intersection }
   subject { @intersection }
-
-  it { should be_instance_of Intersection }
 
   describe "members" do
     its(:origin) { should be_a Vector }
@@ -47,8 +29,6 @@ describe Intersection, "when initialized by its origin, target_ray and ratios" d
 end
 
 describe Intersections do
-  include Intersection::Environment
-
   before do
     setup_intersection
     @intersections = Intersections.new(5, @intersection)

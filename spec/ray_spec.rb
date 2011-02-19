@@ -243,7 +243,6 @@ describe Ray do
   end
 
   context "when extremes are given as VisibilityMap::IntersectionPoint" do
-    include VisibilityMap::IntersectionPoints::Environment
     IntersectionPoint = VisibilityMap::IntersectionPoint
 
     before(:all) do

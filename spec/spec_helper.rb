@@ -29,69 +29,60 @@ RSpec::Matchers.define :be_collection do |collection_class|
   end
 end
 
-module Geometry::Environment
-  def setup_geometry
-    triangle = Polygon.new(Vector.new(10,20),
-                           Vector.new(400,50),
-                           Vector.new(30,420))
-    wall = Polygon.new(Vector.new(100, 100),
-                       Vector.new(250, 130))
-    wall2 = Polygon.new(Vector.new(150, 90),
-                        Vector.new(200, 100))
+def setup_geometry
+  triangle = Polygon.new(Vector.new(10,20),
+                         Vector.new(400,50),
+                         Vector.new(30,420))
+  wall = Polygon.new(Vector.new(100, 100),
+                     Vector.new(250, 130))
+  wall2 = Polygon.new(Vector.new(150, 90),
+                      Vector.new(200, 100))
 
-    @geometry = Geometry.new(triangle, wall, wall2)
-  end
+  @geometry = Geometry.new(triangle, wall, wall2)
 end
 
-module BeamTracer::Environment
-  include Geometry::Environment
-
-  def setup_beam_tracer
-    setup_geometry
-    setup_listener
-    setup_sources
-  end
-
-  def setup_listener
-    @listener = Listener.new(Vector.new(100,200), Vector.new(30,30))
-  end
-
-  def setup_sources
-    @sources = [Source.new(Vector.new(50,50))]
-  end
+def setup_beam_tracer
+  setup_geometry
+  setup_listener
+  setup_sources
 end
 
-module VisibilityRegion::Environment
-  def setup_region
-    original = Ray.new(Vector.new(0,0), Vector.new(0,0))
-    vertices = [
-            Vector.new(0,1),
-            Vector.new(4,2),
-            Vector.new(1,3),
-           ]
-    @region = VisibilityRegion.new(original, vertices)
-  end
+def setup_listener
+  @listener = Listener.new(Vector.new(100,200), Vector.new(30,30))
 end
 
-module VisibilityMap::Environment
-  include BeamTracer::Environment
-
-  IntersectionPoints = VisibilityMap::IntersectionPoints
-  IntersectionPoint = VisibilityMap::IntersectionPoint
-
-  def setup_visibility_map(window=1)
-    setup_beam_tracer
-    @window = @geometry.lines[window]
-    @map = VisibilityMap.new(@geometry, @window)
-    @normalized_listener = @listener.normalize(@map.reflected_normalizer)
-  end
+def setup_sources
+  @sources = [Source.new(Vector.new(50,50))]
 end
 
-module VisibilityMap::IntersectionPoints::Environment
-  include VisibilityMap::Environment
+def setup_region
+  original = Ray.new(Vector.new(0,0), Vector.new(0,0))
+  vertices = [
+              Vector.new(0,1),
+              Vector.new(4,2),
+              Vector.new(1,3),
+             ]
+  @region = VisibilityRegion.new(original, vertices)
+end
 
-  def setup_intersection_points(window=1)
-    setup_visibility_map(window)
-    @intersection_points = @map.intersection_points(@normalized_listener)
-  end
+IntersectionPoints = VisibilityMap::IntersectionPoints
+IntersectionPoint = VisibilityMap::IntersectionPoint
+
+def setup_visibility_map(window=1)
+  setup_beam_tracer
+  @window = @geometry.lines[window]
+  @map = VisibilityMap.new(@geometry, @window)
+  @normalized_listener = @listener.normalize(@map.reflected_normalizer)
+end
+
+def setup_intersection_points(window=1)
+  setup_visibility_map(window)
+  @intersection_points = @map.intersection_points(@normalized_listener)
+end
+
+def setup_intersection
+  setup_listener
+  @target_ray = Ray.new(Vector.new(10,20), Vector.new(400,50))
+  @ratios = [0.0, 0.3, 1.0]
+  @intersection = Intersection.new(@listener.position, @target_ray, @ratios)
 end
