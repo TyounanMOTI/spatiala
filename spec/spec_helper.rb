@@ -14,6 +14,7 @@ require 'matrix'
 require 'visibility_map'
 require 'visibility_region'
 require 'intersection'
+require 'beam_tree'
 
 RSpec.configure do |config|
   include Math
@@ -45,6 +46,7 @@ def setup_beam_tracer
   setup_geometry
   setup_listener
   setup_sources
+  @tracer = BeamTracer.new
 end
 
 def setup_listener

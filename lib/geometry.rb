@@ -7,6 +7,9 @@ class Geometry
     @polygons = polygons.flatten
   end
 
+  def generate_beam_tree(listener)
+  end
+
   def vertices
     @polygons.map { |i| i.vertices }.flatten
   end
