@@ -1,10 +1,9 @@
 class Listener
-  attr_accessor :position, :direction, :children
+  attr_accessor :position, :direction
 
   def initialize(position, direction)
     @position = position
     @direction = direction.normalize
-    @children = Array.new
   end
 
   def normalize(normalizer)
