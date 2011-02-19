@@ -17,6 +17,16 @@ describe Geometry do
     its(:lines) { should be_collection(Array).of(Ray) }
   end
 
+  describe "#generate_beam_tree" do
+    let(:listener) { @listener }
+    it "returns BeamTree" do
+      tree = double("beam tree")
+      subject.should_receive(:pencil_shape_split).with(listener) { tree }.ordered.once
+      tree.should_receive(:generate_children) { tree }.ordered.once
+      subject.generate_beam_tree(listener)
+    end
+  end
+
   describe "#lines_include" do
     it "should return Array of Ray" do
       lines = @geometry.lines_include(Vector.new(10, 20))

@@ -8,6 +8,8 @@ class Geometry
   end
 
   def generate_beam_tree(listener)
+    tree = pencil_shape_split(listener)
+    tree.generate_children
   end
 
   def vertices
