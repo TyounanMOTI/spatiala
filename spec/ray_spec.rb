@@ -243,8 +243,6 @@ describe Ray do
   end
 
   context "when extremes are given as VisibilityMap::IntersectionPoint" do
-    IntersectionPoint = VisibilityMap::IntersectionPoint
-
     before(:all) do
       setup_intersection_points
       @p = @intersection_points[0]

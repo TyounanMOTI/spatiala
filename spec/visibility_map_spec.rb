@@ -34,9 +34,6 @@ describe VisibilityMap do
 end
 
 describe VisibilityMap::IntersectionPoints do
-  IntersectionPoints = VisibilityMap::IntersectionPoints
-  IntersectionPoint = VisibilityMap::IntersectionPoint
-
   let(:listener) { Vector.new(10,10) }
 
   before do
@@ -127,8 +124,6 @@ describe VisibilityMap::IntersectionPoints do
 end
 
 describe VisibilityMap::IntersectionPoint do
-  IntersectionPoint = VisibilityMap::IntersectionPoint
-
   before do
     setup_listener
     setup_region
