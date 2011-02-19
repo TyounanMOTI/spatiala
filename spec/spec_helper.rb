@@ -40,7 +40,6 @@ module Geometry::Environment
                         Vector.new(200, 100))
 
     @geometry = Geometry.new(triangle, wall, wall2)
-    @listener = Vector.new(100,200)
   end
 end
 
@@ -51,7 +50,6 @@ module BeamTracer::Environment
     setup_geometry
     setup_listener
     setup_sources
-    @tracer = BeamTracer.new(@geometry, @sources, @listener)
   end
 
   def setup_listener

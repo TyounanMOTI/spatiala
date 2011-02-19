@@ -1,10 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Geometry do
-  include Geometry::Environment
+  include BeamTracer::Environment
 
   before do
     setup_geometry
+    setup_listener
     @view_ray = Ray.new(Vector.new(0,0), Vector.new(50,50))
   end
 
@@ -55,8 +56,8 @@ describe Geometry do
   end
 
   describe "#occlude?" do
-    it { should_not be_occlude(Ray.new(@listener, Vector.new(30,420))) }
-    it { should be_occlude(Ray.new(@listener, Vector.new(150,90))) }
+    it { should_not be_occlude(Ray.new(@listener.position, Vector.new(30,420))) }
+    it { should be_occlude(Ray.new(@listener.position, Vector.new(150,90))) }
 
     it "should not occlude zero-length Ray" do
       should_not be_occlude(Ray.new(Vector.new(100,100), Vector.new(100,100)))
@@ -64,7 +65,7 @@ describe Geometry do
   end
 
   describe "#intersect" do
-    subject { @geometry.intersect(Ray.new(@listener, Vector.new(100,100)).maximize) }
+    subject { @geometry.intersect(Ray.new(@listener.position, Vector.new(100,100)).maximize) }
     it { should be_a Intersections }
     its(:length) { should == 2 }
   end
