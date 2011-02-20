@@ -1,5 +1,5 @@
 class BeamTree
-  attr_writer :children
+  attr_accessor :children
 
   def initialize(listener)
     @listener = listener

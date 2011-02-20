@@ -11,6 +11,12 @@ class Geometry
     pencil_shape_split(listener).traverse
   end
 
+  def pencil_shape_split(listener)
+    tree = BeamTree.new(listener)
+    tree.children = connect_listener_vertices.reject_occluded.extend.to_beams
+    tree
+  end
+
   def vertices
     @polygons.map { |i| i.vertices }.flatten
   end

@@ -6,6 +6,7 @@ describe Geometry do
     setup_listener
     @view_ray = Ray.new(Vector.new(0,0), Vector.new(50,50))
   end
+  let(:listener) { @listener }
 
   subject { @geometry }
 
@@ -18,12 +19,23 @@ describe Geometry do
   end
 
   describe "#generate_beam_tree" do
-    let(:listener) { @listener }
     it "returns BeamTree" do
       tree = double("beam tree")
       subject.should_receive(:pencil_shape_split).with(listener) { tree }.ordered.once
       tree.should_receive(:traverse) { tree }.ordered.once
       subject.generate_beam_tree(listener)
+    end
+  end
+
+  describe "#pencil_shape_split" do
+    it "returns BeamTree which includes Beams" do
+      rays = double
+      beam = 1
+      subject.should_receive(:connect_listener_vertices) { rays }
+      rays.should_receive(:reject_occluded) { rays }
+      rays.should_receive(:extend) { rays }
+      rays.should_receive(:to_beams) { [beam] }
+      subject.pencil_shape_split(listener).children.should include beam
     end
   end
 
