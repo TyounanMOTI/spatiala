@@ -15,6 +15,10 @@ class Geometry
     BeamTree.new(listener, extend_rays(reject_occluded_rays(connect_listener_vertices)).to_beams)
   end
 
+  def connect_listener_vertices(listener)
+    IntersectionRays.new
+  end
+
   def vertices
     @polygons.map { |i| i.vertices }.flatten
   end
@@ -64,5 +68,8 @@ class Geometry
   def to_regions
     # also dualize reversed ray, because non facing line will be nil when dualized
     VisibilityRegions.new(lines.map { |i| [i.dualize, i.reverse.dualize] }.flatten.compact)
+  end
+
+  class IntersectionRays
   end
 end

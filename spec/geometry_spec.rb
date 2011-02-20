@@ -1,6 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Geometry do
+  IntersectionRays = Geometry::IntersectionRays
+
   before do
     setup_geometry
     setup_listener
@@ -35,6 +37,12 @@ describe Geometry do
       subject.should_receive(:extend_rays) { rays }
       rays.should_receive(:to_beams) { [:beam] }
       subject.pencil_shape_split(listener).children.should include :beam
+    end
+  end
+
+  describe "#connect_listener_vertices" do
+    it "returns IntersectionRays" do
+      subject.connect_listener_vertices(listener).should be_a IntersectionRays
     end
   end
 
