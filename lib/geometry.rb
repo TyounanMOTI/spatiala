@@ -21,6 +21,10 @@ class Geometry
     rays
   end
 
+  def reject_occluded_rays(rays)
+    rays.reject { |ray| occluded?(ray) }
+  end
+
   def vertices
     @polygons.map { |i| i.vertices }.flatten
   end

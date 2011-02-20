@@ -52,6 +52,14 @@ describe Geometry do
     its(:length) { should == 10 }
   end
 
+  describe "#reject_occluded_rays" do
+    it "returns IntersectionRays" do
+      rays = double("intersection rays")
+      rays.should_receive(:reject) { rays }
+      subject.reject_occluded_rays(rays).should be rays
+    end
+  end
+
   describe "#lines_include" do
     it "should return Array of Ray" do
       lines = @geometry.lines_include(Vector.new(10, 20))
