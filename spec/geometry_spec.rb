@@ -49,8 +49,7 @@ describe Geometry do
       rays.should_receive(:append).at_least(:once)
       subject
     end
-    its("length") { should == 10 }
-    its("rays.length") { should == geometry.lines.length }
+    its(:length) { should == 10 }
   end
 
   describe "#lines_include" do
@@ -142,24 +141,24 @@ describe Geometry::IntersectionRays do
   subject { intersection_rays }
 
   describe "#length" do
-    before { subject.rays = { :a => [1,2], :b => [1,2], :c => [1,2] } }
+    before { subject.update({ :a => [1,2], :b => [1,2], :c => [1,2] }) }
     its(:length) { should == 6 }
   end
 
   describe "#append" do
     context "@rays is empty" do
-      specify { intersection_rays.append(:a, [1,2]).rays.should == {:a => [1,2]} }
+      specify { intersection_rays.append(:a, [1,2]).should == {:a => [1,2]} }
     end
 
     context "@rays is {:a, [1,2]}" do
       subject { intersection_rays.append(:a, [1,2]) }
 
       it "appends to existed key" do
-        subject.append(:a, [3,4]).rays.should == {:a => [1,2,3,4]}
+        subject.append(:a, [3,4]).should == {:a => [1,2,3,4]}
       end
 
       it "appends to another key" do
-        subject.append(:b, [1,2]).rays.should == {:a => [1,2], :b => [1,2] }
+        subject.append(:b, [1,2]).should == {:a => [1,2], :b => [1,2] }
       end
     end
   end

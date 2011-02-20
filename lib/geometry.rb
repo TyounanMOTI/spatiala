@@ -72,19 +72,17 @@ class Geometry
     VisibilityRegions.new(lines.map { |i| [i.dualize, i.reverse.dualize] }.flatten.compact)
   end
 
-  class IntersectionRays
-    attr_accessor :rays
-
+  class IntersectionRays < Hash
     def initialize
-      @rays = Hash.new([])
+      super []
     end
 
     def length
-      rays.inject(0) { |count, i| count + i.last.length }
+      inject(0) { |count, i| count + i.last.length }
     end
 
     def append(target_ray, rays)
-      @rays[target_ray] = @rays[target_ray] + rays
+      self[target_ray] = self[target_ray] + rays
       self
     end
   end
