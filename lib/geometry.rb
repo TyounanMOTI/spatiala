@@ -84,6 +84,8 @@ class Geometry
     end
 
     def append(target_ray, rays)
+      @rays[target_ray] = @rays[target_ray] + rays
+      self
     end
   end
 end

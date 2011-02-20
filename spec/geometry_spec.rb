@@ -136,11 +136,30 @@ describe Geometry, "which normalized" do
 end
 
 describe Geometry::IntersectionRays do
-  subject { IntersectionRays.new }
+  let(:intersection_rays) { IntersectionRays.new }
+  subject { intersection_rays }
 
   describe "#length" do
     before { subject.rays = { :a => [1,2], :b => [1,2], :c => [1,2] } }
     its(:length) { should == 6 }
+  end
+
+  describe "#append" do
+    context "@rays is empty" do
+      specify { intersection_rays.append(:a, [1,2]).rays.should == {:a => [1,2]} }
+    end
+
+    context "@rays is {:a, [1,2]}" do
+      subject { intersection_rays.append(:a, [1,2]) }
+
+      it "appends to existed key" do
+        subject.append(:a, [3,4]).rays.should == {:a => [1,2,3,4]}
+      end
+
+      it "appends to another key" do
+        subject.append(:b, [1,2]).rays.should == {:a => [1,2], :b => [1,2] }
+      end
+    end
   end
 end
 
