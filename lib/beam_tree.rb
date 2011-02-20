@@ -1,9 +1,9 @@
 class BeamTree
-  attr_accessor :children
+  attr_reader :children
 
-  def initialize(listener)
+  def initialize(listener, children)
     @listener = listener
-    @children = []
+    @children = children
   end
 
   def traverse

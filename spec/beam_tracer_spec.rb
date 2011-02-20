@@ -10,7 +10,7 @@ describe BeamTracer do
 
     it "returns BeamTree" do
       geometry = double("geometry")
-      geometry.should_receive(:generate_beam_tree).with(listener) { |i| BeamTree.new(i) }
+      geometry.should_receive(:generate_beam_tree).with(listener) { |i| BeamTree.new(i, []) }
       @tracer.generate_beam_tree(geometry, listener).should be_a BeamTree
     end
   end
