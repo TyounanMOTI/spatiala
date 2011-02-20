@@ -7,6 +7,7 @@ describe Geometry do
     @view_ray = Ray.new(Vector.new(0,0), Vector.new(50,50))
   end
   let(:listener) { @listener }
+  let(:geometry) { @geometry }
 
   subject { @geometry }
 
@@ -39,8 +40,14 @@ describe Geometry do
   end
 
   describe "#connect_listener_vertices" do
-    it "returns IntersectionRays" do
-      subject.connect_listener_vertices(listener).should be_a IntersectionRays
+    subject { geometry.connect_listener_vertices(listener) }
+
+    it { should be_a IntersectionRays }
+    it "sends :append to IntersectionRays at least once" do
+      rays = double("intersection rays")
+      IntersectionRays.should_receive(:new) { rays }
+      rays.should_receive(:append).at_least(:once)
+      subject
     end
   end
 

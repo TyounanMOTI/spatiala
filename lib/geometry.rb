@@ -16,7 +16,9 @@ class Geometry
   end
 
   def connect_listener_vertices(listener)
-    IntersectionRays.new
+    rays = IntersectionRays.new
+    lines.each { |i| rays.append(i, [Ray.new(listener.position, i.origin), Ray.new(listener.position, i.destination)]) }
+    rays
   end
 
   def vertices
@@ -79,6 +81,9 @@ class Geometry
 
     def length
       rays.inject(0) { |count, i| count + i.last.length }
+    end
+
+    def append(target_ray, rays)
     end
   end
 end
