@@ -21,6 +21,12 @@ describe Ray do
       it { should_not == Ray.new(Vector.new(0,1), Vector.new(5,6)) }
     end
 
+    describe "#hash" do
+      subject { ray.hash }
+      it { should == ray.dup.hash }
+      it { should_not == ray.reverse.hash }
+    end
+
     describe "#length" do
       specify { subject.length.should == subject.delta.length }
     end

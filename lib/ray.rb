@@ -238,4 +238,8 @@ class Ray
     return self if @origin.x < @destination.x
     return self.reverse
   end
+
+  def hash
+    [@origin, @destination].join.hash
+  end
 end
