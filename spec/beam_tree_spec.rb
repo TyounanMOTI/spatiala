@@ -5,12 +5,12 @@ describe BeamTree do
   let(:listener) { @listener }
   let(:tree) { BeamTree.new(listener) }
 
-  describe "#generate_children" do
-    it "tells children to generate_children" do
+  describe "#traverse" do
+    it "tells children to traverse" do
       beam = double("beam")
       tree.children = [beam]
-      beam.should_receive(:generate_children).once
-      tree.generate_children.should be tree
+      beam.should_receive(:traverse).once
+      tree.traverse.should be tree
     end
   end
 end

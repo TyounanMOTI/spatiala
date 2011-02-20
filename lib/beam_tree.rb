@@ -6,8 +6,8 @@ class BeamTree
     @children = []
   end
 
-  def generate_children
-    @children.each { |i| i.generate_children }
+  def traverse
+    @children.each { |i| i.traverse }
     return self
   end
 end
