@@ -58,6 +58,14 @@ describe Geometry do
       rays.should_receive(:reject) { rays }
       subject.reject_occluded_rays(rays).should be rays
     end
+
+    context "rays are initialized from #connect_listener_vertices" do
+      let(:rays) { geometry.connect_listener_vertices(listener) }
+      subject { geometry.reject_occluded_rays(rays) }
+
+      it { should be_a IntersectionRays }
+      its(:length) { should == 6 }
+    end
   end
 
   describe "#lines_include" do

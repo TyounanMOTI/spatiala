@@ -22,7 +22,7 @@ class Geometry
   end
 
   def reject_occluded_rays(rays)
-    rays.reject { |ray| occluded?(ray) }
+    rays.reject { |ray| occlude?(ray) }
   end
 
   def vertices
