@@ -30,12 +30,11 @@ describe Geometry do
   describe "#pencil_shape_split" do
     it "returns BeamTree which includes Beams" do
       rays = double
-      beam = 1
       subject.should_receive(:connect_listener_vertices) { rays }
-      rays.should_receive(:reject_occluded) { rays }
-      rays.should_receive(:extend) { rays }
-      rays.should_receive(:to_beams) { [beam] }
-      subject.pencil_shape_split(listener).children.should include beam
+      subject.should_receive(:reject_occluded_rays) { rays }
+      subject.should_receive(:extend_rays) { rays }
+      rays.should_receive(:to_beams) { [:beam] }
+      subject.pencil_shape_split(listener).children.should include :beam
     end
   end
 

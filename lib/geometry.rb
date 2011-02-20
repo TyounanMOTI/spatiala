@@ -13,7 +13,7 @@ class Geometry
 
   def pencil_shape_split(listener)
     tree = BeamTree.new(listener)
-    tree.children = connect_listener_vertices.reject_occluded.extend.to_beams
+    tree.children = extend_rays(reject_occluded_rays(connect_listener_vertices)).to_beams
     tree
   end
 
