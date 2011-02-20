@@ -30,6 +30,8 @@ RSpec::Matchers.define :be_collection do |collection_class|
   end
 end
 
+IntersectionRays = Geometry::IntersectionRays
+
 def setup_geometry
   triangle = Polygon.new(Vector.new(10,20),
                          Vector.new(400,50),

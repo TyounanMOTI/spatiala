@@ -1,8 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Geometry do
-  IntersectionRays = Geometry::IntersectionRays
-
   before do
     setup_geometry
     setup_listener
@@ -129,3 +127,13 @@ describe Geometry, "which normalized" do
     it { should be_collection(VisibilityRegions).of(VisibilityRegion) }
   end
 end
+
+describe Geometry::IntersectionRays do
+  subject { IntersectionRays.new }
+
+  describe "#length" do
+    before { subject.rays = { :a => [1,2], :b => [1,2], :c => [1,2] } }
+    its(:length) { should == 6 }
+  end
+end
+

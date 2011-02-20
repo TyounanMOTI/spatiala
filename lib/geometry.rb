@@ -71,5 +71,14 @@ class Geometry
   end
 
   class IntersectionRays
+    attr_accessor :rays
+
+    def initialize
+      @rays = Hash.new([])
+    end
+
+    def length
+      rays.inject(0) { |count, i| count + i.last.length }
+    end
   end
 end
