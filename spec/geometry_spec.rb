@@ -22,7 +22,7 @@ describe Geometry do
     it "returns BeamTree" do
       tree = double("beam tree")
       subject.should_receive(:pencil_shape_split).with(listener) { tree }.ordered.once
-      tree.should_receive(:generate_children) { tree }.ordered.once
+      tree.should_receive(:traverse) { tree }.ordered.once
       subject.generate_beam_tree(listener)
     end
   end
