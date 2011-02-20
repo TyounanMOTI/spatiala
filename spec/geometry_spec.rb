@@ -170,5 +170,16 @@ describe Geometry::IntersectionRays do
       end
     end
   end
+
+  describe "#reject" do
+    context "@rays is {:a => [1,2]}" do
+      subject { intersection_rays.append(:a, [1,2]) }
+
+      it "reject 1" do
+        subject.reject { |i| i == 1 }
+        subject[:a].should_not include 1
+      end
+    end
+  end
 end
 

@@ -89,5 +89,11 @@ class Geometry
       self[target_ray] = self[target_ray] + rays
       self
     end
+
+    def reject
+      each do |key, value|
+        self[key] = value.reject { |i| yield(i) }
+      end
+    end
   end
 end
