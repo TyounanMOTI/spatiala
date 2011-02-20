@@ -49,6 +49,8 @@ describe Geometry do
       rays.should_receive(:append).at_least(:once)
       subject
     end
+    its("length") { should == 10 }
+    its("rays.length") { should == geometry.lines.length }
   end
 
   describe "#lines_include" do
