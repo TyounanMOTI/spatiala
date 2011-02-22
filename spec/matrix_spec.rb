@@ -46,9 +46,6 @@ describe Matrix do
   end
 
   describe "#inverse" do
-    Translator = Matrix::Translator
-    Rotator = Matrix::Rotator
-
     context "which is chain of Translator->Rotator" do
       subject { (Translator[1,2,3]*Rotator[PI/6]).inverse }
       it_behaves_like "a Matrix which have an inverse matrix"
@@ -56,9 +53,6 @@ describe Matrix do
   end
 
   describe "#transforms" do
-    Translator = Matrix::Translator
-    Rotator = Matrix::Rotator
-
     context "of a Translator" do
       subject { Translator[1,2,3].transforms }
       it { should == [Translator[1,2,3]] }
@@ -77,8 +71,6 @@ describe Matrix do
 end
 
 describe Matrix::Translator do
-  Translator = Matrix::Translator
-
   it "can initialize by Translator[x,y,z] format" do
     Translator[3,2,1].should == Matrix[[1,0,0,0],
                                        [0,1,0,0],
@@ -126,8 +118,6 @@ describe Matrix::Scaler do
 end
 
 describe Matrix::Reflector do
-  Reflector = Matrix::Reflector
-
   specify do
     Reflector[1,0,0].should == Matrix[
                                       [-1,0,0,0],
@@ -144,8 +134,6 @@ describe Matrix::Reflector do
 end
 
 describe Matrix::Rotator do
-  Rotator = Matrix::Rotator
-
   specify do
     Rotator[PI/6].should == Matrix[
                                    [cos(PI/6),sin(PI/6),0,0],

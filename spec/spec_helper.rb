@@ -31,6 +31,9 @@ RSpec::Matchers.define :be_collection do |collection_class|
 end
 
 IntersectionRays = Geometry::IntersectionRays
+Translator = Matrix::Translator
+Rotator = Matrix::Rotator
+Reflector = Matrix::Reflector
 
 def setup_geometry
   triangle = Polygon.new(Vector.new(10,20),
