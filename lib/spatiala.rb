@@ -21,9 +21,9 @@ class Spatiala < Processing::App
 
     reflector_index = 1
     @reflector = @geometry.lines[reflector_index]
-    @map = VisibilityMap.new(@geometry, @reflector)
-    @normalized_listener = @listener.normalize(@map.normalizer)
-    @intersection_points = @map.intersection_points(@normalized_listener)
+#    @map = VisibilityMap.new(@geometry, @reflector)
+#    @normalized_listener = @listener.normalize(@map.normalizer)
+#    @intersection_points = @map.intersection_points(@normalized_listener)
 
     case :world
     when :normalized
@@ -35,16 +35,12 @@ class Spatiala < Processing::App
       @beams = @intersection_points.pack_same_ratios.make_pairs.to_beams(@map.geometry)
       draw_beams @beams
 
-#      @beams.first.lines.each { |i| print_ray i }
     when :world
       scale_for_geometry
       draw_geometry
 
-      draw_beams @map.emit_beam(@listener)
-
-      reflected_listener = @listener.transform(Matrix::Reflector[@reflector])
-      draw_listener reflected_listener
-      draw_ray @reflector
+      intersection_rays = @geometry.connect_listener_vertices(@listener)
+      draw_rays @geometry.reject_occluded_rays(intersection_rays).to_a
 
     when :map
       scale_for_visibility_map
@@ -73,7 +69,6 @@ class Spatiala < Processing::App
 
     @region_index = 0
     @ray_index = 0
-    @vision = @normalized_listener.position.dualize
   end
 
   def draw
@@ -136,7 +131,7 @@ class Spatiala < Processing::App
     @listener = Listener.new(Vector.new(100,200),
                              Vector.new(30,30))
 
-    @tracer = BeamTracer.new(@geometry, @sources, @listener)
+#    @tracer = BeamTracer.new(@geometry, @sources, @listener)
   end
 
   def scale_for_geometry
