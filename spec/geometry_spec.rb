@@ -189,5 +189,16 @@ describe Geometry::IntersectionRays do
       end
     end
   end
+
+  describe "#to_a" do
+    let(:ray) { Ray.new(Vector.new(1,2), Vector.new(3,4)) }
+    before do
+      intersection_rays.append(:a, [ray])
+      intersection_rays.append(:b, [ray])
+    end
+    subject { intersection_rays.to_a }
+
+    it { should == [ray, ray] }
+  end
 end
 

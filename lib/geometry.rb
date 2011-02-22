@@ -95,5 +95,9 @@ class Geometry
         self[key] = value.reject { |i| yield(i) }
       end
     end
+
+    def to_a
+      values.flatten
+    end
   end
 end
