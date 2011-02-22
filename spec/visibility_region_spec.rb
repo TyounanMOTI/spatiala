@@ -72,11 +72,12 @@ describe VisibilityRegions do
   it { should == [@region] }
 
   describe "#intersect" do
-    
     before { setup_visibility_map }
     let(:regions) { @map.regions }
     let(:ray) { @normalized_listener.dualize }
     subject { regions.intersect(ray) }
-    it { should be_collection(Array).of(VisibilityRegion) }
+    it { should be_collection(Array).of(Hash) }
+    its(:first) { should include :ratio }
+    its(:first) { should include :original }
   end
 end

@@ -22,7 +22,7 @@ end
 
 RSpec::Matchers.define :be_collection do |collection_class|
   match do |collection|
-    collection.kind_of?(collection_class) && collection.reject {|i| i.kind_of?(@element_class)}
+    (!collection.nil?) && collection.kind_of?(collection_class) && collection.all? {|i| i.kind_of?(@element_class) && (!i.nil?) }
   end
 
   chain :of do |klass|
