@@ -164,6 +164,9 @@ describe Geometry::IntersectionRays do
   describe "#append" do
     context "@rays is empty" do
       specify { intersection_rays.append(:a, [1,2]).should == {:a => [1,2]} }
+      it "can also append single Ray" do
+        intersection_rays.append(:a, 1).should == {:a => [1] }
+      end
     end
 
     context "@rays is {:a, [1,2]}" do

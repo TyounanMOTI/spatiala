@@ -86,7 +86,7 @@ class Geometry
     end
 
     def append(target_ray, rays)
-      self[target_ray] = self[target_ray] + rays
+      self[target_ray] = self[target_ray] + [rays].flatten
       self
     end
 
