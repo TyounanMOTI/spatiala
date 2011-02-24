@@ -205,6 +205,18 @@ describe Geometry::IntersectionRays do
 
       it { should == [ray, ray, ray] }
     end
+
+    describe "#each_ray" do
+      it "yields 3 times" do
+        count = 0
+        intersection_rays.each_ray { |i| count = count+1 }
+        count.should == 3
+      end
+
+      it "yields by a Ray" do
+        intersection_rays.each_ray { |i| i.should be_a Ray }
+      end
+    end
   end
 end
 

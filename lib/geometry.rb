@@ -99,5 +99,9 @@ class Geometry
     def to_a
       values.flatten
     end
+
+    def each_ray
+      to_a.each { |i| yield i }
+    end
   end
 end
