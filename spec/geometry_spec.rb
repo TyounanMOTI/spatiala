@@ -79,15 +79,17 @@ describe Geometry do
   end
 
   describe "#extend_ray" do
-    it "returns ray" do
+    let(:ray) { double("argument") }
+    subject { geometry.extend_ray(ray) }
+
+    it "returns Hash which keys are :target_ray, :ray" do
       intersection = double("intersection")
-      ray = double("ray (argument of this method)")
 
       ray.should_receive(:to_infinite_ray) { ray }
-      geometry.should_receive(:intersect).with(ray) { intersection }
-      intersection.should_receive(:to_ray) { :ray }
+      geometry.should_receive(:intersect).with(ray) { [nil, {:target_ray => ray, :ray => ray }] }
 
-      geometry.extend_ray(ray).should == :ray
+      should be_has_key :target_ray
+      should be_has_key :ray
     end
   end
 

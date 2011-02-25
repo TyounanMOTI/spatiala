@@ -34,7 +34,7 @@ class Geometry
   end
 
   def extend_ray(ray)
-    intersect(ray.to_infinite_ray).to_ray
+    intersect(ray.to_infinite_ray)[1]
   end
 
   def vertices
