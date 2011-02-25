@@ -25,6 +25,13 @@ class Geometry
     rays.reject { |ray| occlude?(ray) }
   end
 
+  def extend_rays(rays)
+    rays.each_ray do |ray|
+      next if extend_ray(ray).nil?
+      rays.append(extend_ray(ray)[:target_ray], extend_ray(ray)[:ray])
+    end
+    return rays
+  end
   def vertices
     @polygons.map { |i| i.vertices }.flatten
   end

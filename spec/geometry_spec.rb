@@ -68,6 +68,15 @@ describe Geometry do
     end
   end
 
+  describe "#extend_rays" do
+    let(:rays) { geometry.reject_occluded_rays(geometry.connect_listener_vertices(listener)) }
+    let(:ray) { Ray.new(Vector.new(0,0), Vector.new(0,0)) }
+    it "returns IntersectionRays" do
+      geometry.should_receive(:extend_ray) { {:target_ray => ray, :ray => ray} }.at_least(:once)
+      rays.should_receive(:append).at_least(:once)
+      geometry.extend_rays(rays).should be_a IntersectionRays
+    end
+  end
   describe "#lines_include" do
     it "should return Array of Ray" do
       lines = @geometry.lines_include(Vector.new(10, 20))
