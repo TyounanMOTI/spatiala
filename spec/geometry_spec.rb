@@ -52,32 +52,6 @@ describe Geometry do
     its(:length) { should == 10 }
   end
 
-  describe "#reject_occluded_rays" do
-    it "returns IntersectionRays" do
-      rays = double("intersection rays")
-      rays.should_receive(:reject) { rays }
-      subject.reject_occluded_rays(rays).should be rays
-    end
-
-    context "rays are initialized from #connect_listener_vertices" do
-      let(:rays) { geometry.connect_listener_vertices(listener) }
-      subject { geometry.reject_occluded_rays(rays) }
-
-      it { should be_a IntersectionRays }
-      its(:length) { should == 6 }
-    end
-  end
-
-  describe "#extend_rays" do
-    let(:rays) { geometry.reject_occluded_rays(geometry.connect_listener_vertices(listener)) }
-    let(:ray) { Ray.new(Vector.new(0,0), Vector.new(0,0)) }
-    it "returns IntersectionRays" do
-      geometry.should_receive(:extend_ray) { {:target_ray => ray, :ray => ray} }.at_least(:once)
-      rays.should_receive(:append).at_least(:once)
-      geometry.extend_rays(rays).should be_a IntersectionRays
-    end
-  end
-
   describe "#extend_ray" do
     let(:ray) { double("argument") }
     subject { geometry.extend_ray(ray) }
@@ -240,6 +214,44 @@ describe Geometry::IntersectionRays do
 
       it "yields by a Ray" do
         intersection_rays.each_ray { |i| i.should be_a Ray }
+      end
+    end
+  end
+
+  context "when geometry and listener are setup-ed" do
+    before { setup_geometry; setup_listener }
+    let(:geometry) { @geometry }
+    let(:listener) { @listener }
+
+    describe "#reject_occluded_by" do
+      subject { intersection_rays.reject_occluded_by(geometry) }
+
+      it "returns IntersectionRays" do
+        intersection_rays.should_receive(:reject) { :rays }
+        should be :rays
+      end
+
+      context "when intersection-rays are initialized by #connect_listener_vertices" do
+        let(:rays) { geometry.connect_listener_vertices(listener) }
+        subject { rays.reject_occluded_by(geometry) }
+
+        it { should be_a IntersectionRays }
+        its(:length) { should == 6 }
+      end
+    end
+
+    describe "#extend_in" do
+      let(:ray) { double("ray") }
+      let(:geometry) { double("geometry") }
+
+      it "returns IntersectionRays" do
+        intersection_rays.should_receive(:each_ray).and_yield(ray) do |context|
+          ray.should_receive(:extend_in).with(geometry) { :intersection_ray }.at_least(:once)
+          context.should_receive(:append).with(:intersection_ray).at_least(:once)
+
+        end
+
+        intersection_rays.extend_in(geometry).should be intersection_rays
       end
     end
   end

@@ -21,18 +21,6 @@ class Geometry
     rays
   end
 
-  def reject_occluded_rays(rays)
-    rays.reject { |ray| occlude?(ray) }
-  end
-
-  def extend_rays(rays)
-    rays.each_ray do |ray|
-      next if extend_ray(ray).nil?
-      rays.append(extend_ray(ray)[:target_ray], extend_ray(ray)[:ray])
-    end
-    return rays
-  end
-
   def extend_ray(ray)
     intersect(ray.to_infinite_ray)[1]
   end
@@ -91,6 +79,17 @@ class Geometry
   class IntersectionRays < Hash
     def initialize
       super []
+    end
+
+    def reject_occluded_by(geometry)
+      reject { |ray| geometry.occlude?(ray) }
+    end
+
+    def extend_in(geometry)
+      each_ray do |ray|
+        append(ray.extend_in(geometry))
+      end
+      self
     end
 
     def length
