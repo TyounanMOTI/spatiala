@@ -87,7 +87,7 @@ class Geometry
 
     def extend_in(geometry)
       each_ray do |ray|
-        append(ray.extend_in(geometry))
+        append(geometry.extend_ray(ray))
       end
       self
     end

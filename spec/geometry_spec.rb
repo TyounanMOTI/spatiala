@@ -242,13 +242,11 @@ describe Geometry::IntersectionRays do
 
     describe "#extend_in" do
       let(:ray) { double("ray") }
-      let(:geometry) { double("geometry") }
 
       it "returns IntersectionRays" do
         intersection_rays.should_receive(:each_ray).and_yield(ray) do |context|
-          ray.should_receive(:extend_in).with(geometry) { :intersection_ray }.at_least(:once)
+          geometry.should_receive(:extend_ray).with(ray) { :intersection_ray }.at_least(:once)
           context.should_receive(:append).with(:intersection_ray).at_least(:once)
-
         end
 
         intersection_rays.extend_in(geometry).should be intersection_rays
