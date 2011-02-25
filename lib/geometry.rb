@@ -87,7 +87,7 @@ class Geometry
 
     def stretch(geometry)
       each_ray do |ray|
-        append(geometry.stretch_ray(ray))
+        append(*geometry.stretch_ray(ray).shift)
       end
       self
     end

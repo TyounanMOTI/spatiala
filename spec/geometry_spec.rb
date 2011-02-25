@@ -245,8 +245,8 @@ describe Geometry::IntersectionRays do
 
       it "returns IntersectionRays" do
         intersection_rays.should_receive(:each_ray).and_yield(ray) do |context|
-          geometry.should_receive(:stretch_ray).with(ray) {:intersection}.at_least(:once)
-          context.should_receive(:append).with(:intersection).at_least(:once)
+          geometry.should_receive(:stretch_ray).with(ray) { {ray=>ray} }.at_least(:once)
+          context.should_receive(:append).with(ray, ray).at_least(:once)
         end
 
         intersection_rays.stretch(geometry).should be intersection_rays
