@@ -32,6 +32,11 @@ class Geometry
     end
     return rays
   end
+
+  def extend_ray(ray)
+    intersect(ray.to_infinite_ray).to_ray
+  end
+
   def vertices
     @polygons.map { |i| i.vertices }.flatten
   end

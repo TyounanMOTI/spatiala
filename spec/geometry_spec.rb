@@ -77,6 +77,20 @@ describe Geometry do
       geometry.extend_rays(rays).should be_a IntersectionRays
     end
   end
+
+  describe "#extend_ray" do
+    it "returns ray" do
+      intersection = double("intersection")
+      ray = double("ray (argument of this method)")
+
+      ray.should_receive(:to_infinite_ray) { ray }
+      geometry.should_receive(:intersect).with(ray) { intersection }
+      intersection.should_receive(:to_ray) { :ray }
+
+      geometry.extend_ray(ray).should == :ray
+    end
+  end
+
   describe "#lines_include" do
     it "should return Array of Ray" do
       lines = @geometry.lines_include(Vector.new(10, 20))
