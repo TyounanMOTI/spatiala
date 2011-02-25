@@ -21,7 +21,7 @@ class Geometry
     rays
   end
 
-  def extend_ray(ray)
+  def stretch_ray(ray)
     intersect(ray.to_infinite_ray)[1]
   end
 
@@ -85,9 +85,9 @@ class Geometry
       reject { |ray| geometry.occlude?(ray) }
     end
 
-    def extend_in(geometry)
+    def stretch(geometry)
       each_ray do |ray|
-        append(geometry.extend_ray(ray))
+        append(geometry.stretch_ray(ray))
       end
       self
     end

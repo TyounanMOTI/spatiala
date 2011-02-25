@@ -52,9 +52,9 @@ describe Geometry do
     its(:length) { should == 10 }
   end
 
-  describe "#extend_ray" do
+  describe "#stretch_ray" do
     let(:ray) { double("argument") }
-    subject { geometry.extend_ray(ray) }
+    subject { geometry.stretch_ray(ray) }
 
     it "returns Hash which keys are :target_ray, :ray" do
       intersection = double("intersection")
@@ -240,16 +240,16 @@ describe Geometry::IntersectionRays do
       end
     end
 
-    describe "#extend_in" do
+    describe "#stretch" do
       let(:ray) { double("ray") }
 
       it "returns IntersectionRays" do
         intersection_rays.should_receive(:each_ray).and_yield(ray) do |context|
-          geometry.should_receive(:extend_ray).with(ray) { :intersection_ray }.at_least(:once)
+          geometry.should_receive(:stretch_ray).with(ray) { :intersection_ray }.at_least(:once)
           context.should_receive(:append).with(:intersection_ray).at_least(:once)
         end
 
-        intersection_rays.extend_in(geometry).should be intersection_rays
+        intersection_rays.stretch(geometry).should be intersection_rays
       end
     end
   end
