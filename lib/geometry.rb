@@ -54,8 +54,9 @@ class Geometry
   end
 
   def intersect(ray)
-    intersections = lines.map { |line| [Intersection.new(ray.origin, line, [line.intersect(ray)]), ray.intersect(line)] }.delete_if { |i| i[1].nil? }.sort_by { |i| i[1] }
-    return Intersections.new(intersections.collect { |i| i[0] })
+    lines.map do |line|
+      {line => ray.fit(line), :ratio => ray.intersect(line) }
+    end.reject { |i| i[:ratio].nil? }.sort_by { |i| i[:ratio] }.each { |i| i.delete(:ratio) }
   end
 
   def normalize(window)
