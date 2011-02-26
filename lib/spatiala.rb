@@ -21,19 +21,20 @@ class Spatiala < Processing::App
 
     reflector_index = 1
     @reflector = @geometry.lines[reflector_index]
-#    @map = VisibilityMap.new(@geometry, @reflector)
-#    @normalized_listener = @listener.normalize(@map.normalizer)
-#    @intersection_points = @map.intersection_points(@normalized_listener)
+    @map = VisibilityMap.new(@geometry, @reflector)
+    @normalized_listener = @listener.normalize(@map.reflected_normalizer)
+    @intersection_points = @map.intersection_points(@normalized_listener)
 
-    case :world
+    case :normalized
     when :normalized
       scale_for_normalized_geometry
       draw_geometry @map.geometry
       draw_listener @normalized_listener
       draw_ray @map.geometry.lines[reflector_index]
 
-      @beams = @intersection_points.pack_same_ratios.make_pairs.to_beams(@map.geometry)
-      draw_beams @beams
+      intersection_points = @map.intersection_points(@normalized_listener)
+      draw_intersection_points intersection_points
+      draw_rays intersection_points.map { |i| i.dualize }
 
     when :world
       scale_for_geometry
@@ -48,7 +49,7 @@ class Spatiala < Processing::App
 
       draw_visibility_map @map
       draw_ray @normalized_listener.position.dualize
-      draw_intersection_points @intersection_points
+      draw_intersection_points @map.intersections_with_regions(@normalized_listener)
 
     when :sandbox
       @scale = Vector.new(150,-150)

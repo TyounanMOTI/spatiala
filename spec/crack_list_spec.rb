@@ -13,6 +13,7 @@ end
 
 describe CrackList, "when initialize with Array of Crack" do
   before do
+    pending "deprecated"
     @line1 = Ray.new(Vector.new(1,0), Vector.new(10,20))
     @line2 = Ray.new(Vector.new(2,0), Vector.new(30,40))
     @ray1 = Ray.new(Vector.new(4,20), Vector.new(1,0))
@@ -51,6 +52,7 @@ end
 
 describe CrackList, "when initialize from Geometry and Listener" do
   before do
+    pending "deprecated"
     setup_geometry
     setup_listener
     @list = CrackList.new(@geometry, @listener)

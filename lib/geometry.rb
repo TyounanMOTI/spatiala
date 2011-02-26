@@ -49,8 +49,7 @@ class Geometry
   end
 
   def occlude?(ray)
-    return false if ray.length == 0
-    return (not lines_include(ray.destination).include?(nearest_intersect_line_with(ray)))
+    lines.any? { |line| ray.intersect?(line) && ray.intersect(line) < 1.0-1.0e-10 }
   end
 
   def intersect(ray)

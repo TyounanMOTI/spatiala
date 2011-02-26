@@ -105,7 +105,6 @@ describe Geometry do
   end
 
   describe "#occlude?" do
-    before { pending "until correct #occlude not to use #nearest_intersect_line_with" }
     it { should_not be_occlude(Ray.new(@listener.position, Vector.new(30,420))) }
     it { should be_occlude(Ray.new(@listener.position, Vector.new(150,90))) }
 
