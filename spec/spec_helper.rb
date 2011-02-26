@@ -8,12 +8,9 @@ require 'beam'
 require 'listener'
 require 'source'
 require 'beam_tracer'
-require 'crack'
-require 'crack_list'
 require 'matrix'
 require 'visibility_map'
 require 'visibility_region'
-require 'intersection'
 require 'beam_tree'
 
 RSpec.configure do |config|
