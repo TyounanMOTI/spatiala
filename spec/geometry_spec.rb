@@ -75,7 +75,6 @@ describe Geometry do
   end
 
   describe "#nearest_intersect_line_with" do
-    before { pending "until correct #occlude not to use #nearest_intersect_line_with" }
     context "target_ray is Ray(0,0)->(50,50)" do
       subject { @geometry.nearest_intersect_line_with(@view_ray) }
 

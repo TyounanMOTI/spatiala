@@ -45,7 +45,7 @@ class Geometry
 
   def nearest_intersect_line_with(ray)
     return nil if intersect(ray).empty?
-    return intersect(ray).first.target_ray
+    return intersect(ray).first.keys.first
   end
 
   def occlude?(ray)
