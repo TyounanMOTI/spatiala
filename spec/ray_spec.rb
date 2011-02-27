@@ -27,6 +27,11 @@ describe Ray do
       it { should_not == ray.reverse.hash }
     end
 
+    describe "to_infinite_ray" do
+      subject { ray.to_infinite_ray }
+      its(:length) { should > Ray::BIG - 1 }
+    end
+
     describe "#length" do
       specify { subject.length.should == subject.delta.length }
     end

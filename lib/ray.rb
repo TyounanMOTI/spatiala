@@ -234,6 +234,10 @@ class Ray
     return self*ratio
   end
 
+  def to_infinite_ray
+    self * BIG
+  end
+
   def look_front
     return self if @origin.x < @destination.x
     return self.reverse
