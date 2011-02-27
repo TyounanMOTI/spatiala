@@ -226,7 +226,6 @@ describe Geometry::IntersectionRays do
     let(:listener) { @listener }
 
     describe "#reject_occluded_by" do
-      before { pending "until correct #occlude not to use #nearest_intersect_line_with" }
       subject { intersection_rays.reject_occluded_by(geometry) }
 
       it "returns IntersectionRays" do
